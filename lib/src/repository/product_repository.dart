@@ -286,24 +286,3 @@ Future<Review> addProductReview(Review review, Product product) async {
     return Review.fromJSON({});
   }
 }
-
-Future<Product> storeProduct(Product product) async {
-  Uri uri = Helper.getUri('api/products');
-  final client = new http.Client();
-  try {
-    final response = await client.post(
-      uri,
-      headers: {HttpHeaders.contentTypeHeader: 'application/json'},
-      body: json.encode(product.toMap()),
-    );
-    if (response.statusCode == 200) {
-      return Product.fromJSON(json.decode(response.body)['data']);
-    } else {
-      print(CustomTrace(StackTrace.current, message: response.body).toString());
-      return Product.fromJSON({});
-    }
-  } catch (e) {
-    print(CustomTrace(StackTrace.current, message: uri.path).toString());
-    return Product.fromJSON({});
-  }
-}

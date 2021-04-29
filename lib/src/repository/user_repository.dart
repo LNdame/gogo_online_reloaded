@@ -41,7 +41,6 @@ Future<User> register(User user) async {
     headers: {HttpHeaders.contentTypeHeader: 'application/json'},
     body: json.encode(user.toMap()),
   );
-  print(response.body);
   if (response.statusCode == 200) {
     setCurrentUser(response.body);
     currentUser.value = User.fromJSON(json.decode(response.body)['data']);
@@ -80,21 +79,6 @@ void setCurrentUser(jsonString) async {
   }
 }
 
-void setCurrentUserFireBaseUid(String uid)async{
-  if(uid.isNotEmpty){
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('current_user_fire_uid', uid);
-  }
-}
-
-Future<String> getCurrentUserFirebaseUid() async{
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  if (currentUser.value.auth &&  prefs.containsKey('current_user_fire_uid')) {
-      return  prefs.get('current_user_fire_uid');
-  }
-  return "";
-}
-
 Future<void> setCreditCard(CreditCard creditCard) async {
   if (creditCard != null) {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -108,15 +92,9 @@ Future<User> getCurrentUser() async {
   if (currentUser.value.auth == null && prefs.containsKey('current_user')) {
     currentUser.value = User.fromJSON(json.decode(await prefs.get('current_user')));
     currentUser.value.auth = true;
-
-    if (prefs.containsKey('current_user_fire_uid')) {
-      currentUser.value.firebaseUid = await prefs.get('current_user_fire_uid');
-    }
   } else {
     currentUser.value.auth = false;
   }
-
-
   // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
   currentUser.notifyListeners();
   return currentUser.value;

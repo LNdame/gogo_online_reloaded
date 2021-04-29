@@ -16,7 +16,7 @@ class User {
   // used for indicate if client logged in or not
   bool auth;
 
-  String firebaseUid;
+//  String role;
 
   User();
 

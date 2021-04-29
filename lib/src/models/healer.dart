@@ -2,7 +2,6 @@ import '../models/media.dart';
 
 class Healer {
   String id;
-  String firebaseId;
   String name;
   Media image;
   String rate;
@@ -16,19 +15,16 @@ class Healer {
   double defaultTax;
   String latitude;
   String longitude;
-  String language;
   bool closed;
  // bool availableForDelivery;
  // double deliveryRange;
   double distance;
-  double hourlyPrice;
 
   Healer();
 
   Healer.fromJSON(Map<String, dynamic> jsonMap) {
     try {
       id = jsonMap['id'].toString();
-      firebaseId = jsonMap['firebase_id'] != null ? jsonMap['firebase_id'] : '';
       name = jsonMap['name'];
       image = jsonMap['media'] != null && (jsonMap['media'] as List).length > 0
           ? Media.fromJSON(jsonMap['media'][0])
@@ -45,13 +41,11 @@ class Healer {
       information = jsonMap['information'];
       latitude = jsonMap['latitude'];
       longitude = jsonMap['longitude'];
-      language = jsonMap['language'] != null ? jsonMap['language'] : '';
       closed = jsonMap['closed'] ?? false;
      // availableForDelivery = jsonMap['available_for_delivery'] ?? false;
       distance = jsonMap['distance'] != null ? double.parse(jsonMap['distance'].toString()) : 0.0;
     } catch (e) {
       id = '';
-      firebaseId = '';
       name = '';
       image = new Media();
       rate = '0';
@@ -66,7 +60,6 @@ class Healer {
       information = '';
       latitude = '0';
       longitude = '0';
-      language = '';
       closed = false;
      // availableForDelivery = false;
       distance = 0.0;
@@ -75,34 +68,13 @@ class Healer {
   }
 
   Map<String, dynamic> toMap() {
-    var map = new Map<String, dynamic>();
-    map["id"] = id;
-    map["firebase_id"] = firebaseId;
-    map["name"] = name;
-    if(image!=null){
-      map["image"]= image?.toMap();
-    }
-    map["description"] = description;
-    map["address"] = address;
-    map["latitude"] = latitude;
-    map["longitude"] = longitude;
-    map["phone"] = phone;
-    map["mobile"] = mobile;
-    map["language"] = language;
-    map["admin_commission"] = adminCommission;
-    map["default_tax"] = defaultTax;
-    map["closed"] = closed;
-    map["information"] = information;
-
-
-    return map;
-   /* return {
+    return {
       'id': id,
       'name': name,
       'latitude': latitude,
       'longitude': longitude,
       //'delivery_fee': deliveryFee,
       'distance': distance,
-    };*/
+    };
   }
 }
