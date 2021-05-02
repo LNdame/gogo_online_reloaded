@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>612875234305-hs3mfu3b5r0neg4tipcf9i0b2l46cstd.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.612875234305-hs3mfu3b5r0neg4tipcf9i0b2l46cstd</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>612875234305-79ij76m5uishr8igqmobvksk0k316g9t.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBXR7SPfYVhdCZN-G1RzXri7c6nlPJVZ-A</string>
+	<key>GCM_SENDER_ID</key>
+	<string>612875234305</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>co.za.inqb8.gogoOnline</string>
+	<key>PROJECT_ID</key>
+	<string>gogo-online-24836</string>
+	<key>STORAGE_BUCKET</key>
+	<string>gogo-online-24836.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:612875234305:ios:81b08e7b83844699a3e400</string>
+</dict>
+</plist>

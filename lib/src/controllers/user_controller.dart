@@ -17,7 +17,7 @@ class UserController extends ControllerMVC {
   OverlayEntry loader;
 
   UserController() {
-    loader = Helper.overlayLoader(state.context);
+
     loginFormKey = new GlobalKey<FormState>();
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
    // _firebaseMessaging = FirebaseMessaging();
@@ -29,6 +29,7 @@ class UserController extends ControllerMVC {
   }
 //TODO look at the update if that is not a better way
   void login() async {
+    loader = Helper.overlayLoader(state.context);
     FocusScope.of(state.context).unfocus();
     if (loginFormKey.currentState.validate()) {
       loginFormKey.currentState.save();
