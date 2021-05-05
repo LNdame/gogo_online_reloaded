@@ -2485,6 +2485,16 @@ class S {
     );
   }
 
+  /// `Register as a healer`
+  String get register_as_healer {
+    return Intl.message(
+      'Register as a healer',
+      name: 'register_as_healer',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Have Coupon Code?`
   String get haveCouponCode {
     return Intl.message(
