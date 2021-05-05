@@ -244,7 +244,7 @@
   "products": "Products",
   "validCouponCode": "Valid Coupon",
   "invalidCouponCode": "Invalid Coupon",
-
+  "register_as_healer": "Register as a healer",
   "haveCouponCode": "Have Coupon Code?",
   "welcome_text": "Welcome to Gogo Online",
   "get_started": "Get Started",

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">612875234305-2bi7n48jnvmlr9ltud95iid44qfe28il.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">612875234305</string>
+    <string name="google_api_key" translatable="false">AIzaSyBuCDgD2GjcZU2-tFWT3bIP6AtGCuiPVh4</string>
+    <string name="google_app_id" translatable="false">1:612875234305:android:1ab4e7e6946e784ba3e400</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBuCDgD2GjcZU2-tFWT3bIP6AtGCuiPVh4</string>
+    <string name="google_storage_bucket" translatable="false">gogo-online-24836.appspot.com</string>
+    <string name="project_id" translatable="false">gogo-online-24836</string>
+</resources>
