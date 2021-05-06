@@ -378,6 +378,10 @@
   "go_home": "Go Home",
   "payment_successful": "Payment Successful",
   "scheduler": "Scheduler",
+  "practice_address": "Practice Address",
+  "pretoria": "Pretoria",
+  "province": "province",
+  "gauteng": "Gauteng",
   "set_consultation_date": "Set Consultation Date",
   "payment_success_subtitle": "We have gotten your payment. Order processing for item paid will be started immediately.",
   "cart_empty": "Your cart is empty. \n Please add a few items."
