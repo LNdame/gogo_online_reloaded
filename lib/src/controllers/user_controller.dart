@@ -59,6 +59,7 @@ class UserController extends ControllerMVC {
   }
 
   void register() async {
+    loader = Helper.overlayLoader(state.context);
     FocusScope.of(state.context).unfocus();
     if (loginFormKey.currentState.validate()) {
       loginFormKey.currentState.save();
@@ -83,6 +84,7 @@ class UserController extends ControllerMVC {
   }
 
   void resetPassword() {
+    loader = Helper.overlayLoader(state.context);
     FocusScope.of(state.context).unfocus();
     if (loginFormKey.currentState.validate()) {
       loginFormKey.currentState.save();

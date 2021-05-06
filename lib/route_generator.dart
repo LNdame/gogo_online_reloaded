@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gogo_online/src/controllers/cart_controller.dart';
 import 'package:gogo_online/src/models/cart.dart';
 import 'package:gogo_online/src/pages/consultations.dart';
+import 'package:gogo_online/src/pages/healer/healer_signup.dart';
 import 'package:gogo_online/src/pages/scheduler.dart';
 import 'src/pages/healer/healer_pages.dart';
 import 'src/pages/onboarding.dart';
@@ -59,6 +60,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => PagesWidget(currentTab: args));
       case '/HealerPages':
         return MaterialPageRoute(builder: (_) => HealerPagesWidget(currentTab: args));
+      case '/HealerRegister':
+        return MaterialPageRoute(builder: (_) => HealerRegistrationWidget());
       case '/Details':
         return MaterialPageRoute(builder: (_) => DetailsWidget(routeArgument: args));
       case '/Menu':
