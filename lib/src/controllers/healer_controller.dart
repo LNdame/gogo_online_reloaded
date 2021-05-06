@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:gogo_online/src/helpers/helper.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
@@ -10,7 +11,7 @@ import '../models/product.dart';
 import '../models/review.dart';
 import '../repository/category_repository.dart';
 import '../repository/gallery_repository.dart';
-import '../repository/healer_repository.dart';
+import '../repository/healer_repository.dart' ;
 import '../repository/product_repository.dart';
 import '../repository/settings_repository.dart';
 
@@ -23,8 +24,11 @@ class HealerController extends ControllerMVC {
   List<Product> featuredProducts = <Product>[];
   List<Review> reviews = <Review>[];
   GlobalKey<ScaffoldState> scaffoldKey;
+  GlobalKey<FormState> registerFormKey;
+  OverlayEntry loader;
 
   HealerController() {
+    registerFormKey = new  GlobalKey<FormState>();
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
   }
 
@@ -116,4 +120,32 @@ class HealerController extends ControllerMVC {
     listenForGalleries(_id);
     listenForFeaturedProducts(_id);
   }
+
+  void requestRegisterHealer(Healer healer) async{
+    loader = Helper.overlayLoader(state.context);
+    FocusScope.of(state.context).unfocus();
+    //if(registerFormKey.currentState.validate()){
+      registerFormKey.currentState.save();
+      Overlay.of(state.context).insert(loader);
+      registerHealer(healer).then( (value){
+        if(value!=null){
+          //TODO navigate to request success
+          ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
+            content: Text("Registered!!"),
+          ));
+        }else{
+          ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
+            content: Text("Error!!"),
+          ));
+        }
+      }).catchError((error){
+        loader.remove();
+        ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
+          content: Text("Error!!"),
+        ));
+      }).whenComplete(() => Helper.hideLoader(loader));
+
+
+    }
+  //}
 }

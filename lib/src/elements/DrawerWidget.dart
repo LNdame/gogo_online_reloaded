@@ -184,14 +184,7 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
           currentUser.value.apiToken != null || currentUser.value.role.name == AppConstants.ROLE_CLIENT ?
           ListTile(
             onTap: () {
-              if (Theme.of(context).brightness == Brightness.dark) {
-                setBrightness(Brightness.light);
-                setting.value.brightness.value = Brightness.light;
-              } else {
-                setting.value.brightness.value = Brightness.dark;
-                setBrightness(Brightness.dark);
-              }
-              setting.notifyListeners();
+              Navigator.of(context).pushReplacementNamed('/HealerRegister');
             },
             leading: Icon(
               Icons.app_registration,
