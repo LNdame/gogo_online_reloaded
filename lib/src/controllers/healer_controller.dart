@@ -121,31 +121,30 @@ class HealerController extends ControllerMVC {
     listenForFeaturedProducts(_id);
   }
 
-  void requestRegisterHealer(Healer healer) async{
+  void requestRegisterHealer(Healer healer) async {
     loader = Helper.overlayLoader(state.context);
     FocusScope.of(state.context).unfocus();
-    //if(registerFormKey.currentState.validate()){
+    if (registerFormKey.currentState.validate()) {
       registerFormKey.currentState.save();
       Overlay.of(state.context).insert(loader);
-      registerHealer(healer).then( (value){
-        if(value!=null){
-          //TODO navigate to request success
+      registerHealer(healer).then((value) {
+        if (value != null) {
+          Navigator.of(state.context).pushReplacementNamed('/HealerRegisterSuccess');
           ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
-            content: Text("Registered!!"),
+            content: Text("Request sent!"),
           ));
-        }else{
-          ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
+        } else {
+          ScaffoldMessenger.of(scaffoldKey?.currentContext)
+              .showSnackBar(SnackBar(
             content: Text("Error!!"),
           ));
         }
-      }).catchError((error){
+      }).catchError((error) {
         loader.remove();
         ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
           content: Text("Error!!"),
         ));
       }).whenComplete(() => Helper.hideLoader(loader));
-
-
     }
-  //}
+  }
 }
