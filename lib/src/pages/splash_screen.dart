@@ -34,16 +34,11 @@ class SplashScreenState extends StateMVC<SplashScreen> {
       _con.progress.value.values.forEach((_progress) {
         progress += _progress;
       });
-      if (progress ==200) {
+      if (progress <=100) {
         try {
-          if(userRepo.currentUser.value.apiToken == null){
-            Navigator.of(context).pushReplacementNamed('/Onboarding');
-          }else if ( userRepo.currentUser.value.apiToken != null){
-            userRepo.currentUser.value.role.name == AppConstants.ROLE_CLIENT ?
-            Navigator.of(context).pushReplacementNamed('/Pages', arguments: 2): Navigator.of(context).pushNamed('/HealerPages', arguments: 2);
-
-          }
-
+          userRepo.currentUser.value.apiToken != null || userRepo.currentUser.value.role.name == AppConstants.ROLE_CLIENT ?
+         Navigator.of(context).pushReplacementNamed('/Pages', arguments: 2): Navigator.of(context).pushNamed('/HealerPages', arguments: 2);
+         // Navigator.of(context).pushReplacementNamed('/Onboarding');
         } catch (e) {}
       }
     });

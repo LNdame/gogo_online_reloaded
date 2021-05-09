@@ -34,6 +34,29 @@ class AppConstants {
   static const String ROLE_CLIENT = "client";
   static const String ROLE_MANGER = "manager";
 
+  //Provinces coordinates
+  static const String EASTERN_CAPE_LAT_LON = "-32.2968, 26.4194";
+  static const String FREE_STATE_LAT_LON = "-28.4541, 26.7968";
+  static const String GAUTENG_LAT_LON = "-26.2708, 28.1123";
+  static const String KWAZULU_NATAL_LAT_LON = "-28.5306, 30.8958";
+  static const String LIMPOPO_LAT_LON = "-23.4013, 29.4179";
+  static const String MPUMALANGA_LAT_LON = "-25.5653, 30.5279";
+  static const String NORTHERN_CAPE_LAT_LON = "-29.0467, 21.8569";
+  static const String NORTH_WEST_LAT_LON = "-26.6639, 25.2838";
+  static const String WESTERN_CAPE_LAT_LON = "-33.2278, 21.8569";
+
+  //Provinces
+  static const String EASTERN_CAPE = "Eastern Cape";
+  static const String FREE_STATE= "Free State";
+  static const String GAUTENG= "Gauteng";
+  static const String KWAZULU_NATAL = "Kwazulu Natal";
+  static const String LIMPOPO= "Limpopo";
+  static const String MPUMALANGA = "Mpumalanga";
+  static const String NORTHERN_CAPE = "Northern Cape";
+  static const String NORTH_WEST = "North West";
+  static const String WESTERN_CAPE = "Western Cape";
+
+
 /*ScreenUtil.init(constraints)
 
   static double font24 = ScreenUtil().setSp(24.0, allowFontScalingSelf: true);
