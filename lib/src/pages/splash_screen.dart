@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gogo_online/src/helpers/app_constants.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../generated/l10n.dart';
+import '../repository/user_repository.dart' as userRepo;
+
 
 
 import '../controllers/splash_screen_controller.dart';
@@ -34,8 +36,9 @@ class SplashScreenState extends StateMVC<SplashScreen> {
       });
       if (progress <=100) {
         try {
-        // Navigator.of(context).pushReplacementNamed('/Pages', arguments: 2);
-          Navigator.of(context).pushReplacementNamed('/Onboarding');
+          userRepo.currentUser.value.apiToken != null || userRepo.currentUser.value.role.name == AppConstants.ROLE_CLIENT ?
+         Navigator.of(context).pushReplacementNamed('/Pages', arguments: 2): Navigator.of(context).pushNamed('/HealerPages', arguments: 2);
+         // Navigator.of(context).pushReplacementNamed('/Onboarding');
         } catch (e) {}
       }
     });

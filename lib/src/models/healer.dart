@@ -68,13 +68,32 @@ class Healer {
   }
 
   Map<String, dynamic> toMap() {
-    return {
+    var map = new Map<String, dynamic>();
+    map["id"] = id;
+    map["name"] = name;
+    if(image!=null){
+      map["image"]= image?.toMap();
+    }
+    map["description"] = description;
+    map["address"] = address;
+    map["latitude"] = latitude;
+    map["longitude"] = longitude;
+    map["phone"] = phone;
+    map["mobile"] = mobile;
+    map["admin_commission"] = adminCommission;
+    map["default_tax"] = defaultTax;
+    map["closed"] = closed;
+    map["information"] = information;
+
+
+    return map;
+   /* return {
       'id': id,
       'name': name,
       'latitude': latitude,
       'longitude': longitude,
       //'delivery_fee': deliveryFee,
       'distance': distance,
-    };
+    };*/
   }
 }

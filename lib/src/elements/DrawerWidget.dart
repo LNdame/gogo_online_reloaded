@@ -181,6 +181,21 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
+          currentUser.value.apiToken != null || currentUser.value.role.name == AppConstants.ROLE_CLIENT ?
+          ListTile(
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed('/HealerRegister');
+            },
+            leading: Icon(
+              Icons.app_registration,
+              color: Theme.of(context).focusColor.withOpacity(1),
+            ),
+            title: Text(
+              S.of(context).register_as_healer,
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
+          )
+              : SizedBox(height: 0),
           ListTile(
             onTap: () {
               if (currentUser.value.apiToken != null) {
