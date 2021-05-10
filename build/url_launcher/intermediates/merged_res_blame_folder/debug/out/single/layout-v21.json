@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/loicstephan/AndroidStudioProjects/GogoOnline/reallocated/gogo_online/build/url_launcher/intermediates/res/merged/debug/layout-v21/notification_template_custom_big.xml",
+        "source": "/Users/loicstephan/.gradle/caches/transforms-2/files-2.1/d5164b353e340d2451a43d4e469e5f69/core-1.1.0/res/layout-v21/notification_template_custom_big.xml"
+    },
+    {
+        "merged": "/Users/loicstephan/AndroidStudioProjects/GogoOnline/reallocated/gogo_online/build/url_launcher/intermediates/res/merged/debug/layout-v21/notification_template_icon_group.xml",
+        "source": "/Users/loicstephan/.gradle/caches/transforms-2/files-2.1/d5164b353e340d2451a43d4e469e5f69/core-1.1.0/res/layout-v21/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/Users/loicstephan/AndroidStudioProjects/GogoOnline/reallocated/gogo_online/build/url_launcher/intermediates/res/merged/debug/layout-v21/notification_action_tombstone.xml",
+        "source": "/Users/loicstephan/.gradle/caches/transforms-2/files-2.1/d5164b353e340d2451a43d4e469e5f69/core-1.1.0/res/layout-v21/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "/Users/loicstephan/AndroidStudioProjects/GogoOnline/reallocated/gogo_online/build/url_launcher/intermediates/res/merged/debug/layout-v21/notification_action.xml",
+        "source": "/Users/loicstephan/.gradle/caches/transforms-2/files-2.1/d5164b353e340d2451a43d4e469e5f69/core-1.1.0/res/layout-v21/notification_action.xml"
+    }
+]

@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "/Users/loicstephan/AndroidStudioProjects/GogoOnline/reallocated/gogo_online/build/android_intent/intermediates/res/merged/debug/layout/custom_dialog.xml",
+        "source": "/Users/loicstephan/.gradle/caches/transforms-2/files-2.1/d5164b353e340d2451a43d4e469e5f69/core-1.1.0/res/layout/custom_dialog.xml"
+    },
+    {
+        "merged": "/Users/loicstephan/AndroidStudioProjects/GogoOnline/reallocated/gogo_online/build/android_intent/intermediates/res/merged/debug/layout/notification_template_part_chronometer.xml",
+        "source": "/Users/loicstephan/.gradle/caches/transforms-2/files-2.1/d5164b353e340d2451a43d4e469e5f69/core-1.1.0/res/layout/notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "/Users/loicstephan/AndroidStudioProjects/GogoOnline/reallocated/gogo_online/build/android_intent/intermediates/res/merged/debug/layout/notification_action.xml",
+        "source": "/Users/loicstephan/.gradle/caches/transforms-2/files-2.1/d5164b353e340d2451a43d4e469e5f69/core-1.1.0/res/layout/notification_action.xml"
+    },
+    {
+        "merged": "/Users/loicstephan/AndroidStudioProjects/GogoOnline/reallocated/gogo_online/build/android_intent/intermediates/res/merged/debug/layout/notification_action_tombstone.xml",
+        "source": "/Users/loicstephan/.gradle/caches/transforms-2/files-2.1/d5164b353e340d2451a43d4e469e5f69/core-1.1.0/res/layout/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "/Users/loicstephan/AndroidStudioProjects/GogoOnline/reallocated/gogo_online/build/android_intent/intermediates/res/merged/debug/layout/notification_template_icon_group.xml",
+        "source": "/Users/loicstephan/.gradle/caches/transforms-2/files-2.1/d5164b353e340d2451a43d4e469e5f69/core-1.1.0/res/layout/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/Users/loicstephan/AndroidStudioProjects/GogoOnline/reallocated/gogo_online/build/android_intent/intermediates/res/merged/debug/layout/notification_template_part_time.xml",
+        "source": "/Users/loicstephan/.gradle/caches/transforms-2/files-2.1/d5164b353e340d2451a43d4e469e5f69/core-1.1.0/res/layout/notification_template_part_time.xml"
+    }
+]

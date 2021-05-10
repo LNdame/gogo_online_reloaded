@@ -1,0 +1,7 @@
+#Sun May 09 10:28:38 SAST 2021
+base.0=/Users/loicstephan/AndroidStudioProjects/GogoOnline/reallocated/gogo_online/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+path.1=classes2.dex
+renamed.1=classes2.dex
+path.0=classes.dex
+renamed.0=classes.dex
+base.1=/Users/loicstephan/AndroidStudioProjects/GogoOnline/reallocated/gogo_online/build/app/intermediates/dex/debug/mergeDexDebug/classes2.dex
