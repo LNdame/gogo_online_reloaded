@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gogo_online/src/elements/CardsVertCarouselLoaderWidget.dart';
+import 'package:gogo_online/src/elements/CardsVertCarouselWidget.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
@@ -115,8 +117,8 @@ class _HomeWidgetState extends StateMVC<HomeWidget> {
                   ),
                 ),
               ),
-              CardsCarouselWidget(healersList: _con.topHealers, heroTag: 'home_top_markets'),
-              Padding(
+              CardsVertCarouselWidget(healersList: _con.topHealers, heroTag: 'home_top_markets'),
+              /*Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: ListTile(
                   dense: true,
@@ -133,8 +135,8 @@ class _HomeWidgetState extends StateMVC<HomeWidget> {
               ),
               CategoriesCarouselWidget(
                 categories: _con.categories,
-              ),
-              Padding(
+              ),*/
+              /*Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: ListTile(
                   dense: true,
@@ -152,7 +154,7 @@ class _HomeWidgetState extends StateMVC<HomeWidget> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: ReviewsListWidget(reviewsList: _con.recentReviews),
-              ),
+              ),*/
             ],
           ),
         ),
