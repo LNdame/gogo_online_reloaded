@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gogo_online/src/controllers/cart_controller.dart';
 import 'package:gogo_online/src/models/cart.dart';
 import 'package:gogo_online/src/pages/consultations.dart';
+import 'package:gogo_online/src/pages/healer/healer_signup.dart';
+import 'package:gogo_online/src/pages/healer/healer_signup_success.dart';
 import 'package:gogo_online/src/pages/scheduler.dart';
 import 'src/pages/healer/healer_pages.dart';
 import 'src/pages/onboarding.dart';
@@ -22,10 +24,10 @@ import 'src/pages/menu_list.dart';
 import 'src/pages/consultation_success.dart';
 import 'src/pages/pages.dart';
 import 'src/pages/payment_methods.dart';
-import 'src/pages/paypal_payment.dart';
+//import 'src/pages/paypal_payment.dart';
 import 'src/pages/product.dart';
 import 'src/pages/profile.dart';
-import 'src/pages/razorpay_payment.dart';
+//import 'src/pages/razorpay_payment.dart';
 import 'src/pages/reviews.dart';
 import 'src/pages/settings.dart';
 import 'src/pages/signup.dart';
@@ -59,6 +61,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => PagesWidget(currentTab: args));
       case '/HealerPages':
         return MaterialPageRoute(builder: (_) => HealerPagesWidget(currentTab: args));
+      case '/HealerRegister':
+        return MaterialPageRoute(builder: (_) => HealerRegistrationWidget());
+      case '/HealerRegisterSuccess':
+        return MaterialPageRoute(builder: (_) => HealerSignUpSuccessWidget());
       case '/Details':
         return MaterialPageRoute(builder: (_) => DetailsWidget(routeArgument: args));
       case '/Menu':
@@ -87,10 +93,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => ConsultationSuccessWidget(routeArgument: RouteArgument(param: 'Cash on Delivery')));
       case '/PayOnPickup':
         return MaterialPageRoute(builder: (_) => ConsultationSuccessWidget(routeArgument: RouteArgument(param: 'Pay on Pickup')));
-      case '/PayPal':
+      /*case '/PayPal':
         return MaterialPageRoute(builder: (_) => PayPalPaymentWidget(routeArgument: args as RouteArgument));
       case '/RazorPay':
-        return MaterialPageRoute(builder: (_) => RazorPayPaymentWidget(routeArgument: args as RouteArgument));
+        return MaterialPageRoute(builder: (_) => RazorPayPaymentWidget(routeArgument: args as RouteArgument));*/
       case '/OrderSuccess':
         return MaterialPageRoute(builder: (_) => ConsultationSuccessWidget(routeArgument: args as RouteArgument));
       case '/Languages':

@@ -166,3 +166,24 @@ Future<Review> addHealerReview(Review review, Healer healer) async {
     return Review.fromJSON({});
   }
 }
+
+Future<Healer> registerHealer(Healer healer) async {
+  Uri uri = Helper.getUri('api/healers');
+  final client = new http.Client();
+  try {
+    final response = await client.post(
+      uri,
+      headers: {HttpHeaders.contentTypeHeader: 'application/json'},
+      body: json.encode(healer.toMap()),
+    );
+    if (response.statusCode == 200) {
+      return Healer.fromJSON(json.decode(response.body)['data']);
+    } else {
+      print(CustomTrace(StackTrace.current, message: response.body).toString());
+      return Healer.fromJSON({});
+    }
+  } catch (e) {
+    print(CustomTrace(StackTrace.current, message: uri.path).toString());
+    return Healer.fromJSON({});
+  }
+}

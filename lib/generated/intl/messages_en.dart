@@ -294,6 +294,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "recent_reviews" : MessageLookupByLibrary.simpleMessage("Recent Reviews"),
     "recents_search" : MessageLookupByLibrary.simpleMessage("Recent Search"),
     "register" : MessageLookupByLibrary.simpleMessage("Register"),
+    "register_as_healer" : MessageLookupByLibrary.simpleMessage("Register as a healer"),
     "reschedule" : MessageLookupByLibrary.simpleMessage("Reschedule"),
     "reset" : MessageLookupByLibrary.simpleMessage("Reset"),
     "reset_instructions" : MessageLookupByLibrary.simpleMessage("Enter the email address associated with your account, and we will send reset instructions."),

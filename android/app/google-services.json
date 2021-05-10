@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "612875234305",
+    "project_id": "gogo-online-24836",
+    "storage_bucket": "gogo-online-24836.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612875234305:android:064fc271db034486a3e400",
+        "android_client_info": {
+          "package_name": "co.za.inqb8.ansteph.gogo_online"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612875234305-ik5s7p1t68o242642j7agnjuerrpujbb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.za.inqb8.ansteph.gogo_online",
+            "certificate_hash": "c2ba7786fc96757b4f11487b7afabb34a89e4b1a"
+          }
+        },
+        {
+          "client_id": "612875234305-2bi7n48jnvmlr9ltud95iid44qfe28il.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuCDgD2GjcZU2-tFWT3bIP6AtGCuiPVh4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612875234305-2bi7n48jnvmlr9ltud95iid44qfe28il.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "612875234305-8fgj7cbl477riv2o3bcpo73d6r36gm8j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "co.za.inqb8.ansteph.gogo-online"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612875234305:android:1ab4e7e6946e784ba3e400",
+        "android_client_info": {
+          "package_name": "co.za.inqb8.gogo_online"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612875234305-79ij76m5uishr8igqmobvksk0k316g9t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.za.inqb8.gogo_online",
+            "certificate_hash": "1a3bdf50505c95baca4f06280da4b43c4c2398cb"
+          }
+        },
+        {
+          "client_id": "612875234305-2bi7n48jnvmlr9ltud95iid44qfe28il.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuCDgD2GjcZU2-tFWT3bIP6AtGCuiPVh4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612875234305-2bi7n48jnvmlr9ltud95iid44qfe28il.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "612875234305-8fgj7cbl477riv2o3bcpo73d6r36gm8j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "co.za.inqb8.ansteph.gogo-online"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
