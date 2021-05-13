@@ -53,7 +53,7 @@ class Setting {
       stripeEnabled = jsonMap['enable_stripe'] == null || jsonMap['enable_stripe'] == '0' ? false : true;
       razorPayEnabled = jsonMap['enable_razorpay'] == null || jsonMap['enable_razorpay'] == '0' ? false : true;
     } catch (e) {
-      print(CustomTrace(StackTrace.current, message: e));
+      print(CustomTrace(StackTrace.current, message: e.toString()));
     }
   }
 
