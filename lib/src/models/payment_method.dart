@@ -31,7 +31,8 @@ class PaymentMethodList {
       new PaymentMethod("cod", S.of(_context).cash_on_delivery, S.of(_context).click_to_pay_cash_on_delivery, "/CashOnDelivery", "assets/img/cash.png"),
     ];
     this._pickupList = [
-      new PaymentMethod("pop", S.of(_context).pay_on_pickup, S.of(_context).click_to_pay_on_pickup, "/PayOnPickup", "assets/img/pay_pickup.png"),
+      //new PaymentMethod("pop", S.of(_context).pay_on_pickup, S.of(_context).click_to_pay_on_pickup, "/PayOnPickup", "assets/img/credit-card.png"),
+      new PaymentMethod("pop", "Tap to Confirm and Pay Now", "By clicking this you agree with the details", "/PayOnPickup", "assets/img/credit-card.png"),
       new PaymentMethod("delivery", S.of(_context).delivery_address, S.of(_context).click_to_pay_on_pickup, "/PaymentMethod", "assets/img/pay_pickup.png"),
     ];
   }
