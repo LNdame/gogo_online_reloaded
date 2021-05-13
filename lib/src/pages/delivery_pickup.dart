@@ -44,8 +44,8 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: Text(
-          S.of(context).delivery_or_pickup,
+        title: Text("Consultation Summary",
+         // S.of(context).delivery_or_pickup,
           style: Theme.of(context).textTheme.headline6.merge(TextStyle(letterSpacing: 1.3)),
         ),
         actions: <Widget>[
@@ -60,27 +60,40 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 20, right: 10),
-              child: ListTile(
-                contentPadding: EdgeInsets.symmetric(vertical: 0),
-                leading: Icon(
-                  Icons.domain,
-                  color: Theme.of(context).hintColor,
-                ),
-                title: Text(
-                  S.of(context).pickup,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-                subtitle: Text(
-                  S.of(context).pickup_your_product_from_the_healer,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.caption,
-                ),
+              padding: const EdgeInsets.only(left: 20, top: 30,right: 10),
+              child: Container(
+                height: 200,
+               child: Column(
+                 mainAxisAlignment: MainAxisAlignment.start,
+                 children: [
+                   ListTile(
+                     contentPadding: EdgeInsets.symmetric(vertical: 0),
+                     leading: Icon(Icons.assistant_rounded,color: Theme.of(context).hintColor,),
+                     title: Text("Virtual Consultation",maxLines: 1,
+                       overflow: TextOverflow.ellipsis,
+                       style: Theme.of(context).textTheme.headline4,
+                     ),
+                     subtitle: Text(
+                         "Dr Hassan Corrim",
+                       maxLines: 1,
+                       overflow: TextOverflow.ellipsis,
+                       style: Theme.of(context).textTheme.subtitle1,
+                     ),
+                   ),
+                   SizedBox(height: 16,),
+                   ListTile(
+                     contentPadding: EdgeInsets.symmetric(vertical: 0),
+                     leading: Icon(Icons.calendar_today_outlined,color: Theme.of(context).hintColor,),
+                     title: Text("Date: 23-01-1987",maxLines: 1,
+                       overflow: TextOverflow.ellipsis,
+                       style: Theme.of(context).textTheme.subtitle1,
+                     ),
+                   ),
+                 ],
+               ),
               ),
             ),
+
             PickUpMethodItem(
                 paymentMethod: _con.getPickUpMethod(),
                 onPressed: (paymentMethod) {
@@ -88,7 +101,7 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
                 }),
             Column(
               children: <Widget>[
-                Padding(
+                /*Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 10, left: 20, right: 10),
                   child: ListTile(
                     contentPadding: EdgeInsets.symmetric(vertical: 0),
@@ -116,8 +129,8 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
                             style: Theme.of(context).textTheme.caption,
                           ),
                   ),
-                ),
-                _con.carts.isNotEmpty && Helper.canDelivery(_con.carts[0].product.healer, carts: _con.carts)
+                ),*/
+               /* _con.carts.isNotEmpty && Helper.canDelivery(_con.carts[0].product.healer, carts: _con.carts)
                     ? DeliveryAddressesItemWidget(
                         paymentMethod: _con.getDeliveryMethod(),
                         address: _con.deliveryAddress,
@@ -144,7 +157,7 @@ class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
                           );
                         },
                       )
-                    : NotDeliverableAddressesItemWidget()
+                    : NotDeliverableAddressesItemWidget()*/
               ],
             )
           ],

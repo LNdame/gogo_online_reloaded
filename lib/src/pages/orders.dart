@@ -4,7 +4,7 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../generated/l10n.dart';
 import '../controllers/consultation_controller.dart';
 import '../elements/EmptyConsultationsWidget.dart';
-import '../elements/OrderItemWidget.dart';
+import '../elements/ConsultationItemWidget.dart';
 import '../elements/PermissionDeniedWidget.dart';
 import '../elements/SearchBarWidget.dart';
 import '../elements/WaitingRoomButtonWidget.dart';
@@ -72,9 +72,9 @@ class _OrdersWidgetState extends StateMVC<OrdersWidget> {
                           itemCount: _con.consultations.length,
                           itemBuilder: (context, index) {
                             var _order = _con.consultations.elementAt(index);
-                            return OrderItemWidget(
+                            return ConsultationItemWidget(
                               expanded: index == 0 ? true : false,
-                              order: _order,
+                              consultation: _order,
                               onCanceled: (e) {
                                 _con.doCancelConsultation(_order);
                               },

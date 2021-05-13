@@ -6,7 +6,7 @@ import '../models/consultation.dart';
 import '../repository/consultation_repository.dart';
 
 class ProfileController extends ControllerMVC {
-  List<Consultation> recentOrders = [];
+  List<Consultation> recentConsultations = [];
   GlobalKey<ScaffoldState> scaffoldKey;
 
   ProfileController() {
@@ -18,7 +18,7 @@ class ProfileController extends ControllerMVC {
     final Stream<Consultation> stream = await getRecentConsultations();
     stream.listen((Consultation _order) {
       setState(() {
-        recentOrders.add(_order);
+        recentConsultations.add(_order);
       });
     }, onError: (a) {
       print(a);
@@ -35,7 +35,7 @@ class ProfileController extends ControllerMVC {
   }
 
   Future<void> refreshProfile() async {
-    recentOrders.clear();
+    recentConsultations.clear();
     listenForRecentOrders(message: S.of(state.context).consultations_refreshed_successfuly);
   }
 }
