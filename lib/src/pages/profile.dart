@@ -5,7 +5,7 @@ import '../../generated/l10n.dart';
 import '../controllers/profile_controller.dart';
 import '../elements/DrawerWidget.dart';
 import '../elements/EmptyConsultationsWidget.dart';
-import '../elements/OrderItemWidget.dart';
+import '../elements/ConsultationItemWidget.dart';
 import '../elements/PermissionDeniedWidget.dart';
 import '../elements/ProfileAvatarWidget.dart';
 import '../elements/WaitingRoomButtonWidget.dart';
@@ -76,24 +76,24 @@ class _ProfileWidgetState extends StateMVC<ProfileWidget> {
                   ListTile(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     leading: Icon(
-                      Icons.shopping_basket,
+                      Icons.calendar_today,
                       color: Theme.of(context).hintColor,
                     ),
-                    title: Text(
-                      S.of(context).recent_orders,
+                    title: Text("Recent Consultations",
+                     // S.of(context).recent_orders,
                       style: Theme.of(context).textTheme.headline4,
                     ),
                   ),
-                  _con.recentOrders.isEmpty
+                  _con.recentConsultations.isEmpty
                       ? EmptyConsultationsWidget()
                       : ListView.separated(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
                           primary: false,
-                          itemCount: _con.recentOrders.length,
+                          itemCount: _con.recentConsultations.length,
                           itemBuilder: (context, index) {
-                            var _order = _con.recentOrders.elementAt(index);
-                            return OrderItemWidget(expanded: index == 0 ? true : false, order: _order);
+                            var _order = _con.recentConsultations.elementAt(index);
+                            return ConsultationItemWidget(expanded: index == 0 ? true : false, consultation: _order);
                           },
                           separatorBuilder: (context, index) {
                             return SizedBox(height: 20);
