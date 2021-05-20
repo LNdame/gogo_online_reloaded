@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gogo_online/src/models/user.dart';
+import 'package:gogo_online/src/repository/services/db.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
@@ -21,9 +24,27 @@ class ProfileWidget extends StatefulWidget {
 
 class _ProfileWidgetState extends StateMVC<ProfileWidget> {
   ProfileController _con;
-
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   _ProfileWidgetState() : super(ProfileController()) {
     _con = controller;
+  }
+
+  Future<bool> addUserToFirebase(User currentUser, String password) async{
+    try{
+      final db = DB();
+      //AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword();
+       //   email: currentUser.email, password: password);
+      //FirebaseUser user = result.user;
+
+      db.addNewUser(currentUser.id, currentUser.image.thumb, currentUser.name, currentUser.email);
+      UserUpdateInfo info = UserUpdateInfo();
+      info.displayName = currentUser.name;
+      //user.updateProfile(info);
+
+    }catch(error) {
+      print(error);
+      return false;
+    }
   }
 
   @override
@@ -72,6 +93,30 @@ class _ProfileWidgetState extends StateMVC<ProfileWidget> {
                       currentUser.value?.bio ?? "",
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: TextButton(
+                        onPressed: (){
+                          addUserToFirebase(currentUser.value, "123456");
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.chat,
+                              color: Theme.of(context).primaryColor,
+                              size: 24,
+                            ),
+                            SizedBox(width: 16,),
+                            Text("Add to firebase", style: TextStyle(color: Theme.of(context).primaryColor,),)
+                          ],
+                        ) ,
+                        style: TextButton.styleFrom(
+                          backgroundColor: Theme.of(context).accentColor.withOpacity(0.9),
+                          shape: StadiumBorder(),
+                        )
+                    )
                   ),
                   ListTile(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),

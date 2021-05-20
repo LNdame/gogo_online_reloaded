@@ -15,6 +15,7 @@ class AppConstants {
   static const lightBlackSub = Color.fromRGBO(53, 54, 79, 0.62);
   static const dangerColor = Color(0xFFE85050);
   static const customBackground = Color(0xFF37474F);
+  static const deepYellow = Color(0xFFFFc107);
   static double normalFontSize = 20.0;
   static double normalFontSize2x = 21.0;
   static double smallFontSize2x = 17.0;
@@ -117,4 +118,22 @@ class AppConstants {
   static Color greyColor = Color.fromRGBO(2, 19, 51, 1);
   static Color greenColor = Color.fromRGBO(131, 208, 71, 1);
   static Color darkBackground = Color.fromRGBO(21, 33, 43, 1);
+
+   static const String ALL_MESSAGES_COLLECTION = 'MESSAGES';
+   static const String USERS_COLLECTION = 'USERS';
+   static const String CHATS_COLLECTION = 'CHATS';
+   static const String MEDIA_COLLECTION = 'MEDIA';
+
+  static const String CHATS_MEDIA_STORAGE_REF = 'ChatsMedia';
+
+}
+
+enum MediaType {
+  Photo,
+  Video,
+}
+
+enum MessageType {
+  Text,
+  Media,
 }
