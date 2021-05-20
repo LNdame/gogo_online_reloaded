@@ -34,6 +34,8 @@ dependencies:
   google_map_location_picker:
   mvc_pattern:
   firebase_core:
+  firebase_auth:
+  firebase_storage:
   firebase_analytics:
   # firebase_messaging:
   global_configuration:
@@ -48,6 +50,9 @@ dependencies:
   cached_network_image:
   fluttertoast:
   flutter_staggered_grid_view:
+  cloud_firestore:
+  file_picker:
+  video_player:
   intl:
   analyzer:
   flutter_screenutil:
@@ -58,13 +63,17 @@ dependencies:
   path:
   table_calendar:
   intl_utils:
+  image_picker:
+  json_annotation:
+  keyboard_visibility:
 
 
 dev_dependencies:
   flutter_native_splash:
   flutter_test:
     sdk: flutter
-
+  build_runner: ^1.10.2
+  json_serializable:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 flutter_icons:

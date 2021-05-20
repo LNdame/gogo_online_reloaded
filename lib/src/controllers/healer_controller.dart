@@ -147,4 +147,8 @@ class HealerController extends ControllerMVC {
       }).whenComplete(() => Helper.hideLoader(loader));
     }
   }
+
+
+
+  /// TODO retrieve chat data with current user if exist
 }

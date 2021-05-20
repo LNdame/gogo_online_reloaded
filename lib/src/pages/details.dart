@@ -1,6 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:gogo_online/src/models/chat_data.dart';
+import 'package:gogo_online/src/models/chat_user.dart';
+import 'package:gogo_online/src/pages/messaging/messaging_screen.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -41,6 +45,27 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
     _con.listenForHealerReviews(id: widget.routeArgument.id);
     super.initState();
   }
+
+
+  void goToChat(BuildContext context,  DocumentSnapshot item){
+    ChatUser peer= new ChatUser(
+      id:"jksgfddslgdsfjlgks",
+      username: _con.healer.name,
+      email: "",
+      imageUrl:_con.healer.image.thumb,
+      about: "",
+    );
+    final initData = new ChatData(
+        groupId: 'kjakjnlankvlsvkslnavan',
+        userId: "kdjfnaskfjnafdfajfnal",
+        peerId: "jksgfddslgdsfjlgks",
+        peer: peer,
+        messages: []
+    );
+
+    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> MessagingScreenWidget(chatData: initData)));
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -223,6 +248,41 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                                         shape: StadiumBorder(),
                                       ),
                                     ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                                margin: const EdgeInsets.symmetric(vertical: 5),
+                                color: Theme.of(context).primaryColor,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: TextButton(
+                                        onPressed: (){
+                                          goToChat(context, null);
+                                        },
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.chat,
+                                              color: Theme.of(context).primaryColor,
+                                              size: 24,
+                                            ),
+                                            SizedBox(width: 16,),
+                                            Text("Chat with healer", style: TextStyle(color: Theme.of(context).primaryColor,),)
+                                          ],
+                                        ) ,
+                                        style: TextButton.styleFrom(
+                                          backgroundColor: Theme.of(context).accentColor.withOpacity(0.9),
+                                          shape: StadiumBorder(),
+                                        )
+                                      )
+                                    ),
+
+
                                   ],
                                 ),
                               ),
