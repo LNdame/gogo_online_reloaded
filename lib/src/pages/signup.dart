@@ -80,7 +80,7 @@ class _SignUpWidgetState extends StateMVC<SignUpWidget> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       TextFormField(
-                        keyboardType: TextInputType.name,
+                        keyboardType: TextInputType.text,
                         onSaved: (input) => _con.user.name = input,
                         validator: (input) => input.length < 3 ? S.of(context).should_be_more_than_3_letters : null,
                         decoration: InputDecoration(
@@ -97,7 +97,7 @@ class _SignUpWidgetState extends StateMVC<SignUpWidget> {
                       ),
                       SizedBox(height: 30),
                       TextFormField(
-                        keyboardType: TextInputType.phone,
+                        keyboardType: TextInputType.text,
                         onSaved: (input) => _con.user.phone = input,
                         validator: ValidatorUtil.phoneValidator,
                         decoration: InputDecoration(

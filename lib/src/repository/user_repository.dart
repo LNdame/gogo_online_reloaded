@@ -41,6 +41,7 @@ Future<User> register(User user) async {
     headers: {HttpHeaders.contentTypeHeader: 'application/json'},
     body: json.encode(user.toMap()),
   );
+  print(response.body);
   if (response.statusCode == 200) {
     setCurrentUser(response.body);
     currentUser.value = User.fromJSON(json.decode(response.body)['data']);

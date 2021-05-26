@@ -42,6 +42,7 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
     _con.listenForHealer(id: widget.routeArgument.id);
     _con.listenForGalleries(widget.routeArgument.id);
     _con.listenForFeaturedProducts(widget.routeArgument.id);
+    _con.listenForProducts(widget.routeArgument.id);
     _con.listenForHealerReviews(id: widget.routeArgument.id);
     super.initState();
   }
@@ -73,16 +74,17 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
         key: _con.scaffoldKey,
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            Navigator.of(context).pushNamed('/Menu', arguments: new RouteArgument(id: widget.routeArgument.id));
+            goToChat(context, null);
+           // Navigator.of(context).pushNamed('/Menu', arguments: new RouteArgument(id: widget.routeArgument.id));
           },
           isExtended: true,
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           icon: Icon(
-            Icons.calendar_today_rounded,
+            Icons.chat,
             color: Theme.of(context).primaryColor,
           ),
-          label: Text(
-            S.of(context).appointment,
+          label: Text("Chat with healer",
+            //S.of(context).appointment,
             style: TextStyle(color: Theme.of(context).primaryColor),
           ),
         ),
@@ -179,15 +181,7 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                                   SizedBox(width: 10),
 
                                   Expanded(child: SizedBox(height: 0)),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 3),
-                                    decoration: BoxDecoration(
-                                        color: Helper.canDelivery(_con.healer) ? Colors.green : Colors.grey, borderRadius: BorderRadius.circular(24)),
-                                    child: Text(
-                                      Helper.getDistance(_con.healer.distance, Helper.of(context).trans(setting.value.distanceUnit)),
-                                      style: Theme.of(context).textTheme.caption.merge(TextStyle(color: Theme.of(context).primaryColor)),
-                                    ),
-                                  ),
+
                                   SizedBox(width: 20),
                                 ],
                               ),
@@ -195,7 +189,7 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                                 child: Helper.applyHtml(context, _con.healer.description),
                               ),
-                              ImageThumbCarouselWidget(galleriesList: _con.galleries),
+                              //ImageThumbCarouselWidget(galleriesList: _con.galleries),
                               Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 20),
                                 child: ListTile(
@@ -251,40 +245,23 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                                   ],
                                 ),
                               ),
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                                margin: const EdgeInsets.symmetric(vertical: 5),
-                                color: Theme.of(context).primaryColor,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: TextButton(
-                                        onPressed: (){
-                                          goToChat(context, null);
-                                        },
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons.chat,
-                                              color: Theme.of(context).primaryColor,
-                                              size: 24,
-                                            ),
-                                            SizedBox(width: 16,),
-                                            Text("Chat with healer", style: TextStyle(color: Theme.of(context).primaryColor,),)
-                                          ],
-                                        ) ,
-                                        style: TextButton.styleFrom(
-                                          backgroundColor: Theme.of(context).accentColor.withOpacity(0.9),
-                                          shape: StadiumBorder(),
-                                        )
-                                      )
-                                    ),
-
-
-                                  ],
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                                child: ListTile(
+                                  dense: true,
+                                  contentPadding: EdgeInsets.symmetric(vertical: 0),
+                                  leading: Icon(
+                                    Icons.chat_bubble_outline,
+                                    color: Theme.of(context).hintColor,
+                                  ),
+                                  title: Text("Language",
+                                    style: Theme.of(context).textTheme.headline4,
+                                  ),
                                 ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                                child: Helper.applyHtml(context, _con.healer.language),
                               ),
                               _con.featuredProducts.isEmpty
                                   ? SizedBox(height: 0)
@@ -303,48 +280,26 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                                         ),
                                       ),
                                     ),
-                              _con.featuredProducts.isEmpty
+                              _con.products.isEmpty
                                   ? SizedBox(height: 0)
                                   : ListView.separated(
                                       padding: EdgeInsets.symmetric(vertical: 10),
                                       scrollDirection: Axis.vertical,
                                       shrinkWrap: true,
                                       primary: false,
-                                      itemCount: _con.featuredProducts.length,
+                                      itemCount: _con.products.length,
                                       separatorBuilder: (context, index) {
                                         return SizedBox(height: 10);
                                       },
                                       itemBuilder: (context, index) {
                                         return ProductItemWidget(
                                           heroTag: 'details_featured_product',
-                                          product: _con.featuredProducts.elementAt(index),
+                                          product: _con.products.elementAt(index),
                                         );
                                       },
                                     ),
-                              SizedBox(height: 100),
-                              _con.reviews.isEmpty
-                                  ? SizedBox(height: 5)
-                                  : Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                                      child: ListTile(
-                                        dense: true,
-                                        contentPadding: EdgeInsets.symmetric(vertical: 0),
-                                        leading: Icon(
-                                          Icons.recent_actors,
-                                          color: Theme.of(context).hintColor,
-                                        ),
-                                        title: Text(
-                                          S.of(context).what_they_say,
-                                          style: Theme.of(context).textTheme.headline4,
-                                        ),
-                                      ),
-                                    ),
-                              _con.reviews.isEmpty
-                                  ? SizedBox(height: 5)
-                                  : Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                                      child: ReviewsListWidget(reviewsList: _con.reviews),
-                                    ),
+                              SizedBox(height: 200),
+
                             ],
                           ),
                         ),
