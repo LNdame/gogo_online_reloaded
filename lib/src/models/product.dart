@@ -83,6 +83,11 @@ class Product {
     map["description"] = description;
     map["capacity"] = capacity;
     map["package_items_count"] = packageItemsCount;
+    map["unit"] = packageItemsCount;
+    map["featured"] = featured;
+    map["deliverable"] = deliverable;
+    map["healer_id"] = healer.id;
+    map["category_id"] = "1";
     return map;
   }
 

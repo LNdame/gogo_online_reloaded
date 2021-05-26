@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gogo_online/src/utils/ValidatorUtil.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
@@ -97,8 +98,8 @@ class _SignUpWidgetState extends StateMVC<SignUpWidget> {
                       SizedBox(height: 30),
                       TextFormField(
                         keyboardType: TextInputType.text,
-                        onSaved: (input) => _con.user.name = input, //TODO: change this to cellphone
-                        validator: (input) => input.length == 10 ? S.of(context).should_be_10_digits : null,
+                        onSaved: (input) => _con.user.phone = input,
+                        validator: ValidatorUtil.phoneValidator,
                         decoration: InputDecoration(
                           labelText: S.of(context).phone,
                           labelStyle: TextStyle(color: Theme.of(context).accentColor),
