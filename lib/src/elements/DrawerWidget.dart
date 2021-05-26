@@ -65,7 +65,7 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
           ),
           ListTile(
             onTap: () {
-              currentUser.value.role.name == AppConstants.ROLE_CLIENT ?
+              currentUser.value.role?.name == AppConstants.ROLE_CLIENT ?
               Navigator.of(context).pushNamed('/Pages', arguments: 2):  Navigator.of(context).pushNamed('/HealerPages', arguments: 2);
             },
             leading: Icon(
@@ -79,7 +79,7 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
           ),
           ListTile(
             onTap: () {
-              currentUser.value.role.name == AppConstants.ROLE_CLIENT ?
+              currentUser.value.role?.name == AppConstants.ROLE_CLIENT ?
               Navigator.of(context).pushNamed('/Pages', arguments: 0):  Navigator.of(context).pushNamed('/HealerPages', arguments: 0);
             },
             leading: Icon(
@@ -93,7 +93,7 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
           ),
           ListTile(
             onTap: () {
-              currentUser.value.role.name == AppConstants.ROLE_CLIENT ?
+              currentUser.value.role?.name == AppConstants.ROLE_CLIENT ?
               Navigator.of(context).pushNamed('/Pages', arguments: 3):  Navigator.of(context).pushNamed('/HealerPages', arguments: 3);
             },
             leading: Icon(
@@ -107,7 +107,7 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
           ),
           ListTile(
             onTap: () {
-              currentUser.value.role.name == AppConstants.ROLE_CLIENT ?
+              currentUser.value.role?.name == AppConstants.ROLE_CLIENT ?
               Navigator.of(context).pushNamed('/Pages', arguments: 4):  Navigator.of(context).pushNamed('/HealerPages', arguments: 4);
             },
             leading: Icon(
@@ -181,8 +181,8 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
-          currentUser.value.apiToken != null || currentUser.value.role.name == AppConstants.ROLE_CLIENT ?
-          ListTile(
+          currentUser.value.apiToken != null || currentUser.value.role?.name == AppConstants.ROLE_CLIENT
+              ? ListTile(
             onTap: () {
               Navigator.of(context).pushReplacementNamed('/HealerRegister');
             },
