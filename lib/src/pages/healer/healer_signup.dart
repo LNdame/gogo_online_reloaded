@@ -60,6 +60,7 @@ class _HealerRegistrationWidgetState extends StateMVC<HealerRegistrationWidget> 
   void initRequestHealer(){
     requestHealer = new Healer();
     requestHealer.name = currentUser.value.name;
+    requestHealer.firebaseId = currentUser.value.firebaseUid;
     requestHealer.latitude ="-26.2708";
     requestHealer.longitude ="28.1123";
     requestHealer.closed = false;
@@ -289,7 +290,7 @@ class _HealerRegistrationWidgetState extends StateMVC<HealerRegistrationWidget> 
                         ),
                         SizedBox(height: 30,),
                         TextFormField(
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.datetime,
                           validator: (input)=>ValidatorUtil.genericEmptyValidator(input, "Please enter time range"),
                           onSaved: (input) =>requestHealer.information += "Week day working hours\n $input \n", //_con.user.name = input,
                           decoration: InputDecoration(
@@ -306,7 +307,7 @@ class _HealerRegistrationWidgetState extends StateMVC<HealerRegistrationWidget> 
                         ),
                         SizedBox(height: 30,),
                         TextFormField(
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.datetime,
                           validator: (input)=>ValidatorUtil.genericEmptyValidator(input, "Please enter time range"),
                           onSaved: (input) =>requestHealer.information += "Saturday working hours\n $input \n", //_con.user.name = input,
                           decoration: InputDecoration(
@@ -323,7 +324,7 @@ class _HealerRegistrationWidgetState extends StateMVC<HealerRegistrationWidget> 
                         ),
                         SizedBox(height: 30,),
                         TextFormField(
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.datetime,
                           validator: (input)=>ValidatorUtil.genericEmptyValidator(input, "Please enter time range"),
                           onSaved: (input) =>requestHealer.information += "Sunday working hours\n $input \n", //_con.user.name = input,
                           decoration: InputDecoration(
@@ -340,7 +341,7 @@ class _HealerRegistrationWidgetState extends StateMVC<HealerRegistrationWidget> 
                         ),
                         SizedBox(height: 30,),
                         TextFormField(
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.number,
                           validator: (input)=>ValidatorUtil.genericEmptyValidator(input, "Please enter an amount"),
                           onSaved: (input) =>requestHealer.hourlyPrice = double.parse(input), //_con.user.name = input,
                           decoration: InputDecoration(
@@ -357,7 +358,7 @@ class _HealerRegistrationWidgetState extends StateMVC<HealerRegistrationWidget> 
                         ),
                         SizedBox(height: 30,),
                         TextFormField(
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.phone,
                           validator: ValidatorUtil.phoneValidator,
                           onSaved: (input) =>requestHealer.phone = requestHealer.mobile =input, //_con.user.name = input,
                           decoration: InputDecoration(
