@@ -15,6 +15,7 @@ class HomeController extends ControllerMVC {
   List<Category> categories = <Category>[];
   List<Healer> topHealers = <Healer>[];
   List<Healer> popularHealers = <Healer>[];
+  List<Healer> allHealers = <Healer>[];
   List<Review> recentReviews = <Review>[];
   List<Product> trendingProducts = <Product>[];
 
@@ -23,6 +24,7 @@ class HomeController extends ControllerMVC {
     listenForTrendingProducts();
     listenForCategories();
     listenForPopularHealers();
+    listenForAllHealers();
     listenForRecentReviews();
   }
 
@@ -46,6 +48,13 @@ class HomeController extends ControllerMVC {
     final Stream<Healer> stream = await getPopularHealers(billingAddress.value);
     stream.listen((Healer _market) {
       setState(() => popularHealers.add(_market));
+    }, onError: (a) {}, onDone: () {});
+  }
+
+  Future<void> listenForAllHealers() async {
+    final Stream<Healer> stream = await getAllHealers(billingAddress.value);
+    stream.listen((Healer _market) {
+      setState(() => allHealers.add(_market));
     }, onError: (a) {}, onDone: () {});
   }
 
