@@ -29,23 +29,6 @@ class _ProfileWidgetState extends StateMVC<ProfileWidget> {
     _con = controller;
   }
 
-  Future<bool> addUserToFirebase(User currentUser, String password) async{
-    try{
-      final db = DB();
-      //AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword();
-       //   email: currentUser.email, password: password);
-      //FirebaseUser user = result.user;
-
-      db.addNewUser(currentUser.id, currentUser.image.thumb, currentUser.name, currentUser.email);
-      UserUpdateInfo info = UserUpdateInfo();
-      info.displayName = currentUser.name;
-      //user.updateProfile(info);
-
-    }catch(error) {
-      print(error);
-      return false;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,30 +76,6 @@ class _ProfileWidgetState extends StateMVC<ProfileWidget> {
                       currentUser.value?.bio ?? "",
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: TextButton(
-                        onPressed: (){
-                          addUserToFirebase(currentUser.value, "123456");
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.chat,
-                              color: Theme.of(context).primaryColor,
-                              size: 24,
-                            ),
-                            SizedBox(width: 16,),
-                            Text("Add to firebase", style: TextStyle(color: Theme.of(context).primaryColor,),)
-                          ],
-                        ) ,
-                        style: TextButton.styleFrom(
-                          backgroundColor: Theme.of(context).accentColor.withOpacity(0.9),
-                          shape: StadiumBorder(),
-                        )
-                    )
                   ),
                   ListTile(
                     contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),

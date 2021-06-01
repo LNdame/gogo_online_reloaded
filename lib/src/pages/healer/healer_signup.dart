@@ -45,16 +45,13 @@ class _HealerRegistrationWidgetState extends StateMVC<HealerRegistrationWidget> 
     _provinceList.add(DropdownMenuItem(child: Text(AppConstants.WESTERN_CAPE), value: AppConstants.WESTERN_CAPE_LAT_LON,));
   }
 
-
   Healer requestHealer;
   _HealerRegistrationWidgetState(): super(HealerController()){
     _con = controller;
   }
 
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     initRequestHealer();
     loadProvinces();
@@ -63,12 +60,14 @@ class _HealerRegistrationWidgetState extends StateMVC<HealerRegistrationWidget> 
   void initRequestHealer(){
     requestHealer = new Healer();
     requestHealer.name = currentUser.value.name;
+    requestHealer.firebaseId = currentUser.value.firebaseUid;
     requestHealer.latitude ="-26.2708";
     requestHealer.longitude ="28.1123";
     requestHealer.closed = false;
     requestHealer.adminCommission = 10.0;
     requestHealer.defaultTax = 15;
     requestHealer.information = "Work hours \n";
+    requestHealer.language ="";
   }
 
   void setLatLongFromProvince(String value){
@@ -89,9 +88,9 @@ class _HealerRegistrationWidgetState extends StateMVC<HealerRegistrationWidget> 
   }
 
   void addLanguagesList(){
-    String langs = "\n Consultation language:\n";
+    String langs = "";
     langs += _languageList.join(", ");
-    requestHealer.information += langs;
+    requestHealer.language = langs;
   }
 
   @override
@@ -291,7 +290,7 @@ class _HealerRegistrationWidgetState extends StateMVC<HealerRegistrationWidget> 
                         ),
                         SizedBox(height: 30,),
                         TextFormField(
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.datetime,
                           validator: (input)=>ValidatorUtil.genericEmptyValidator(input, "Please enter time range"),
                           onSaved: (input) =>requestHealer.information += "Week day working hours\n $input \n", //_con.user.name = input,
                           decoration: InputDecoration(
@@ -308,7 +307,7 @@ class _HealerRegistrationWidgetState extends StateMVC<HealerRegistrationWidget> 
                         ),
                         SizedBox(height: 30,),
                         TextFormField(
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.datetime,
                           validator: (input)=>ValidatorUtil.genericEmptyValidator(input, "Please enter time range"),
                           onSaved: (input) =>requestHealer.information += "Saturday working hours\n $input \n", //_con.user.name = input,
                           decoration: InputDecoration(
@@ -325,7 +324,7 @@ class _HealerRegistrationWidgetState extends StateMVC<HealerRegistrationWidget> 
                         ),
                         SizedBox(height: 30,),
                         TextFormField(
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.datetime,
                           validator: (input)=>ValidatorUtil.genericEmptyValidator(input, "Please enter time range"),
                           onSaved: (input) =>requestHealer.information += "Sunday working hours\n $input \n", //_con.user.name = input,
                           decoration: InputDecoration(
@@ -342,14 +341,14 @@ class _HealerRegistrationWidgetState extends StateMVC<HealerRegistrationWidget> 
                         ),
                         SizedBox(height: 30,),
                         TextFormField(
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.number,
                           validator: (input)=>ValidatorUtil.genericEmptyValidator(input, "Please enter an amount"),
-                          onSaved: (input) =>{}, //_con.user.name = input,
+                          onSaved: (input) =>requestHealer.hourlyPrice = double.parse(input), //_con.user.name = input,
                           decoration: InputDecoration(
                             labelText: "Consultation price (per hour)",//S.of(context).full_address,
                             labelStyle: TextStyle(color: Theme.of(context).accentColor),
                             contentPadding: EdgeInsets.all(12),
-                            hintText:"R500",// S.of(context).siya_nkosi,
+                            hintText:"500",// S.of(context).siya_nkosi,
                             hintStyle: TextStyle(color: Theme.of(context).focusColor.withOpacity(0.7)),
                             prefixIcon: Icon(Icons.money, color: Theme.of(context).accentColor),
                             border: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2))),
@@ -359,7 +358,7 @@ class _HealerRegistrationWidgetState extends StateMVC<HealerRegistrationWidget> 
                         ),
                         SizedBox(height: 30,),
                         TextFormField(
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.phone,
                           validator: ValidatorUtil.phoneValidator,
                           onSaved: (input) =>requestHealer.phone = requestHealer.mobile =input, //_con.user.name = input,
                           decoration: InputDecoration(
@@ -399,8 +398,6 @@ class _HealerRegistrationWidgetState extends StateMVC<HealerRegistrationWidget> 
             ),
 
       )
-
-
     );
   }
 }

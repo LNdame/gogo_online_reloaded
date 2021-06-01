@@ -1,5 +1,7 @@
 //import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gogo_online/src/repository/services/db.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
@@ -14,12 +16,14 @@ class UserController extends ControllerMVC {
   GlobalKey<FormState> loginFormKey;
   GlobalKey<ScaffoldState> scaffoldKey;
   //FirebaseMessaging _firebaseMessaging;
+  FirebaseAuth _firebaseAuth ;
   OverlayEntry loader;
 
   UserController() {
 
     loginFormKey = new GlobalKey<FormState>();
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
+    _firebaseAuth = FirebaseAuth.instance;
    // _firebaseMessaging = FirebaseMessaging();
    /* _firebaseMessaging.getToken().then((String _deviceToken) {
       user.deviceToken = _deviceToken;
@@ -41,7 +45,7 @@ class UserController extends ControllerMVC {
           }else{
             Navigator.of(scaffoldKey.currentContext).pushReplacementNamed('/Pages', arguments: 2);
           }
-
+          firebaseSilentLogin(user.email, user.password);
         } else {
           ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
             content: Text(S.of(state.context).wrong_email_or_password),
@@ -66,6 +70,7 @@ class UserController extends ControllerMVC {
       Overlay.of(state.context).insert(loader);
       repository.register(user).then((value) {
         if (value != null && value.apiToken != null) {
+          registerOnFirebase(value, user.password);
           Navigator.of(scaffoldKey.currentContext).pushReplacementNamed('/Pages', arguments: 2);
         } else {
           ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
@@ -112,4 +117,29 @@ class UserController extends ControllerMVC {
       });
     }
   }
+
+  void registerOnFirebase(User user, String password) {
+    _firebaseAuth.createUserWithEmailAndPassword(email: user.email, password:password).then((value) {
+      try {
+        final db = DB();
+        db.addNewUser(value.user.uid, user.image.thumb, user.name, user.email);
+        UserUpdateInfo info = UserUpdateInfo();
+        info.displayName = user.name;
+        value.user.updateProfile(info);
+        repository.currentUser.value.firebaseUid = value.user.uid;
+        repository.setCurrentUserFireBaseUid(value.user.uid);
+      } catch (error) {
+        print(error);
+      }
+    });
+  }
+
+
+  void firebaseSilentLogin(email, password){
+    _firebaseAuth.signInWithEmailAndPassword(email: email, password: password).then((value){
+      repository.currentUser.value.firebaseUid = value.user.uid;
+      repository.setCurrentUserFireBaseUid(value.user.uid);
+    });
+  }
+
 }

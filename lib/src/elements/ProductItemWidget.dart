@@ -66,7 +66,15 @@ class ProductItemWidget extends StatelessWidget {
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
                         Row(
-                          children: Helper.getStarsList(product.getRate()),
+                          //children: Helper.getStarsList(product.getRate()),
+                          children: [
+                            Text(
+                              product.unit,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: Theme.of(context).textTheme.bodyText1,
+                            )
+                          ]
                         ),
                         Text(
                           product.options.map((e) => e.name).toList().join(', '),

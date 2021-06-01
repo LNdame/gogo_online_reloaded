@@ -34,7 +34,7 @@ dependencies:
   google_map_location_picker:
   mvc_pattern:
   firebase_core:
-  firebase_auth:
+  firebase_auth: ^0.15.1+1
   firebase_storage:
   firebase_analytics:
   # firebase_messaging:

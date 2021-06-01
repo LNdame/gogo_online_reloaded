@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gogo_online/src/pages/messaging/active_chat_screen.dart';
 import 'consultations.dart';
 
 import '../elements/DrawerWidget.dart';
@@ -58,7 +59,7 @@ class _PagesWidgetState extends State<PagesWidget> {
           widget.currentPage = NotificationsWidget(parentScaffoldKey: widget.scaffoldKey);
           break;
         case 1:
-          widget.currentPage = MapWidget(parentScaffoldKey: widget.scaffoldKey, routeArgument: widget.routeArgument);
+          widget.currentPage = ActiveChatWidget(parentScaffoldKey: widget.scaffoldKey);
           break;
         case 2:
           widget.currentPage = HomeWidget(parentScaffoldKey: widget.scaffoldKey);
