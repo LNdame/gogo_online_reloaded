@@ -19,13 +19,13 @@ Future<Stream<Healer>> getNearHealers(Address myLocation, Address areaLocation) 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   Filter filter = Filter.fromJSON(json.decode(prefs.getString('filter') ?? '{}'));
 
-  _queryParams['limit'] = '6';
-  if (!myLocation.isUnknown() && !areaLocation.isUnknown()) {
+  _queryParams['limit'] = '12';
+  /*if (!myLocation.isUnknown() && !areaLocation.isUnknown()) {
     _queryParams['myLon'] = myLocation.longitude.toString();
     _queryParams['myLat'] = myLocation.latitude.toString();
     _queryParams['areaLon'] = areaLocation.longitude.toString();
     _queryParams['areaLat'] = areaLocation.latitude.toString();
-  }
+  }*/
   _queryParams.addAll(filter.toQuery());
   uri = uri.replace(queryParameters: _queryParams);
   try {
@@ -47,7 +47,7 @@ Future<Stream<Healer>> getPopularHealers(Address myLocation) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   Filter filter = Filter.fromJSON(json.decode(prefs.getString('filter') ?? '{}'));
 
-  _queryParams['limit'] = '6';
+  _queryParams['limit'] = '10';
   _queryParams['popular'] = 'all';
   if (!myLocation.isUnknown()) {
     _queryParams['myLon'] = myLocation.longitude.toString();
@@ -103,6 +103,28 @@ Future<Stream<Healer>> getHealer(String id, Address address) async {
     _queryParams['areaLon'] = address.longitude.toString();
     _queryParams['areaLat'] = address.latitude.toString();
   }
+  uri = uri.replace(queryParameters: _queryParams);
+  try {
+    final client = new http.Client();
+    final streamedRest = await client.send(http.Request('get', uri));
+
+    return streamedRest.stream.transform(utf8.decoder).transform(json.decoder).map((data) => Helper.getData(data)).map((data) => Healer.fromJSON(data));
+  } catch (e) {
+    print(CustomTrace(StackTrace.current, message: uri.toString()).toString());
+    return new Stream.value(new Healer.fromJSON({}));
+  }
+}
+
+
+Future<Stream<Healer>> getAllHealers( Address address) async {
+  Uri uri = Helper.getUri('api/healers');
+  Map<String, dynamic> _queryParams = {};
+  /*if (!address.isUnknown()) {
+    _queryParams['myLon'] = address.longitude.toString();
+    _queryParams['myLat'] = address.latitude.toString();
+    _queryParams['areaLon'] = address.longitude.toString();
+    _queryParams['areaLat'] = address.latitude.toString();
+  }*/
   uri = uri.replace(queryParameters: _queryParams);
   try {
     final client = new http.Client();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gogo_online/src/elements/DrawerWidget.dart';
 import 'package:gogo_online/src/elements/FilterWidget.dart';
 import 'package:gogo_online/src/helpers/helper.dart';
+import 'package:gogo_online/src/pages/messaging/active_chat_screen.dart';
 import '../../models/route_argument.dart';
 import '../home.dart';
 import '../favorites.dart';
@@ -54,13 +55,13 @@ class _HealerPagesWidgetState extends State<HealerPagesWidget> {
           widget.currentPage = NotificationsWidget(parentScaffoldKey: widget.scaffoldKey);
           break;
         case 1:
-          widget.currentPage = MapWidget(parentScaffoldKey: widget.scaffoldKey, routeArgument: widget.routeArgument);
+          widget.currentPage = OrdersWidget(parentScaffoldKey: widget.scaffoldKey);
           break;
         case 2:
           widget.currentPage = HomeWidget(parentScaffoldKey: widget.scaffoldKey);
           break;
         case 3:
-          widget.currentPage = OrdersWidget(parentScaffoldKey: widget.scaffoldKey);
+          widget.currentPage = ActiveChatWidget(parentScaffoldKey: widget.scaffoldKey);
           break;
         case 4:
           widget.currentPage = FavoritesWidget(parentScaffoldKey: widget.scaffoldKey);
