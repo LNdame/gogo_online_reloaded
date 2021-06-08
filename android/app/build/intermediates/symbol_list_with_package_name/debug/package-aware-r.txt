@@ -205,6 +205,7 @@ layout notification_template_part_time
 layout toast_custom
 mipmap ic_launcher
 mipmap ic_notification
+string app_name
 string common_google_play_services_enable_button
 string common_google_play_services_enable_text
 string common_google_play_services_enable_title

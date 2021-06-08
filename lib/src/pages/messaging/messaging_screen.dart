@@ -4,19 +4,23 @@ import 'package:async/async.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gogo_online/src/controllers/messaging_controller.dart';
 import 'package:gogo_online/src/helpers/app_constants.dart';
 import 'package:gogo_online/src/models/chat_data.dart';
+import 'package:gogo_online/src/models/chat_user.dart';
 import 'package:gogo_online/src/models/message.dart';
 import 'package:gogo_online/src/models/reply_message.dart';
 import 'package:gogo_online/src/pages/messaging/widget/chat_app_bar.dart';
 import 'package:gogo_online/src/pages/messaging/widget/reply_message_preview.dart';
 import 'package:gogo_online/src/pages/messaging/widget/selected_media_preview.dart';
 import 'package:gogo_online/src/repository/services/db.dart';
+import 'package:gogo_online/src/repository/user_repository.dart';
 import 'package:gogo_online/src/utils/MediaUtil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:gogo_online/src/pages/messaging/widget/chat_bubble.dart';
 import 'package:gogo_online/src/pages/messaging/widget/media_uploading_bubble.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
 
 enum LoaderStatus {
   STABLE,
@@ -33,9 +37,13 @@ class MessagingScreenWidget extends StatefulWidget {
   _MessagingScreenWidgetState createState() => _MessagingScreenWidgetState();
 }
 
-class _MessagingScreenWidgetState extends State<MessagingScreenWidget> {
+class _MessagingScreenWidgetState extends StateMVC<MessagingScreenWidget> {
+  MessagingController _con;
   DB db;
 
+  _MessagingScreenWidgetState(): super(MessagingController()){
+    _con = controller;
+  }
   // keep track of last fetched message to get messages only after this message
   DocumentSnapshot lastSnapshot;
 
@@ -77,6 +85,7 @@ class _MessagingScreenWidgetState extends State<MessagingScreenWidget> {
     super.initState();
     print('initcalled =============');
     db = DB();
+    _con.getUserDetailsAndContacts(currentUser.value.firebaseUid);
     _textEditingController = TextEditingController();
     _scrollController = ScrollController();
     _textFieldFocusNode = FocusNode();
@@ -148,27 +157,28 @@ class _MessagingScreenWidgetState extends State<MessagingScreenWidget> {
       );
     }
 
-    /*final userContacts = Provider.of<Chat>(context, listen: false).getContacts;
-    // add user to contacts if not already in contacts
+    final userContacts = _con.getContacts;
     if (!userContacts.contains(peerId)) {
-      Provider.of<Chat>(context, listen: false).addToContacts(peerId);
+      _con.addToContacts(peerId);
       db.updateContacts(userId, userContacts);
 
       // add to peer contacts too
       var userRef = await db.addToPeerContacts(peerId, userId);
-
-      User person = User.fromJson(userRef.data);
+      ChatUser person = ChatUser.fromJson(userRef.data);
       ChatData initChatData = ChatData(
         userId: userId,
         peerId: peerId,
         groupId: groupChatId,
         peer: person,
         messages: [newMessage],
-      );*/
-
+      );
+      _con.addToInitChats(initChatData);
+    } else {
+      _con.bringChatToTop(groupChatId, userId);
+    }
   }
 
-  void onSend(String msgContent, {MessageType type, MediaType mediaType, ReplyMessage replyDetails}) {
+   void onSend(String msgContent, {MessageType type, MediaType mediaType, ReplyMessage replyDetails}) {
     // if not media is not selected add new message as text message
     if (type == MessageType.Text) {
       if (msgContent.isEmpty) return;
@@ -192,6 +202,7 @@ class _MessagingScreenWidgetState extends State<MessagingScreenWidget> {
     }
     FocusScope.of(context).requestFocus(_textFieldFocusNode);
   }
+
 
   Stream<QuerySnapshot> stream() {
     var snapshots;
