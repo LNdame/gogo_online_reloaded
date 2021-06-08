@@ -66,6 +66,8 @@ dependencies:
   image_picker:
   json_annotation:
   keyboard_visibility:
+  permission_handler:
+  agora_rtc_engine:
 
 
 dev_dependencies:

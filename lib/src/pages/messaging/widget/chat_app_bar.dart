@@ -7,6 +7,10 @@ import 'package:gogo_online/src/helpers/app_constants.dart';
 import 'package:gogo_online/src/models/chat_user.dart';
 import 'package:gogo_online/src/models/user.dart';
 import 'package:gogo_online/src/pages/messaging/widget/avatar.dart';
+import 'package:gogo_online/src/repository/user_repository.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import '../call_page.dart';
 
 
 class ChatAppBar extends StatefulWidget {
@@ -77,6 +81,27 @@ class _ChatAppBarState extends State<ChatAppBar>
     setState(() {
       tapped = !tapped;
     });
+  }
+
+  Future<void> onJoinMeeting() async {
+    //TODO: try using the groupID instead if same across
+    var meetingID = currentUser.value.role.name == AppConstants.ROLE_CLIENT
+        ? currentUser.value.firebaseUid
+        : widget.peer.id;
+
+    await _handleCameraAndMic(Permission.camera);
+    await _handleCameraAndMic(Permission.microphone);
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CallPage(channelName: meetingID),
+        ));
+  }
+
+  Future<void> _handleCameraAndMic(Permission permission) async {
+    final status = await permission.request();
+    print(status);
   }
 
   @override
@@ -161,7 +186,7 @@ class _ChatAppBarState extends State<ChatAppBar>
                 // Avatar(imageUrl: widget.peer.imageUrl, radius: 23, color: kBlackColor3),
               ),
               CupertinoButton(
-                onPressed:(){}, // TODO re-enable when doing feature/Video-Call makeVoiceCall,
+                onPressed:onJoinMeeting, // TODO re-enable when doing feature/Video-Call makeVoiceCall,
                 padding: const EdgeInsets.all(0),
                 child: Icon(Icons.video_call,
                     color: Theme.of(context).accentColor),
