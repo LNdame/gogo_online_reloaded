@@ -77,7 +77,7 @@ class _SearchResultWidgetState extends StateMVC<SearchResultWidget> {
               ),
             ),
           ),
-          _con.markets.isEmpty && _con.products.isEmpty
+          _con.healers.isEmpty && _con.products.isEmpty
               ? CircularLoadingWidget(height: 288)
               : Expanded(
                   child: ListView(
@@ -122,17 +122,17 @@ class _SearchResultWidgetState extends StateMVC<SearchResultWidget> {
                       ListView.builder(
                         shrinkWrap: true,
                         primary: false,
-                        itemCount: _con.markets.length,
+                        itemCount: _con.healers.length,
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {
                               Navigator.of(context).pushNamed('/Details',
                                   arguments: RouteArgument(
-                                    id: _con.markets.elementAt(index).id,
+                                    id: _con.healers.elementAt(index).id,
                                     heroTag: widget.heroTag,
                                   ));
                             },
-                            child: CardWidget(healer: _con.markets.elementAt(index), heroTag: widget.heroTag),
+                            child: CardWidget(healer: _con.healers.elementAt(index), heroTag: widget.heroTag),
                           );
                         },
                       ),

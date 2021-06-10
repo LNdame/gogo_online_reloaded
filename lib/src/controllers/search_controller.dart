@@ -9,22 +9,22 @@ import '../repository/search_repository.dart';
 import '../repository/settings_repository.dart';
 
 class SearchController extends ControllerMVC {
-  List<Healer> markets = <Healer>[];
+  List<Healer> healers = <Healer>[];
   List<Product> products = <Product>[];
 
   SearchController() {
-    listenForMarkets();
-    listenForProducts();
+    listenForHealers();
+   // listenForProducts();
   }
 
-  void listenForMarkets({String search}) async {
+  void listenForHealers({String search}) async {
     if (search == null) {
       search = await getRecentSearch();
     }
     Address _address = billingAddress.value;
     final Stream<Healer> stream = await searchHealers(search, _address);
     stream.listen((Healer _market) {
-      setState(() => markets.add(_market));
+      setState(() => healers.add(_market));
     }, onError: (a) {
       print(a);
     }, onDone: () {});
@@ -45,10 +45,10 @@ class SearchController extends ControllerMVC {
 
   Future<void> refreshSearch(search) async {
     setState(() {
-      markets = <Healer>[];
+      healers = <Healer>[];
       products = <Product>[];
     });
-    listenForMarkets(search: search);
+    listenForHealers(search: search);
     listenForProducts(search: search);
   }
 

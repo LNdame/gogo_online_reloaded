@@ -33,7 +33,7 @@ class AppConstants {
 
   //Roles
   static const String ROLE_CLIENT = "client";
-  static const String ROLE_MANGER = "manager";
+  static const String ROLE_MANAGER = "manager";
 
   //Provinces coordinates
   static const String EASTERN_CAPE_LAT_LON = "-32.2968, 26.4194";

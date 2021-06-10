@@ -11,7 +11,6 @@ class ConsultationController extends ControllerMVC {
 
   ConsultationController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
-    listenForConsultations();
   }
 
   void listenForConsultations({String message}) async {
@@ -27,7 +26,27 @@ class ConsultationController extends ControllerMVC {
       ));
     }, onDone: () {
       if (message != null) {
-        scaffoldKey?.currentState?.showSnackBar(SnackBar(
+        ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
+          content: Text(message),
+        ));
+      }
+    });
+  }
+
+  void listenForHealerConsultations({String message}) async {
+    final Stream<Consultation> stream = await getHealerConsultations();
+    stream.listen((Consultation _consultation) {
+      setState(() {
+        consultations.add(_consultation);
+      });
+    }, onError: (a) {
+      print(a);
+      ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
+        content: Text(S.of(state.context).verify_your_internet_connection),
+      ));
+    }, onDone: () {
+      if (message != null) {
+        ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
           content: Text(message),
         ));
       }
