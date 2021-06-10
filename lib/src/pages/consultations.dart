@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gogo_online/src/elements/ConsultationItemWithDateWidget.dart';
 import 'package:gogo_online/src/models/consultation.dart';
 import '../elements/UpcomingConsultationsCardWidget.dart';
 import '../elements/SearchBarWidget.dart';
@@ -25,6 +26,12 @@ class _ConsultationsWidgetState extends StateMVC<ConsultationsWidget> {
 
   _ConsultationsWidgetState() : super(ConsultationController()) {
     _con = controller;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _con.listenForConsultations(message: 'Loaded');
   }
 
   @override
@@ -73,7 +80,8 @@ class _ConsultationsWidgetState extends StateMVC<ConsultationsWidget> {
                             primary: false,
                             itemBuilder: (context, index) {
                               var _consultation = _con.consultations.elementAt(index);  // var _consultation =  new Consultation();
-                              return UpcomingConsultationsCardWidget(
+                              return ConsultationItemWithDateWidget(
+                                expanded: true,
                                 consultation: _consultation,
                                 onCanceled: (e) {
                                   _con.doCancelConsultation(_consultation);

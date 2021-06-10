@@ -50,6 +50,27 @@ Future<Stream<Consultation>> getConsultation(consultationId) async {
   });
 }
 
+Future<Stream<Consultation>> getHealerConsultations() async {
+  User _user = userRepo.currentUser.value;
+  if (_user.apiToken == null) {
+    return new Stream.value(null);
+  }
+  final String _apiToken = 'api_token=${_user.apiToken}&';
+  final String url =
+      '${GlobalConfiguration().getString('api_base_url')}consultations?${_apiToken}user_type=healer&with=user;productConsultations;productConsultations.product;productConsultations.options;consultationStatus;payment';
+  try {
+    final client = new http.Client();
+    final streamedRest = await client.send(http.Request('get', Uri.parse(url)));
+
+    return streamedRest.stream.transform(utf8.decoder).transform(json.decoder).map((data) => Helper.getData(data)).expand((data) => (data as List)).map((data) {
+      return Consultation.fromJSON(data);
+    });
+  } catch (e) {
+    print(CustomTrace(StackTrace.current, message: url).toString());
+    return new Stream.value(new Consultation.fromJSON({}));
+  }
+}
+
 Future<Stream<Consultation>> getRecentConsultations() async {
   User _user = userRepo.currentUser.value;
   if (_user.apiToken == null) {

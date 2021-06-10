@@ -2,9 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:gogo_online/src/helpers/app_constants.dart';
 import 'package:gogo_online/src/models/chat_data.dart';
 import 'package:gogo_online/src/models/chat_user.dart';
 import 'package:gogo_online/src/pages/messaging/messaging_screen.dart';
+import 'package:gogo_online/src/repository/user_repository.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -32,35 +34,30 @@ class DetailsWidget extends StatefulWidget {
 
 class _DetailsWidgetState extends StateMVC<DetailsWidget> {
   HealerController _con ;
-
   _DetailsWidgetState() : super(HealerController()) {
     _con = controller;
   }
 
   @override
   void initState() {
-    _con.listenForHealer(id: widget.routeArgument.id);
+    _con.listenForHealer(id: widget.routeArgument.id, currentUserUid: currentUser.value.firebaseUid);
     _con.listenForGalleries(widget.routeArgument.id);
     _con.listenForFeaturedProducts(widget.routeArgument.id);
     _con.listenForProducts(widget.routeArgument.id);
     _con.listenForHealerReviews(id: widget.routeArgument.id);
+  //  _con.listenForChatData(currentUser.value.firebaseUid, _con.healerPeer);
     super.initState();
   }
 
 
-  void goToChat(BuildContext context,  DocumentSnapshot item){
-    ChatUser peer= new ChatUser(
-      id:"jksgfddslgdsfjlgks",
-      username: _con.healer.name,
-      email: "",
-      imageUrl:_con.healer.image.thumb,
-      about: "",
-    );
-    final initData = new ChatData(
-        groupId: 'kjakjnlankvlsvkslnavan',
-        userId: "kdjfnaskfjnafdfajfnal",
-        peerId: "jksgfddslgdsfjlgks",
-        peer: peer,
+  void goToChat(BuildContext context){
+
+    final initData = _con.chatData ??
+        new ChatData(
+        groupId: _con.getGroupId(currentUser.value.firebaseUid),
+        userId: currentUser.value.firebaseUid,
+        peerId: _con.healerPeer.id,
+        peer: _con.healerPeer,
         messages: []
     );
 
@@ -74,7 +71,7 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
         key: _con.scaffoldKey,
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            goToChat(context, null);
+            goToChat(context);
            // Navigator.of(context).pushNamed('/Menu', arguments: new RouteArgument(id: widget.routeArgument.id));
           },
           isExtended: true,
