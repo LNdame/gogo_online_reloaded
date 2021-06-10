@@ -201,7 +201,7 @@ class HealerController extends ControllerMVC {
         email: "",
         imageUrl: healer.image.thumb,
         about: healer.description,
-        role: AppConstants.ROLE_MANGER);
+        role: AppConstants.ROLE_MANAGER);
   }
 
   String getGroupId(String uid) {

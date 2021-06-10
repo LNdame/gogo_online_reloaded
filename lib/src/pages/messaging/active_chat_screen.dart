@@ -6,6 +6,7 @@ import 'package:gogo_online/src/elements/EmptyChatsWidget.dart';
 import 'package:gogo_online/src/elements/NotificationItemWidget.dart';
 import 'package:gogo_online/src/elements/PermissionDeniedWidget.dart';
 import 'package:gogo_online/src/elements/WaitingRoomButtonWidget.dart';
+import 'package:gogo_online/src/helpers/app_constants.dart';
 import 'package:gogo_online/src/models/chat_data.dart';
 import 'package:gogo_online/src/pages/messaging/widget/chats_list_item.dart';
 import 'package:gogo_online/src/repository/services/db.dart';
@@ -52,7 +53,7 @@ class _ActiveChatWidgetState extends StateMVC<ActiveChatWidget> {
           endIndent: 15,
           height: 0,
           thickness: 1,
-          color: Theme.of(context).primaryColor,
+          color: AppConstants.customBackground,
         );
       },
     ),
