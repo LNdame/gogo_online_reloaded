@@ -4,6 +4,7 @@ import 'package:gogo_online/src/models/cart.dart';
 import 'package:gogo_online/src/pages/consultations.dart';
 import 'package:gogo_online/src/pages/healer/healer_signup.dart';
 import 'package:gogo_online/src/pages/healer/healer_signup_success.dart';
+import 'package:gogo_online/src/pages/payfast_payment.dart';
 import 'package:gogo_online/src/pages/scheduler.dart';
 import 'src/pages/healer/healer_pages.dart';
 import 'src/pages/onboarding.dart';
@@ -14,7 +15,7 @@ import 'src/pages/category.dart';
 import 'src/pages/checkout.dart';
 import 'src/pages/debug.dart';
 import 'src/pages/delivery_addresses.dart';
-import 'src/pages/delivery_pickup.dart';
+import 'src/pages/consultation_summary.dart';
 import 'src/pages/details.dart';
 import 'src/pages/forget_password.dart';
 import 'src/pages/help.dart';
@@ -85,17 +86,17 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => PaymentMethodsWidget());
       case '/DeliveryAddresses':
         return MaterialPageRoute(builder: (_) => DeliveryAddressesWidget());
-      case '/DeliveryPickup':
-        return MaterialPageRoute(builder: (_) => DeliveryPickupWidget(routeArgument: args as RouteArgument));
+      case '/ConsultationSummary':
+        return MaterialPageRoute(builder: (_) => ConsultationSummaryWidget(routeArgument: args as RouteArgument));
       case '/Checkout':
         return MaterialPageRoute(builder: (_) => CheckoutWidget());
       case '/CashOnDelivery':
         return MaterialPageRoute(builder: (_) => ConsultationSuccessWidget(routeArgument: RouteArgument(param: 'Cash on Delivery')));
       case '/PayOnPickup':
         return MaterialPageRoute(builder: (_) => ConsultationSuccessWidget(routeArgument: RouteArgument(param: 'Pay on Pickup')));
-      /*case '/PayPal':
-        return MaterialPageRoute(builder: (_) => PayPalPaymentWidget(routeArgument: args as RouteArgument));
-      case '/RazorPay':
+      case '/PayFast':
+        return MaterialPageRoute(builder: (_) => PayFastPaymentWidget(routeArgument: args as RouteArgument));
+     /* case '/RazorPay':
         return MaterialPageRoute(builder: (_) => RazorPayPaymentWidget(routeArgument: args as RouteArgument));*/
       case '/OrderSuccess':
         return MaterialPageRoute(builder: (_) => ConsultationSuccessWidget(routeArgument: args as RouteArgument));

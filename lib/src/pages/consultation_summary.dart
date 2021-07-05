@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
-import '../controllers/delivery_pickup_controller.dart';
+import '../controllers/consultation_summary_controller.dart';
 import '../elements/WaitingRoomBottomDetailsWidget.dart';
 import '../elements/DeliveryAddressDialog.dart';
 import '../elements/DeliveryAddressesItemWidget.dart';
@@ -14,19 +14,19 @@ import '../models/address.dart';
 import '../models/payment_method.dart';
 import '../models/route_argument.dart';
 
-class DeliveryPickupWidget extends StatefulWidget {
+class ConsultationSummaryWidget extends StatefulWidget {
   final RouteArgument routeArgument;
 
-  DeliveryPickupWidget({Key key, this.routeArgument}) : super(key: key);
+  ConsultationSummaryWidget({Key key, this.routeArgument}) : super(key: key);
 
   @override
-  _DeliveryPickupWidgetState createState() => _DeliveryPickupWidgetState();
+  _ConsultationSummaryWidgetState createState() => _ConsultationSummaryWidgetState();
 }
 
-class _DeliveryPickupWidgetState extends StateMVC<DeliveryPickupWidget> {
-  DeliveryPickupController _con;
+class _ConsultationSummaryWidgetState extends StateMVC<ConsultationSummaryWidget> {
+  ConsultationSummaryController _con;
 
-  _DeliveryPickupWidgetState() : super(DeliveryPickupController()) {
+  _ConsultationSummaryWidgetState() : super(ConsultationSummaryController()) {
     _con = controller;
   }
 

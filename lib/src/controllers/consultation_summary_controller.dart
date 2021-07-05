@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gogo_online/src/controllers/payfast_controller.dart';
+import 'package:gogo_online/src/pages/payfast_payment.dart';
 
 import '../../generated/l10n.dart';
 import '../models/address.dart' as model;
@@ -7,12 +9,12 @@ import '../repository/settings_repository.dart' as settingRepo;
 import '../repository/user_repository.dart' as userRepo;
 import 'cart_controller.dart';
 
-class DeliveryPickupController extends CartController {
+class ConsultationSummaryController extends CartController {
   GlobalKey<ScaffoldState> scaffoldKey;
   model.Address deliveryAddress;
   PaymentMethodList list;
 
-  DeliveryPickupController() {
+  ConsultationSummaryController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
     super.listenForCarts();
     listenForDeliveryAddress();
@@ -85,6 +87,11 @@ class DeliveryPickupController extends CartController {
 
   @override
   void goCheckout(BuildContext context) {
-    Navigator.of(context).pushNamed(getSelectedMethod().route);
+
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => PayFastPaymentWidget(carts: carts, total: total,))
+    );
+
+   // Navigator.of(context).pushNamed(getSelectedMethod().route);
   }
 }
