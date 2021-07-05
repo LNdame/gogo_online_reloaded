@@ -158,7 +158,7 @@ class CartController extends ControllerMVC {
           content: Text(S.of(state.context).this_healer_is_closed_),
         ));
       } else {
-        Navigator.of(state.context).pushNamed('/DeliveryPickup');
+        Navigator.of(state.context).pushNamed('/ConsultationSummary');
       }
     }
   }
