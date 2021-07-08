@@ -46,10 +46,10 @@ class SearchController extends ControllerMVC {
   Future<void> refreshSearch(search) async {
     setState(() {
       healers = <Healer>[];
-      products = <Product>[];
+     // products = <Product>[];
     });
     listenForHealers(search: search);
-    listenForProducts(search: search);
+    //listenForProducts(search: search);
   }
 
   void saveSearch(String search) {
