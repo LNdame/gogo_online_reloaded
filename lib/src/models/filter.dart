@@ -1,9 +1,24 @@
+import 'package:gogo_online/src/models/province.dart';
+
 import '../models/field.dart';
 
 class Filter {
   bool delivery;
+  bool eastCape;
+  bool freeState;
+  bool gauteng;
+  bool kwazNatal;
+  bool limpopo;
+  bool mpumalanga;
+  bool northCape;
+  bool northWest;
+  bool westCape;
+
+
+
   bool open;
   List<Field> fields;
+  List<Province> provinces;
 
   Filter();
 

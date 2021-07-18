@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:gogo_online/src/helpers/app_constants.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 import '../../generated/l10n.dart';
@@ -53,42 +54,25 @@ class _FilterWidgetState extends StateMVC<FilterWidget> {
                 shrinkWrap: true,
                 children: <Widget>[
                   ExpansionTile(
-                    title: Text(S.of(context).delivery_or_pickup),
-                    children: [
-                      CheckboxListTile(
-                        controlAffinity: ListTileControlAffinity.trailing,
-                        value: _con.filter?.delivery ?? false,
-                        onChanged: (value) {
-                          setState(() {
-                            _con.filter?.delivery = true;
-                          });
-                        },
-                        title: Text(
-                          S.of(context).delivery,
-                          overflow: TextOverflow.fade,
-                          softWrap: false,
-                          maxLines: 1,
-                        ),
+                    title:Text("Provinces"), //  Text(S.of(context).delivery_or_pickup),
+                    children: List.generate(_con.provinces.length, (index)  {
+                      return CheckboxListTile(
+                      controlAffinity: ListTileControlAffinity.trailing,
+                      value: _con.provinces.elementAt(index).selected,
+                      onChanged: (value) {
+                        _con.onChangeProvincesFilter(index);
+                      },
+                      title: Text(
+                        _con.provinces.elementAt(index).name,
+                        overflow: TextOverflow.fade,
+                        softWrap: false,
+                        maxLines: 1,
                       ),
-                      CheckboxListTile(
-                        controlAffinity: ListTileControlAffinity.trailing,
-                        value: _con.filter?.delivery ?? false ? false : true,
-                        onChanged: (value) {
-                          setState(() {
-                            _con.filter?.delivery = false;
-                          });
-                        },
-                        title: Text(
-                          S.of(context).pickup,
-                          overflow: TextOverflow.fade,
-                          softWrap: false,
-                          maxLines: 1,
-                        ),
-                      ),
-                    ],
+                    );
+                    }),
                     initiallyExpanded: true,
                   ),
-                  ExpansionTile(
+                  /*ExpansionTile(
                     title: Text(S.of(context).opened_markets),
                     children: [
                       CheckboxListTile(
@@ -108,7 +92,7 @@ class _FilterWidgetState extends StateMVC<FilterWidget> {
                       ),
                     ],
                     initiallyExpanded: true,
-                  ),
+                  ),*/
                   _con.fields.isEmpty
                       ? CircularLoadingWidget(height: 100)
                       : ExpansionTile(

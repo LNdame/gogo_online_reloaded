@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:gogo_online/src/helpers/app_constants.dart';
+import 'package:gogo_online/src/models/province.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,13 +15,16 @@ import '../repository/field_repository.dart';
 class FilterController extends ControllerMVC {
   GlobalKey<ScaffoldState> scaffoldKey;
   List<Field> fields = [];
+  List<Province> provinces = [];
   Filter filter;
   Cart cart;
 
   FilterController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
+
     listenForFilter().whenComplete(() {
       listenForFields();
+      populateProvinces();
     });
   }
 
@@ -61,6 +66,22 @@ class FilterController extends ControllerMVC {
     });
   }
 
+  void populateProvinces() {
+    provinces =
+    [new Province(name:"All", selected: false ),
+      new Province(name:AppConstants.EASTERN_CAPE, selected: false ),
+    new Province(name:AppConstants.FREE_STATE, selected: false ),
+    new Province(name:AppConstants.GAUTENG, selected: false ),
+    new Province(name:AppConstants.KWAZULU_NATAL, selected: false ),
+    new Province(name:AppConstants.LIMPOPO, selected: false ),
+    new Province(name:AppConstants.MPUMALANGA, selected: false ),
+    new Province(name:AppConstants.NORTHERN_CAPE, selected: false ),
+    new Province(name:AppConstants.NORTH_WEST, selected: false ),
+    new Province(name:AppConstants.WESTERN_CAPE, selected:false)];
+    filter.provinces = provinces;
+
+  }
+
   Future<void> refreshFields() async {
     fields.clear();
     listenForFields(message: S.of(state.context).addresses_refreshed_successfuly);
@@ -71,6 +92,7 @@ class FilterController extends ControllerMVC {
       filter.open = false;
       filter.delivery = false;
       resetFields();
+      resetProvinces();
     });
   }
 
@@ -80,6 +102,14 @@ class FilterController extends ControllerMVC {
       _f.selected = false;
     });
     fields.elementAt(0).selected = true;
+  }
+
+  void resetProvinces() {
+    filter.provinces = [];
+    provinces.forEach((Province _p) {
+      _p.selected = false;
+    });
+    provinces.elementAt(0).selected = true;
   }
 
   void onChangeFieldsFilter(int index) {
@@ -92,6 +122,20 @@ class FilterController extends ControllerMVC {
       setState(() {
         fields.elementAt(index).selected = !fields.elementAt(index).selected;
         fields.elementAt(0).selected = false;
+      });
+    }
+  }
+
+  void onChangeProvincesFilter(int index) {
+    if (index == 0) {
+      // all
+      setState(() {
+        resetProvinces();
+      });
+    } else {
+      setState(() {
+        provinces.elementAt(index).selected = !provinces.elementAt(index).selected;
+        provinces.elementAt(0).selected = false;
       });
     }
   }
