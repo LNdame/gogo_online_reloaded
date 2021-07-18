@@ -73,13 +73,13 @@ Future<Stream<Healer>> searchHealers(String search, Address address) async {
   Map<String, dynamic> _queryParams = {};
   _queryParams['search'] = 'name:$search;description:$search';
   _queryParams['searchFields'] = 'name:like;description:like';
-  _queryParams['limit'] = '5';
-  if (!address.isUnknown()) {
+  _queryParams['limit'] = '15';
+  /*if (!address.isUnknown()) {
     _queryParams['myLon'] = address.longitude.toString();
     _queryParams['myLat'] = address.latitude.toString();
     _queryParams['areaLon'] = address.longitude.toString();
     _queryParams['areaLat'] = address.latitude.toString();
-  }
+  }*/
   uri = uri.replace(queryParameters: _queryParams);
   try {
     final client = new http.Client();

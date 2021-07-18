@@ -68,7 +68,7 @@ class _SearchResultWidgetState extends StateMVC<SearchResultWidget> {
               autofocus: true,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(12),
-                hintText: S.of(context).search_for_healers_or_products,
+                hintText:"Search for healers", //S.of(context).search_for_healers_or_products,
                 hintStyle: Theme.of(context).textTheme.caption.merge(TextStyle(fontSize: 14)),
                 prefixIcon: Icon(Icons.search, color: Theme.of(context).accentColor),
                 border: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.1))),
@@ -77,12 +77,12 @@ class _SearchResultWidgetState extends StateMVC<SearchResultWidget> {
               ),
             ),
           ),
-          _con.healers.isEmpty && _con.products.isEmpty
+          _con.healers.isEmpty
               ? CircularLoadingWidget(height: 288)
               : Expanded(
                   child: ListView(
                     children: <Widget>[
-                      Padding(
+                      /*Padding(
                         padding: const EdgeInsets.only(left: 20, right: 20),
                         child: ListTile(
                           dense: true,
@@ -92,8 +92,8 @@ class _SearchResultWidgetState extends StateMVC<SearchResultWidget> {
                             style: Theme.of(context).textTheme.subtitle1,
                           ),
                         ),
-                      ),
-                      ListView.separated(
+                      ),*/
+                      /*ListView.separated(
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
                         primary: false,
@@ -107,9 +107,9 @@ class _SearchResultWidgetState extends StateMVC<SearchResultWidget> {
                             product: _con.products.elementAt(index),
                           );
                         },
-                      ),
+                      ),*/
                       Padding(
-                        padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+                        padding: const EdgeInsets.only(top: 8, left: 20, right: 20),
                         child: ListTile(
                           dense: true,
                           contentPadding: EdgeInsets.symmetric(vertical: 0),
