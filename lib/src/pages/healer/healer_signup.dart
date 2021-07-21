@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gogo_online/generated/l10n.dart';
 import 'package:gogo_online/src/controllers/healer_controller.dart';
@@ -8,6 +12,7 @@ import 'package:gogo_online/src/helpers/helper.dart';
 import 'package:gogo_online/src/models/healer.dart';
 import 'package:gogo_online/src/repository/user_repository.dart';
 import 'package:gogo_online/src/utils/ValidatorUtil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
 
@@ -32,7 +37,10 @@ class _HealerRegistrationWidgetState extends StateMVC<HealerRegistrationWidget> 
   var _provinceList = <DropdownMenuItem>[];
   var _languageList = <String>[];
   var _selectedProvinceValue;
-  
+  final ImagePicker _picker = ImagePicker();
+  File _image;
+  String base64Image;
+  File tmpFile;
   void loadProvinces(){
     _provinceList.add(DropdownMenuItem(child: Text(AppConstants.EASTERN_CAPE), value: AppConstants.EASTERN_CAPE_LAT_LON,));
     _provinceList.add(DropdownMenuItem(child: Text(AppConstants.FREE_STATE), value: AppConstants.FREE_STATE_LAT_LON,));
@@ -93,6 +101,81 @@ class _HealerRegistrationWidgetState extends StateMVC<HealerRegistrationWidget> 
     requestHealer.language = langs;
   }
 
+ Future<Null> _imgFromCamera() async {
+    File image;
+    try{
+      image = (await _picker.getImage(
+          source: ImageSource.camera
+      ).then((picture) {
+        return picture;
+      })) as File;
+    }catch (error){
+      print('error taking picture ${error.toString()}');
+    }
+
+    setState(() {
+      _image = image;
+    });
+  }
+
+  _imgFromGallery() async {
+    File image;
+    try{
+      image = (await _picker.getImage(
+          source: ImageSource.gallery
+      ).then((picture) {
+        PickedFile imagePicked = picture ;
+        uploadImage(File(imagePicked.path));
+        return picture;
+      })) as File;
+    }catch (error){
+      print('error taking picture ${error.toString()}');
+    }
+
+
+    setState(() {
+      _image = image;
+    });
+  }
+
+  void uploadImage(File imageFile){
+    tmpFile = imageFile;
+    final bytes = imageFile.readAsBytesSync();
+    base64Image = base64Encode(bytes) ;
+  }
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Photo Library'),
+                      onTap: () {
+                        _imgFromGallery();
+                       Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Camera'),
+                    onTap: () {
+                      _imgFromCamera();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,7 +205,7 @@ class _HealerRegistrationWidgetState extends StateMVC<HealerRegistrationWidget> 
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-                ProfileAvatarWidget(user: currentUser.value),
+                ProfileAvatarWidget(user: currentUser.value, showImageChoice: _showPicker),
                 SizedBox(height: 30,),
                 Form(key: _con.registerFormKey,
                     autovalidateMode: AutovalidateMode.disabled,
