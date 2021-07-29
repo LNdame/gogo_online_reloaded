@@ -16,4 +16,13 @@ class ValidatorUtil {
     }
     return null;
   }
+
+  static String convertDateToZeroFormat(int dateItem){
+    if(dateItem<10){
+      return "0$dateItem";
+    }
+    else{
+      return "$dateItem";
+    }
+  }
 }

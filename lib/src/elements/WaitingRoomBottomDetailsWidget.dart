@@ -76,9 +76,9 @@ class WaitingRoomBottomDetailsWidget extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width - 40,
                         child: FlatButton(
-                          onPressed: () {
+                          onPressed: _con.carts.first.consultationDate.isNotEmpty? () {
                             _con.goCheckout(context);
-                          },
+                          }:null,
                           disabledColor: Theme.of(context).focusColor.withOpacity(0.5),
                           padding: EdgeInsets.symmetric(vertical: 14),
                           color: !_con.carts[0].product.healer.closed ? Theme.of(context).accentColor : Theme.of(context).focusColor.withOpacity(0.5),

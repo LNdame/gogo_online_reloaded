@@ -97,12 +97,19 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                                   : SizedBox(height: 0),
                             ],
                           ),
+                          Text(
+                            widget.cart.consultationDate!=null&& widget.cart.consultationDate.isNotEmpty?
+                            widget.cart.consultationDate : "No date selected",
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
                           //Helper.getPrice(widget.cart.getProductPrice(), context, style: Theme.of(context).textTheme.headline4)
                         ],
                       ),
                     ),
                     SizedBox(width: 8),
-                    Column( //TODO remove incrementer and add calendar
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Ink(
