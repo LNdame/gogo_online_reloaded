@@ -3,6 +3,7 @@ import 'package:gogo_online/src/controllers/cart_controller.dart';
 import 'package:gogo_online/src/elements/AppointmentSlotWidget.dart';
 import 'package:gogo_online/src/elements/BlockButtonWidget.dart';
 import 'package:gogo_online/src/helpers/helper.dart';
+import 'package:gogo_online/src/utils/ValidatorUtil.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../models/cart.dart';
 import '../models/route_argument.dart';
@@ -12,15 +13,16 @@ class SchedulerWidget extends StatefulWidget {
   final RouteArgument routeArgument;
   final Cart cart;
   final CartController _con;
-  const SchedulerWidget({Key key, @required this.cart, this.routeArgument, @required CartController con}) : _con=con, super(key: key);
 
+  const SchedulerWidget({Key key, @required this.cart, this.routeArgument, @required CartController con})
+      : _con = con,
+        super(key: key);
 
   @override
   _SchedulerWidgetState createState() => _SchedulerWidgetState();
 }
 
 class _SchedulerWidgetState extends State<SchedulerWidget> {
-
   Map<DateTime, List<dynamic>> _events;
   String selectedTime = "";
   List<dynamic> _selectedEvents;
@@ -29,9 +31,11 @@ class _SchedulerWidgetState extends State<SchedulerWidget> {
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay;
 
-  DateTime kNow ;
-  DateTime kFirstDay ;
-  DateTime kLastDay ;
+  DateTime kNow;
+
+  DateTime kFirstDay;
+
+  DateTime kLastDay;
 
   @override
   void initState() {
@@ -41,7 +45,7 @@ class _SchedulerWidgetState extends State<SchedulerWidget> {
     _selectedEvents = [];
     _selectedDate = new DateTime.now();
 
-    kNow =  DateTime.now();
+    kNow = DateTime.now();
     kFirstDay = DateTime(kNow.year, kNow.month - 3, kNow.day);
     kLastDay = DateTime(kNow.year, kNow.month + 3, kNow.day);
   }
@@ -64,10 +68,9 @@ class _SchedulerWidgetState extends State<SchedulerWidget> {
 
   Future<void> saveConsultationDateTime(String selectedTime, DateTime date) async {
     widget.cart.consultationStartTime = selectedTime;
-    String selectedDate = "${date.year}-${date.month}-${date.day}";
+    String selectedDate = "${date.year}-${ValidatorUtil.convertDateToZeroFormat(date.month)}-${ValidatorUtil.convertDateToZeroFormat(date.day)}";
     widget.cart.consultationDate = selectedDate;
-   await widget._con.updateDateTime(widget.cart);
-
+    await widget._con.updateDateTime(widget.cart);
   }
 
   @override
@@ -80,11 +83,12 @@ class _SchedulerWidgetState extends State<SchedulerWidget> {
 
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: true ,
+        automaticallyImplyLeading: true,
         leading: IconButton(
           onPressed: () {
             if (widget.routeArgument != null) {
-              Navigator.of(context).pushReplacementNamed(widget.routeArgument.param, arguments: RouteArgument(id: widget.routeArgument.id));
+              Navigator.of(context).pushReplacementNamed(widget.routeArgument.param,
+                  arguments: RouteArgument(id: widget.routeArgument.id));
             } else {
               Navigator.of(context).pushNamed('/Cart', arguments: RouteArgument(param: '/Pages', id: '2'));
             }
@@ -101,21 +105,20 @@ class _SchedulerWidgetState extends State<SchedulerWidget> {
         ),
       ),
       bottomNavigationBar: Container(
-        height: 100,
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 26),
-        child: BlockButtonWidget(
-          text: Text(
-            S.of(context).set_consultation_date,
-            style: TextStyle(color: Theme.of(context).primaryColor),
-          ),
-          color: Theme.of(context).accentColor,
-          onPressed: () async{
-            await saveConsultationDateTime(selectedTime, _selectedDate).then((value) {
-              Navigator.of(context).pushNamed('/Cart', arguments: RouteArgument(param: '/Pages', id: '2'));
-            }, onError: (e)=>print(e));
-          },
-        )
-      ),
+          height: 100,
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 26),
+          child: BlockButtonWidget(
+            text: Text(
+              S.of(context).set_consultation_date,
+              style: TextStyle(color: Theme.of(context).primaryColor),
+            ),
+            color: Theme.of(context).accentColor,
+            onPressed: () async {
+              await saveConsultationDateTime(selectedTime, _selectedDay).then((value) {
+                Navigator.of(context).pushNamed('/Cart', arguments: RouteArgument(param: '/Pages', id: '2'));
+              }, onError: (e) => print(e));
+            },
+          )),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
         child: Column(
@@ -123,7 +126,8 @@ class _SchedulerWidgetState extends State<SchedulerWidget> {
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: [
-            Padding(padding:  EdgeInsets.only(top: 15, left: 20, right: 20),
+            Padding(
+              padding: EdgeInsets.only(top: 15, left: 20, right: 20),
               child: ListTile(
                 dense: true,
                 contentPadding: EdgeInsets.symmetric(vertical: 0),
@@ -131,8 +135,12 @@ class _SchedulerWidgetState extends State<SchedulerWidget> {
                   Icons.calendar_today_rounded,
                   color: Theme.of(context).hintColor,
                 ),
-                title: Text(widget.cart.product.name , style: Theme.of(context).textTheme.headline2,),
-                subtitle: Helper.getPrice(widget.cart.product.price, context, style: Theme.of(context).textTheme.bodyText2, zeroPlaceholder: 'Free'),
+                title: Text(
+                  widget.cart.product.name,
+                  style: Theme.of(context).textTheme.headline2,
+                ),
+                subtitle: Helper.getPrice(widget.cart.product.price, context,
+                    style: Theme.of(context).textTheme.bodyText2, zeroPlaceholder: 'Free'),
               ),
             ),
             SizedBox(
@@ -207,7 +215,6 @@ class _SchedulerWidgetState extends State<SchedulerWidget> {
     );
   }
 }
-
 
 /*TableCalendar(
               events: _events,

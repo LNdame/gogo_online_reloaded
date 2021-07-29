@@ -69,12 +69,11 @@ class _ConsultationSummaryWidgetState extends StateMVC<ConsultationSummaryWidget
                    ListTile(
                      contentPadding: EdgeInsets.symmetric(vertical: 0),
                      leading: Icon(Icons.assistant_rounded,color: Theme.of(context).hintColor,),
-                     title: Text("Virtual Consultation",maxLines: 1,
+                     title: Text(_con.carts.first.product.name,maxLines: 1,
                        overflow: TextOverflow.ellipsis,
                        style: Theme.of(context).textTheme.headline4,
                      ),
-                     subtitle: Text(
-                         "Dr Hassan Corrim",
+                     subtitle: Text( _con.carts.first.product.healer.name,
                        maxLines: 1,
                        overflow: TextOverflow.ellipsis,
                        style: Theme.of(context).textTheme.subtitle1,
@@ -84,7 +83,7 @@ class _ConsultationSummaryWidgetState extends StateMVC<ConsultationSummaryWidget
                    ListTile(
                      contentPadding: EdgeInsets.symmetric(vertical: 0),
                      leading: Icon(Icons.calendar_today_outlined,color: Theme.of(context).hintColor,),
-                     title: Text("Date: 23-01-1987",maxLines: 1,
+                     title: Text("Date: ${_con.carts.first.consultationDate}",maxLines: 1,
                        overflow: TextOverflow.ellipsis,
                        style: Theme.of(context).textTheme.subtitle1,
                      ),

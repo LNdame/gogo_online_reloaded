@@ -123,7 +123,7 @@ class _WaitingRoomWidgetState extends StateMVC<WaitingRoomWidget> {
                         ),
                       ],
                     ),
-                    Container(
+                    /*Container(
                       padding: const EdgeInsets.all(18),
                       margin: EdgeInsets.only(bottom: 15),
                       decoration: BoxDecoration(
@@ -160,7 +160,7 @@ class _WaitingRoomWidgetState extends StateMVC<WaitingRoomWidget> {
                               borderRadius: BorderRadius.circular(30), borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2))),
                         ),
                       ),
-                    ),
+                    ),*/
                   ],
                 ),
         ),
