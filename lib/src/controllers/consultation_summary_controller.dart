@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gogo_online/src/controllers/payfast_controller.dart';
+import 'package:gogo_online/src/models/cart.dart';
 import 'package:gogo_online/src/pages/payfast_payment.dart';
 
 import '../../generated/l10n.dart';
@@ -92,6 +93,5 @@ class ConsultationSummaryController extends CartController {
         MaterialPageRoute(builder: (context) => PayFastPaymentWidget(carts: carts, total: total,))
     );
 
-   // Navigator.of(context).pushNamed(getSelectedMethod().route);
   }
 }
