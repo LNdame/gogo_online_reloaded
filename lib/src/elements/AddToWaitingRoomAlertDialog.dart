@@ -20,15 +20,15 @@ class AddToWaitingRoomAlertDialogWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: new Text(S.of(context).reset_waiting_room),
+      title: new Text( 'Reset Waiting Room?'),// S.of(context).reset_waiting_room),
       contentPadding: EdgeInsets.symmetric(vertical: 20),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 20, left: 20, bottom: 20),
-            child: Text(
-              S.of(context).you_must_add_products_of_the_same_healers_choose_one,
+            child: Text('You must add consultations of the same healer. Choose from one healer only!',
+            //  S.of(context).you_must_add_products_of_the_same_healers_choose_one,
               style: Theme.of(context).textTheme.caption,
             ),
           ),
@@ -78,8 +78,8 @@ class AddToWaitingRoomAlertDialogWidget extends StatelessWidget {
                                 style: Theme.of(context).textTheme.subtitle1,
                               ),
                               SizedBox(height: 8),
-                              Text(
-                                S.of(context).reset_your_waiting_and_consultation_from_this_healer,
+                              Text(  'Reset your waiting room and add consultation from this healer',
+                            //    S.of(context).reset_your_waiting_and_consultation_from_this_healer,
                                 style: Theme.of(context).textTheme.caption,
                               ),
                             ],
@@ -138,8 +138,8 @@ class AddToWaitingRoomAlertDialogWidget extends StatelessWidget {
                                 style: Theme.of(context).textTheme.subtitle1,
                               ),
                               SizedBox(height: 8),
-                              Text(
-                                S.of(context).keep_your_old_consultations_of_this_healer,
+                              Text( 'Keep your old consultations from this healer',
+                               // S.of(context).keep_your_old_consultations_of_this_healer,
                                 style: Theme.of(context).textTheme.caption,
                               ),
                             ],
@@ -157,14 +157,14 @@ class AddToWaitingRoomAlertDialogWidget extends StatelessWidget {
       actions: <Widget>[
         // usually buttons at the bottom of the dialog
         FlatButton(
-          child: new Text(S.of(context).reset),
+          child: new Text('Reset'),// S.of(context).reset),
           onPressed: () {
             onPressed(newProduct, reset: true);
             Navigator.of(context).pop();
           },
         ),
         FlatButton(
-          child: new Text(S.of(context).close),
+          child: new Text('Close'),//S.of(context).close),
           onPressed: () {
             Navigator.of(context).pop();
           },

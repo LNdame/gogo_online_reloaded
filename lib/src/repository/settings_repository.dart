@@ -28,23 +28,39 @@ Future<Setting> initSettings() async {
   final String url = '${GlobalConfiguration().getString('api_base_url')}settings';
   Uri uri = Uri.parse(url);
   try {
-    final response = await http.get(uri, headers: {HttpHeaders.contentTypeHeader: 'application/json'});
-    if (response.statusCode == 200 && response.headers.containsValue('application/json')) {
-      if (json.decode(response.body)['data'] != null) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('settings', json.encode(json.decode(response.body)['data']));
-        _setting = Setting.fromJSON(json.decode(response.body)['data']);
-        if (prefs.containsKey('language')) {
-          _setting.mobileLanguage.value = Locale(prefs.get('language'), '');
-        }
-        _setting.brightness.value = prefs.getBool('isDark') ?? false ? Brightness.dark : Brightness.light;
-        setting.value = _setting;
-        // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
-        setting.notifyListeners();
-      }
-    } else {
-      print(CustomTrace(StackTrace.current, message: response.body).toString());
+
+    Map<String, String> data = {
+      "app_name": "Gogo Online",
+      "enable_stripe": "1",
+      "default_tax": "10",
+      "default_currency": "R",
+      "enable_paypal": "1",
+      "main_color": "#37474f",
+      "main_dark_color": "#312a3d",
+      "second_color": "#62727b",
+      "second_dark_color": "#ccccdd",
+      "accent_color": "#ffc107",
+      "accent_dark_color": "#c79100",
+      "scaffold_dark_color": "#2c2c2c",
+      "scaffold_color": "#37474f",
+      "google_maps_key": "AIzaSyAT07iMlfZ9bJt1gmGj9KhJDLFY8srI6dA",
+      "mobile_language": "en",
+      "app_version": "1.3.0",
+      "enable_version": "1",
+      "default_currency_decimal_digits": "2",
+      "currency_right": "0"
+    };
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('settings', json.encode(data));
+    _setting = Setting.fromJSON(data);
+    if (prefs.containsKey('language')) {
+      _setting.mobileLanguage.value = Locale(prefs.get('language'), '');
     }
+    _setting.brightness.value = prefs.getBool('isDark') ?? false ? Brightness.dark : Brightness.light;
+    setting.value = _setting;
+    // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+    setting.notifyListeners();
+
   } catch (e) {
     print(CustomTrace(StackTrace.current, message: url).toString());
     return Setting.fromJSON({});

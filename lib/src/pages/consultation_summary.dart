@@ -25,9 +25,20 @@ class ConsultationSummaryWidget extends StatefulWidget {
 
 class _ConsultationSummaryWidgetState extends StateMVC<ConsultationSummaryWidget> {
   ConsultationSummaryController _con;
+  String productName ="";
+  String healerName = "";
+  String consultationDate = "";
 
   _ConsultationSummaryWidgetState() : super(ConsultationSummaryController()) {
     _con = controller;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+   // _con.listenForCarts();
+
   }
 
   @override
@@ -69,11 +80,11 @@ class _ConsultationSummaryWidgetState extends StateMVC<ConsultationSummaryWidget
                    ListTile(
                      contentPadding: EdgeInsets.symmetric(vertical: 0),
                      leading: Icon(Icons.assistant_rounded,color: Theme.of(context).hintColor,),
-                     title: Text(_con.carts.first.product.name,maxLines: 1,
+                     title: Text(_con.sumCarts.value.isNotEmpty ? _con.sumCarts.value.elementAt(0).product.name : "",maxLines: 1, ///use a set state here
                        overflow: TextOverflow.ellipsis,
                        style: Theme.of(context).textTheme.headline4,
                      ),
-                     subtitle: Text( _con.carts.first.product.healer.name,
+                     subtitle: Text(_con.sumCarts.value.isNotEmpty ? _con.sumCarts.value.first.product.healer.name:"",
                        maxLines: 1,
                        overflow: TextOverflow.ellipsis,
                        style: Theme.of(context).textTheme.subtitle1,
@@ -83,7 +94,7 @@ class _ConsultationSummaryWidgetState extends StateMVC<ConsultationSummaryWidget
                    ListTile(
                      contentPadding: EdgeInsets.symmetric(vertical: 0),
                      leading: Icon(Icons.calendar_today_outlined,color: Theme.of(context).hintColor,),
-                     title: Text("Date: ${_con.carts.first.consultationDate}",maxLines: 1,
+                     title: Text("Date: ${_con.sumCarts.value.isNotEmpty ?_con.sumCarts.value.first.consultationDate:""}",maxLines: 1,
                        overflow: TextOverflow.ellipsis,
                        style: Theme.of(context).textTheme.subtitle1,
                      ),
