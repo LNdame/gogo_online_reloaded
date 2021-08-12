@@ -10,6 +10,7 @@ import 'src/pages/healer/healer_pages.dart';
 import 'src/pages/onboarding.dart';
 
 import 'src/models/route_argument.dart';
+import 'src/pages/paystack_payment.dart';
 import 'src/pages/waiting_room.dart';
 import 'src/pages/category.dart';
 import 'src/pages/checkout.dart';
@@ -96,6 +97,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => ConsultationSuccessWidget(routeArgument: RouteArgument(param: 'Pay on Pickup')));
       case '/PayFast':
         return MaterialPageRoute(builder: (_) => PayFastPaymentWidget(routeArgument: args as RouteArgument));
+      case '/PayStack':
+        return MaterialPageRoute(builder: (_) => PayStackPaymentWidget(routeArgument: args as RouteArgument));
      /* case '/RazorPay':
         return MaterialPageRoute(builder: (_) => RazorPayPaymentWidget(routeArgument: args as RouteArgument));*/
       case '/OrderSuccess':
