@@ -42,10 +42,11 @@ class SplashScreenController extends ControllerMVC {
       }
     });
 
-    Timer(Duration(seconds: 20), () {
+    Timer(Duration(seconds: 12), () {
       ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
         content: Text(S.of(state.context).verify_your_internet_connection),
       ));
+      settingRepo.navigatorKey.currentState.pushReplacementNamed('/Onboarding');
     });
   }
 

@@ -26,8 +26,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
 
 Future<Setting> initSettings() async {
   Setting _setting;
-  final String url = '${GlobalConfiguration().getString('api_base_url')}settings';
-  Uri uri = Uri.parse(url);
+
   try {
 
     var themeData = ThemeUtil.themeToMap();
@@ -43,7 +42,7 @@ Future<Setting> initSettings() async {
     setting.notifyListeners();
 
   } catch (e) {
-    print(CustomTrace(StackTrace.current, message: url).toString());
+    print(CustomTrace(StackTrace.current, message: "no settings found").toString());
     return Setting.fromJSON({});
   }
   return setting.value;
