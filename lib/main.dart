@@ -52,8 +52,8 @@ class _GogoOnlineInitializerState extends State<GogoOnlineInitializer> {
   @override
   void initState() {
     settingRepo.initSettings();
-    settingRepo.getCurrentLocation();
     userRepo.getCurrentUser();
+    settingRepo.getCurrentLocation();
     super.initState();
   }
 

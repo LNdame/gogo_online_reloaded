@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gogo_online/src/controllers/onboarding_controller.dart';
 import 'package:gogo_online/src/elements/BlockButtonWidget.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
 import '../helpers/app_constants.dart';
 import '../widgets/onboarding_screen_widget.dart';
 import '../../generated/l10n.dart';
@@ -9,7 +11,14 @@ class OnBoardingPage extends StatefulWidget {
   _OnBoardingPageState createState() => _OnBoardingPageState();
 }
 
-class _OnBoardingPageState extends State<OnBoardingPage> {
+class _OnBoardingPageState extends StateMVC<OnBoardingPage> {
+
+  OnBoardingController _con;
+
+  _OnBoardingPageState() : super(OnBoardingController()) {
+    _con = controller;
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size _size = MediaQuery.of(context).size;
