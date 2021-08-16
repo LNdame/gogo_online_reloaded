@@ -12,7 +12,7 @@
 
    <application
        android:icon="@mipmap/ic_launcher"
-       android:label="gogo_online"
+       android:label="Gogo Online"
        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
