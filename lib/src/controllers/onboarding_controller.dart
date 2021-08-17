@@ -18,7 +18,7 @@ class OnBoardingController extends ControllerMVC {
   @override
   void initState() {
     super.initState();
-    userRepo.getCurrentUser().then((user) => {
+    /*userRepo.getCurrentUser().then((user) => {
           if (user.auth != null)
             {
               if (user.firebaseUid.isNotEmpty)
@@ -28,6 +28,6 @@ class OnBoardingController extends ControllerMVC {
                       : settingRepo.navigatorKey.currentState.pushReplacementNamed('/HealerPages', arguments: 2)
                 }
             }
-        });
+        });*/
   }
 }

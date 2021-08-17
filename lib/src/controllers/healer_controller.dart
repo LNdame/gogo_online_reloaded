@@ -94,7 +94,11 @@ class HealerController extends ControllerMVC {
     }, onError: (a) {
       print(a);
     }, onDone: () {
-      healer..name = products?.elementAt(0)?.healer?.name;
+      try {
+        healer..name = products?.elementAt(0)?.healer?.name;
+      } catch (e) {
+        print(e);
+      }
     });
   }
 
