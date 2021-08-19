@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:global_configuration/global_configuration.dart';
 
 class Media {
@@ -9,9 +11,14 @@ class Media {
   String size;
 
   Media() {
-    url = "${GlobalConfiguration().getString('base_url')}images/image_default.png";
-    thumb = "${GlobalConfiguration().getString('base_url')}images/image_default.png";
-    icon = "${GlobalConfiguration().getString('base_url')}images/image_default.png";
+    var random= Random();
+    int min = 1;
+    int max = 5;
+    int node = min + random.nextInt(max - min);
+
+    url = "${GlobalConfiguration().getString('base_url')}images/female_avatar_$node.jpg";
+    thumb = "${GlobalConfiguration().getString('base_url')}images/female_avatar_$node.jpg";
+    icon = "${GlobalConfiguration().getString('base_url')}images/female_avatar_$node.jpg";
   }
 
   Media.fromJSON(Map<String, dynamic> jsonMap) {
@@ -23,9 +30,9 @@ class Media {
       icon = jsonMap['icon'];
       size = jsonMap['formated_size'];
     } catch (e) {
-      url = "${GlobalConfiguration().getString('base_url')}images/image_default.png";
-      thumb = "${GlobalConfiguration().getString('base_url')}images/image_default.png";
-      icon = "${GlobalConfiguration().getString('base_url')}images/image_default.png";
+      url = "${GlobalConfiguration().getString('base_url')}images/male_avatar_1.jpg";
+      thumb = "${GlobalConfiguration().getString('base_url')}images/male_avatar_1.jpg";
+      icon = "${GlobalConfiguration().getString('base_url')}images/male_avatar_1.jpg";
       print(e);
     }
   }
