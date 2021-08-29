@@ -16,9 +16,9 @@ class Media {
     int max = 5;
     int node = min + random.nextInt(max - min);
 
-    url = "${GlobalConfiguration().getString('base_url')}images/female_avatar_$node.jpg";
-    thumb = "${GlobalConfiguration().getString('base_url')}images/female_avatar_$node.jpg";
-    icon = "${GlobalConfiguration().getString('base_url')}images/female_avatar_$node.jpg";
+    url = "${GlobalConfiguration().getString('base_url')}images/avatar_$node.png";
+    thumb = "${GlobalConfiguration().getString('base_url')}images/avatar_$node.png";
+    icon = "${GlobalConfiguration().getString('base_url')}images/avatar_$node.png";
   }
 
   Media.fromJSON(Map<String, dynamic> jsonMap) {
@@ -30,9 +30,9 @@ class Media {
       icon = jsonMap['icon'];
       size = jsonMap['formated_size'];
     } catch (e) {
-      url = "${GlobalConfiguration().getString('base_url')}images/male_avatar_1.jpg";
-      thumb = "${GlobalConfiguration().getString('base_url')}images/male_avatar_1.jpg";
-      icon = "${GlobalConfiguration().getString('base_url')}images/male_avatar_1.jpg";
+      url = "${GlobalConfiguration().getString('base_url')}images/avatar.png";
+      thumb = "${GlobalConfiguration().getString('base_url')}images/avatar.png";
+      icon = "${GlobalConfiguration().getString('base_url')}images/avatar.png";
       print(e);
     }
   }
