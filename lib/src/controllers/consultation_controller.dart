@@ -21,9 +21,6 @@ class ConsultationController extends ControllerMVC {
       });
     }, onError: (a) {
       print(a);
-      ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
-        content: Text(S.of(state.context).verify_your_internet_connection),
-      ));
     }, onDone: () {
       if (message != null) {
         ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
@@ -41,9 +38,6 @@ class ConsultationController extends ControllerMVC {
       });
     }, onError: (a) {
       print(a);
-      ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
-        content: Text(S.of(state.context).verify_your_internet_connection),
-      ));
     }, onDone: () {
       if (message != null) {
         ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
