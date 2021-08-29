@@ -18,7 +18,7 @@ class CartController extends ControllerMVC {
   double subTotal = 0.0;
   double total = 0.0;
   GlobalKey<ScaffoldState> scaffoldKey;
-
+  ValueNotifier<List<Cart>> sumCarts = new ValueNotifier(List<Cart>());
   CartController() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
   }
@@ -41,6 +41,7 @@ class CartController extends ControllerMVC {
     }, onDone: () {
       if (carts.isNotEmpty) {
         calculateSubtotal();
+        sumCarts.value = carts;
       }
       if (message != null) {
         scaffoldKey?.currentState?.showSnackBar(SnackBar(

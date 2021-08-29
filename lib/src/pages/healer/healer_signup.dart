@@ -132,6 +132,23 @@ class _HealerRegistrationWidgetState extends StateMVC<HealerRegistrationWidget> 
                       children: [
                         TextFormField(
                           keyboardType: TextInputType.text,
+                          validator: (input)=>ValidatorUtil.genericEmptyValidator(input, "Please enter a name"),
+                          onSaved: (input) =>requestHealer.name = input, //_con.user.name = input,
+                          decoration: InputDecoration(
+                            labelText: "Practice Name",
+                            labelStyle: TextStyle(color: Theme.of(context).accentColor),
+                            contentPadding: EdgeInsets.all(12),
+                            hintText: S.of(context).siya_nkosi,
+                            hintStyle: TextStyle(color: Theme.of(context).focusColor.withOpacity(0.7)),
+                            prefixIcon: Icon(Icons.album_rounded, color: Theme.of(context).accentColor),
+                            border: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2))),
+                            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.5))),
+                            enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2))),
+                          ),
+                        ),
+                        SizedBox(height: 30,),
+                        TextFormField(
+                          keyboardType: TextInputType.text,
                           validator: (input)=>ValidatorUtil.genericEmptyValidator(input, "Please enter an address"),
                           onSaved: (input) =>requestHealer.address = input, //_con.user.name = input,
                           decoration: InputDecoration(
@@ -360,9 +377,26 @@ class _HealerRegistrationWidgetState extends StateMVC<HealerRegistrationWidget> 
                         TextFormField(
                           keyboardType: TextInputType.phone,
                           validator: ValidatorUtil.phoneValidator,
-                          onSaved: (input) =>requestHealer.phone = requestHealer.mobile =input, //_con.user.name = input,
+                          onSaved: (input) =>requestHealer.practiceNumber  =input, //_con.user.name = input,
                           decoration: InputDecoration(
-                            labelText: "Practice number (optional)",//S.of(context).full_address,
+                            labelText: "Practice number",//S.of(context).full_address,
+                            labelStyle: TextStyle(color: Theme.of(context).accentColor),
+                            contentPadding: EdgeInsets.all(12),
+                            hintText:"MP 075837583",
+                            hintStyle: TextStyle(color: Theme.of(context).focusColor.withOpacity(0.7)),
+                            prefixIcon: Icon(Icons.wb_shade, color: Theme.of(context).accentColor),
+                            border: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2))),
+                            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.5))),
+                            enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2))),
+                          ),
+                        ),
+                        SizedBox(height: 30,),
+                        TextFormField(
+                          keyboardType: TextInputType.phone,
+                          validator: ValidatorUtil.phoneValidator,
+                          onSaved: (input) =>requestHealer.mobile =input, //_con.user.name = input,
+                          decoration: InputDecoration(
+                            labelText: "Practice Contact Number (optional)",//S.of(context).full_address,
                             labelStyle: TextStyle(color: Theme.of(context).accentColor),
                             contentPadding: EdgeInsets.all(12),
                             hintText:"012 566 7685",

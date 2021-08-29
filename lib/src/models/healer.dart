@@ -8,7 +8,7 @@ class Healer {
   String rate;
   String address;
   String description;
-  String phone;
+  String practiceNumber;
   String mobile;
   String information;
  // double deliveryFee;
@@ -39,7 +39,7 @@ class Healer {
      // deliveryRange = jsonMap['delivery_range'] != null ? jsonMap['delivery_range'].toDouble() : 0.0;
       address = jsonMap['address'];
       description = jsonMap['description'];
-      phone = jsonMap['phone'];
+      practiceNumber = jsonMap['phone'];
       mobile = jsonMap['mobile'];
       defaultTax = jsonMap['default_tax'] != null ? jsonMap['default_tax'].toDouble() : 0.0;
       information = jsonMap['information'];
@@ -60,7 +60,7 @@ class Healer {
      // deliveryRange = 0.0;
       address = '';
       description = '';
-      phone = '';
+      practiceNumber = '';
       mobile = '';
       defaultTax = 0.0;
       information = '';
@@ -86,7 +86,7 @@ class Healer {
     map["address"] = address;
     map["latitude"] = latitude;
     map["longitude"] = longitude;
-    map["phone"] = phone;
+    map["phone"] = practiceNumber;
     map["mobile"] = mobile;
     map["language"] = language;
     map["admin_commission"] = adminCommission;

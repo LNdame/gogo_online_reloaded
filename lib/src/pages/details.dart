@@ -208,15 +208,15 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                               ),
 
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                                 margin: const EdgeInsets.symmetric(vertical: 5),
                                 color: Theme.of(context).primaryColor,
                                 child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Expanded(
                                       child: Text(
-                                        '${_con.healer.phone} \n${_con.healer.mobile}',
+                                        'Practice Number: ${_con.healer.practiceNumber}',
                                         overflow: TextOverflow.ellipsis,
                                         style: Theme.of(context).textTheme.bodyText1,
                                       ),
@@ -231,9 +231,9 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                                           launch("tel:${_con.healer.mobile}");
                                         },
                                         child: Icon(
-                                          Icons.call,
+                                          Icons.wb_shade,
                                           color: Theme.of(context).primaryColor,
-                                          size: 24,
+                                          size: 16,
                                         ),
                                         color: Theme.of(context).accentColor.withOpacity(0.9),
                                         shape: StadiumBorder(),

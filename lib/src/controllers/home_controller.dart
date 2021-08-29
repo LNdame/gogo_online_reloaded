@@ -21,8 +21,8 @@ class HomeController extends ControllerMVC {
 
   HomeController() {
     listenForTopHealers();
-    listenForTrendingProducts();
-    listenForCategories();
+   // listenForTrendingProducts();
+    //listenForCategories();
     listenForPopularHealers();
     listenForAllHealers();
     listenForRecentReviews();
@@ -95,8 +95,8 @@ class HomeController extends ControllerMVC {
       trendingProducts = <Product>[];
     });
     await listenForTopHealers();
-    await listenForTrendingProducts();
-    await listenForCategories();
+   // await listenForTrendingProducts();
+   // await listenForCategories();
     await listenForPopularHealers();
     await listenForRecentReviews();
   }

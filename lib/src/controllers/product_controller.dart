@@ -65,9 +65,11 @@ class ProductController extends ControllerMVC {
   }
 
   void addToCart(Product product, {bool reset = false}) async {
+
     setState(() {
       this.loadCart = true;
     });
+
     var _newCart = new Cart();
     _newCart.product = product;
     _newCart.options = product.options.where((element) => element.checked).toList();
@@ -75,7 +77,8 @@ class ProductController extends ControllerMVC {
     // if product exist in the cart then increment quantity
     var _oldCart = isExistInCart(_newCart);
     if (_oldCart != null) {
-      _oldCart.quantity += this.quantity;
+      //_oldCart.quantity += this.quantity;
+      _oldCart.quantity =1;
       updateCart(_oldCart).then((value) {
         setState(() {
           this.loadCart = false;

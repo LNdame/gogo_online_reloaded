@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:global_configuration/global_configuration.dart';
+import 'package:gogo_online/src/utils/ThemeUtil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
@@ -25,28 +26,23 @@ final navigatorKey = GlobalKey<NavigatorState>();
 
 Future<Setting> initSettings() async {
   Setting _setting;
-  final String url = '${GlobalConfiguration().getString('api_base_url')}settings';
-  Uri uri = Uri.parse(url);
+
   try {
-    final response = await http.get(uri, headers: {HttpHeaders.contentTypeHeader: 'application/json'});
-    if (response.statusCode == 200 && response.headers.containsValue('application/json')) {
-      if (json.decode(response.body)['data'] != null) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('settings', json.encode(json.decode(response.body)['data']));
-        _setting = Setting.fromJSON(json.decode(response.body)['data']);
-        if (prefs.containsKey('language')) {
-          _setting.mobileLanguage.value = Locale(prefs.get('language'), '');
-        }
-        _setting.brightness.value = prefs.getBool('isDark') ?? false ? Brightness.dark : Brightness.light;
-        setting.value = _setting;
-        // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
-        setting.notifyListeners();
-      }
-    } else {
-      print(CustomTrace(StackTrace.current, message: response.body).toString());
+
+    var themeData = ThemeUtil.themeToMap();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('settings', json.encode(themeData));
+    _setting = Setting.fromJSON(themeData);
+    if (prefs.containsKey('language')) {
+      _setting.mobileLanguage.value = Locale(prefs.get('language'), '');
     }
+    _setting.brightness.value = prefs.getBool('isDark') ?? false ? Brightness.dark : Brightness.light;
+    setting.value = _setting;
+    // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+    setting.notifyListeners();
+
   } catch (e) {
-    print(CustomTrace(StackTrace.current, message: url).toString());
+    print(CustomTrace(StackTrace.current, message: "no settings found").toString());
     return Setting.fromJSON({});
   }
   return setting.value;
