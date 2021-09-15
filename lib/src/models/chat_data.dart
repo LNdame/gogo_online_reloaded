@@ -44,13 +44,13 @@ class ChatData {
   Future<bool> fetchNewChats() async {
     final newData = await db.getNewChats(groupId, lastDoc);
     await Future.delayed(Duration.zero).then((value) {
-      newData.documents.forEach((element) {
+      newData.docs.forEach((element) {
       // print('new message added -------------> ${element['content']}');
-      messages.add(Message.fromMap(element.data));      
+      messages.add(Message.fromMap(element.data as Map<String, dynamic>));
     });
 
-    if (newData.documents.isNotEmpty) {
-      lastDoc = newData.documents[newData.documents.length - 1];
+    if (newData.docs.isNotEmpty) {
+      lastDoc = newData.docs[newData.docs.length - 1];
     }
     }).then((value) => value);    
 

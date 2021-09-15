@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
@@ -53,9 +52,9 @@ class MapsUtil {
       var endPoint =
           'https://maps.googleapis.com/maps/api/geocode/json?latlng=${location?.latitude},${location?.longitude}&language=${setting.value.mobileLanguage.value}&key=$apiKey';
       Uri endPointUri = Uri.parse(endPoint);
-      var response = jsonDecode((await http.get(endPointUri, headers: await LocationUtils.getAppHeaders())).body);
+      var response = "";// jsonDecode((await http.get(endPointUri, headers: await LocationUtils.getAppHeaders())).body);
 
-      return response['results'][0]['formatted_address'];
+      return "";// response['results'][0]['formatted_address'];
     } catch (e) {
       print(e);
       return null;

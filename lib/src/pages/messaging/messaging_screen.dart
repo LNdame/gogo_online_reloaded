@@ -164,7 +164,7 @@ class _MessagingScreenWidgetState extends StateMVC<MessagingScreenWidget> {
 
       // add to peer contacts too
       var userRef = await db.addToPeerContacts(peerId, userId);
-      ChatUser person = ChatUser.fromJson(userRef.data);
+      ChatUser person = ChatUser.fromJson(userRef.data as Map<String, dynamic>);
       ChatData initChatData = ChatData(
         userId: userId,
         peerId: peerId,

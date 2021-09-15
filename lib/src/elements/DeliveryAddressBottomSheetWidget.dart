@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:google_map_location_picker/google_map_location_picker.dart';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
@@ -46,7 +46,7 @@ class _DeliveryAddressBottomSheetWidgetState extends StateMVC<DeliveryAddressBot
               children: <Widget>[
                 InkWell(
                   onTap: () async {
-                    LocationResult result = await showLocationPicker(
+                    /*LocationResult result = await showLocationPicker(
                       context,
                       setting.value.googleMapsKey,
                       initialCenter: LatLng(billingAddress.value?.latitude ?? 0, billingAddress.value?.longitude ?? 0),
@@ -60,7 +60,7 @@ class _DeliveryAddressBottomSheetWidgetState extends StateMVC<DeliveryAddressBot
                       'latitude': result.latLng.latitude,
                       'longitude': result.latLng.longitude,
                     }));
-                    print("result = $result");
+                    print("result = $result");*/
                     // Navigator.of(widget.scaffoldKey.currentContext).pop();
                   },
                   child: Row(

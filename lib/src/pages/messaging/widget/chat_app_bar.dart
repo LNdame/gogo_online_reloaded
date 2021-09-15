@@ -40,9 +40,9 @@ class _ChatAppBarState extends State<ChatAppBar>
     );
 
     // steram of peer details
-    stream = Firestore.instance
+    stream = FirebaseFirestore.instance
         .collection(AppConstants.USERS_COLLECTION)
-        .document(widget.peer.id)
+        .doc(widget.peer.id)
         .snapshots();
 
     _animation = Tween(begin: 1.0, end: 0.0).animate(_animationController);

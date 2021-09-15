@@ -1,5 +1,6 @@
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gogo_online/src/models/chat_data.dart';
 import 'package:gogo_online/src/models/chat_user.dart';
@@ -48,15 +49,15 @@ class MessagingController extends ControllerMVC{
 
   Future<dynamic> getUserDetailsAndContacts(String currentUserUid) async {
     final userData = await db.getUser(currentUserUid);
-    _userDetails = ChatUser.fromJson(userData.data);
+    _userDetails = ChatUser.fromJson(userData.data as Map<String, dynamic>?);
    // _imageUrl = _user.photoUrl;
 
     setUserId(_userDetails.id);
 
-    if (userData.data != null)
-      userData.data['contacts'].forEach((elem) {
-        _contacts.add(elem);
-      });
+    if (userData.data != null){
+      List<dynamic> contacts = userData.get(FieldPath(['contacts']));
+    contacts.forEach((element) =>_contacts.add(element));
+    }
 
     await fetchChats();
     return true;
@@ -141,21 +142,21 @@ class MessagingController extends ControllerMVC{
   Future<ChatData> getChatData( String peerId) async {
     String groupId = getGroupId(peerId);
     final peer = await db.getUser(peerId);
-    final ChatUser person = ChatUser.fromJson(peer.data);
+    final ChatUser person = ChatUser.fromJson(peer.data as Map<String, dynamic>);
     final messagesData = await db.getChatItemData(groupId);
 
     int unreadCount = 0;
     List<Message> messages = [];
-    for (int i = 0; i < messagesData.documents.length; i++) {
+    for (int i = 0; i < messagesData.docs.length; i++) {
       var tmp = Message.fromMap(
-          Map<String, dynamic>.from(messagesData.documents[i].data));
+          Map<String, dynamic>.from(messagesData.docs[i].data as Map<String, dynamic>));
       messages.add(tmp);
       if (tmp.fromId == peerId && !tmp.isSeen) unreadCount++;
     }
 
     var lastDoc;
-    if (messagesData.documents.isNotEmpty)
-      lastDoc = messagesData.documents[messagesData.documents.length - 1];
+    if (messagesData.docs.isNotEmpty)
+      lastDoc = messagesData.docs[messagesData.docs.length - 1];
 
 
     ChatData chatData = ChatData(

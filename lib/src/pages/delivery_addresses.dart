@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_map_location_picker/google_map_location_picker.dart';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
@@ -51,7 +51,7 @@ class _DeliveryAddressesWidgetState extends StateMVC<DeliveryAddressesWidget> {
       floatingActionButton: _con.cart != null
           ? FloatingActionButton(
               onPressed: () async {
-                LocationResult result = await showLocationPicker(
+               /* LocationResult result = await showLocationPicker(
                   context,
                   setting.value.googleMapsKey,
                   initialCenter: LatLng(billingAddress.value?.latitude ?? 0, billingAddress.value?.longitude ?? 0),
@@ -66,7 +66,7 @@ class _DeliveryAddressesWidgetState extends StateMVC<DeliveryAddressesWidget> {
                   'longitude': result.latLng.longitude,
                 }));
                 print("result = $result");
-                //setState(() => _pickedLocation = result);
+                //setState(() => _pickedLocation = result);*/
               },
               backgroundColor: Theme.of(context).accentColor,
               child: Icon(

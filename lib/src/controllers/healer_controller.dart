@@ -226,15 +226,15 @@ class HealerController extends ControllerMVC {
 
     int unreadCount = 0;
     List<Message> messages = [];
-    for (int i = 0; i < messagesData.documents.length; i++) {
-      var tmp = Message.fromMap(Map<String, dynamic>.from(messagesData.documents[i].data));
+    for (int i = 0; i < messagesData.docs.length; i++) {
+      var tmp = Message.fromMap(Map<String, dynamic>.from(messagesData.docs[i].data as Map<String, dynamic>));
       messages.add(tmp);
       if(tmp.fromId == healer.firebaseId && !tmp.isSeen) unreadCount++;
     }
 
     var lastDoc;
-    if (messagesData.documents.isNotEmpty)
-      lastDoc = messagesData.documents[messagesData.documents.length - 1];
+    if (messagesData.docs.isNotEmpty)
+      lastDoc = messagesData.docs[messagesData.docs.length - 1];
 
 
     ChatData chatData = ChatData(

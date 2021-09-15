@@ -30,7 +30,7 @@ class MediaUploadingBubble extends StatefulWidget {
 
 class _MediaUploadingBubbleState extends State<MediaUploadingBubble> {
   Storage _storage;
-  StorageUploadTask _uploadTask;
+  UploadTask _uploadTask;
 
   bool uploadStarted = false;
   String path;
@@ -87,14 +87,13 @@ class _MediaUploadingBubbleState extends State<MediaUploadingBubble> {
                             : Image.file(widget.file, fit: BoxFit.cover, width: size.width * 0.7, height: size.height * 0.35),
                       ),
                     ),
-                    StreamBuilder<StorageTaskEvent>(
-                      stream: _uploadTask.events,
+                    StreamBuilder<TaskSnapshot>(
+                      stream: _uploadTask.snapshotEvents,
                       builder: (ctx, snapshots) {
-                        if (_uploadTask.isComplete &&
-                            _uploadTask.isSuccessful) {
+                        if (_uploadTask.snapshot.state == TaskState.success) {
                           onUploadCompleted();
                         }
-                        return _uploadTask.isInProgress
+                        return _uploadTask.snapshot.state == TaskState.running
                             ? Container(
                                 height: size.height * 0.35,
                                 width: size.width * 0.7,

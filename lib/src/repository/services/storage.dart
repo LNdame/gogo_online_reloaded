@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class Storage {
-  final _storageBucket =
-      FirebaseStorage(storageBucket: 'gs://gogo-online-24836.appspot.com');
+  final _storageBucket =FirebaseStorage.instanceFor(bucket:'gs://gogo-online-24836.appspot.com' );
+      //FirebaseStorage(storageBucket: 'gs://gogo-online-24836.appspot.com');
 
   Future<String> getUrl(String path, String id) async {
     try {
@@ -21,7 +21,7 @@ class Storage {
     }
   }
 
-  StorageUploadTask getUploadTask(File file, String path) {
+  UploadTask getUploadTask(File file, String path) {
     try {
       return _storageBucket.ref().child(path).putFile(file);
     } catch (error) {

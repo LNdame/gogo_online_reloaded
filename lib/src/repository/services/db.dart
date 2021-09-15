@@ -5,29 +5,29 @@ import 'package:gogo_online/src/models/message.dart';
 
 class DB{
   final CollectionReference _usersCollection =
-  Firestore.instance.collection(AppConstants.USERS_COLLECTION);
+  FirebaseFirestore.instance.collection(AppConstants.USERS_COLLECTION);
   final CollectionReference _messagesCollection =
-  Firestore.instance.collection(AppConstants.ALL_MESSAGES_COLLECTION);
+  FirebaseFirestore.instance.collection(AppConstants.ALL_MESSAGES_COLLECTION);
 
   Stream<QuerySnapshot> getContactsStream() {
-    return Firestore.instance.collection(AppConstants.USERS_COLLECTION).snapshots();
+    return FirebaseFirestore.instance.collection(AppConstants.USERS_COLLECTION).snapshots();
   }
 
   Stream<DocumentSnapshot> getUserContactsStream(String uid) {
-    return _usersCollection.document(uid).snapshots();
+    return _usersCollection.doc(uid).snapshots();
   }
 
   Future<DocumentSnapshot> getUser(String id) {
-    return _usersCollection.document(id).get();
+    return _usersCollection.doc(id).get();
   }
 
   void addNewMessage(String groupId, DateTime timeStamp, dynamic data) {
     try {
       _messagesCollection
-          .document(groupId)
+          .doc(groupId)
           .collection(AppConstants.CHATS_COLLECTION)
-          .document(timeStamp.millisecondsSinceEpoch.toString())
-          .setData(data);
+          .doc(timeStamp.millisecondsSinceEpoch.toString())
+          .set(data);
     } catch (error) {
       print('****************** DB addNewMessage error **********************');
       print(error);
@@ -38,11 +38,11 @@ class DB{
   Future<QuerySnapshot> getChatItemData(String groupId, [int limit = 20]) {
     try {
       return _messagesCollection
-          .document(groupId)
+          .doc(groupId)
           .collection(AppConstants.CHATS_COLLECTION)
           .orderBy('timeStamp', descending: true)
           .limit(limit)
-          .getDocuments();
+          .get();
     } catch (error) {
       print(
           '****************** DB getChatItemData error **********************');
@@ -53,10 +53,10 @@ class DB{
   void addMediaUrl(String groupId, String url, Message mediaMsg) {
     try {
       _messagesCollection
-          .document(groupId)
+          .doc(groupId)
           .collection(AppConstants.MEDIA_COLLECTION)
-          .document(mediaMsg.timeStamp)
-          .setData(MediaModel.fromMsgToMap(mediaMsg));
+          .doc(mediaMsg.timeStamp)
+          .set(MediaModel.fromMsgToMap(mediaMsg));
     } catch (error) {
       print('****************** DB addMediaUrl error **********************');
       print(error);
@@ -67,7 +67,7 @@ class DB{
   Stream<QuerySnapshot> getMediaCount(String groupId) {
     try {
       return _messagesCollection
-          .document(groupId)
+          .doc(groupId)
           .collection(AppConstants.MEDIA_COLLECTION)
           .snapshots();
     } catch (error) {
@@ -80,7 +80,7 @@ class DB{
   Stream<QuerySnapshot> getChatMediaStream(String groupId) {
     try {
       return _messagesCollection
-          .document(groupId)
+          .doc(groupId)
           .collection(AppConstants.MEDIA_COLLECTION)
           .snapshots();
     } catch (error) {
@@ -93,8 +93,8 @@ class DB{
   void updateContacts(String userId, dynamic contacts) {
     try {
       _usersCollection
-          .document(userId)
-          .setData({'contacts': contacts}, merge: true);
+          .doc(userId)
+          .set({'contacts': contacts}, SetOptions(merge: true));
     } catch (error) {
       print(
           '****************** DB updateContacts error **********************');
@@ -109,15 +109,17 @@ class DB{
     DocumentSnapshot docSnapshot;
 
     try {
-      doc = _usersCollection.document(peerId);
+      doc = _usersCollection.doc(peerId);
       docSnapshot = await doc.get();
 
       var peerContacts = [];
 
-      docSnapshot.data['contacts'].forEach((elem) => peerContacts.add(elem));
-      peerContacts.add(newContact);
+      List<dynamic> contacts = docSnapshot.get(FieldPath(['contacts']));
+      contacts.forEach((element) =>peerContacts.add(element));
+      // docSnapshot.data['contacts'].forEach((elem) => peerContacts.add(elem));
+      peerContacts.add(newContact);;
 
-      Firestore.instance.runTransaction((transaction) async {
+      FirebaseFirestore.instance.runTransaction((transaction) async {
         final freshDoc = await transaction.get(doc);
         transaction.update(freshDoc.reference, {'contacts': peerContacts});
       });
@@ -137,7 +139,7 @@ class DB{
       String groupChatId, DocumentSnapshot lastSnapshot) {
     try {
       return _messagesCollection
-          .document(groupChatId)
+          .doc(groupChatId)
           .collection(AppConstants.CHATS_COLLECTION)
           .startAfterDocument(lastSnapshot)
           .orderBy('timeStamp')
@@ -155,12 +157,12 @@ class DB{
       [int limit = 20]) {
     try {
       return _messagesCollection
-          .document(groupChatId)
+          .doc(groupChatId)
           .collection(AppConstants.CHATS_COLLECTION)
           .startAfterDocument(lastSnapshot)
           .limit(20)
           .orderBy('timeStamp', descending: true)
-          .getDocuments();
+          .get();
     } catch (error) {
       print(
           '****************** DB getSnapshotsAfter error **********************');
@@ -173,7 +175,7 @@ class DB{
       [int limit = 10]) {
     try {
       return _messagesCollection
-          .document(groupChatId)
+          .doc(groupChatId)
           .collection(AppConstants.CHATS_COLLECTION)
           .limit(limit)
           .orderBy('timeStamp', descending: true)
@@ -188,7 +190,7 @@ class DB{
 
   void updateMessageField(dynamic snapshot, String field, dynamic value) {
     try {
-      Firestore.instance.runTransaction((transaction) async {
+     FirebaseFirestore.instance.runTransaction((transaction) async {
         // DocumentSnapshot freshDoc = await transaction.get(snapshot.reference);
         transaction.update(snapshot.reference, {'$field': value});
       });
@@ -205,7 +207,7 @@ class DB{
   void addNewUser(
       String userId, String imageUrl, String username, String email) {
     try {
-      _usersCollection.document(userId).setData({
+      _usersCollection.doc(userId).set({
         'id': userId,
         'imageUrl': imageUrl,
         'username': username,
@@ -221,7 +223,7 @@ class DB{
 
   Future<DocumentSnapshot> getUserDocRef(String userId) async {
     try {
-      return _usersCollection.document(userId).get();
+      return _usersCollection.doc(userId).get();
     } catch (error) {
       print('****************** DB getUserDocRef error **********************');
       print(error);
@@ -231,7 +233,7 @@ class DB{
 
   void updateUserInfo(String userId, Map<String, dynamic> data) async {
     try {
-      _usersCollection.document(userId).setData(data, merge: true);
+      _usersCollection.doc(userId).set(data, SetOptions(merge: true) );
     } catch (error) {
       print(
           '****************** DB updateUserInfo error **********************');

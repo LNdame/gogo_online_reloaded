@@ -30,15 +30,16 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   shared_preferences: ^2.0.5
-  google_maps_flutter:
-  google_map_location_picker:
-  mvc_pattern:
-  firebase_core:
-  firebase_auth: ^0.15.1+1
+  google_maps_flutter: ^2.0.8
+  #google_map_location_picker:
+  mvc_pattern: ^7.1.4
+  firebase_core: "^0.7.0"
+  firebase_crashlytics: ^0.4.0+1
+  firebase_auth:
   firebase_storage:
   firebase_analytics:
-  # firebase_messaging:
-  global_configuration:
+  firebase_messaging:
+  global_configuration: ^0.1.2
   http:
   html:
   flutter_html:
@@ -50,31 +51,31 @@ dependencies:
   cached_network_image:
   fluttertoast:
   flutter_staggered_grid_view:
-  cloud_firestore:
+  cloud_firestore: ^0.16.0+1
   file_picker:
   video_player:
   intl:
   analyzer:
   flutter_screenutil:
-  fluro: "^1.6.3"
+  #fluro: "^1.6.3"
   lottie:
   path_provider:
   flutter_launcher_icons:
-  path:
+  path: ^1.8.0
   table_calendar:
   intl_utils:
   image_picker:
   json_annotation:
   keyboard_visibility:
   permission_handler:
-  agora_rtc_engine:
+  agora_rtc_engine: ^4.0.6
 
 
 dev_dependencies:
   flutter_native_splash:
   flutter_test:
     sdk: flutter
-  build_runner: ^1.10.2
+  build_runner:
   json_serializable:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

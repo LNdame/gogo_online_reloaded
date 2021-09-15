@@ -1,5 +1,8 @@
+import 'dart:async';
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,7 +15,15 @@ import 'src/models/setting.dart';
 import 'src/repository/settings_repository.dart' as settingRepo;
 import 'src/repository/user_repository.dart' as userRepo;
 import 'src/helpers/app_config.dart' as config;
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
+
+// Toggle this to cause an async error to be thrown during initialization
+// and to test that runZonedGuarded() catches the error
+const _kShouldTestAsyncErrorOnInit = true;
+
+// Toggle this for testing Crashlytics in your app locally.
+const _kTestingCrashlytics = true;
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext context) {
@@ -22,11 +33,17 @@ class MyHttpOverrides extends HttpOverrides {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Initialize Firebase.
+  await Firebase.initializeApp();
   await GlobalConfiguration().loadFromAsset("configurations");
   print(CustomTrace(StackTrace.current, message: "base_url: ${GlobalConfiguration().getString('base_url')}"));
   print(CustomTrace(StackTrace.current, message: "api_base_url: ${GlobalConfiguration().getString('api_base_url')}"));
   HttpOverrides.global = new MyHttpOverrides();
-  runApp(MyApp());
+
+  runZonedGuarded(() {
+    runApp(MyApp());
+  }, FirebaseCrashlytics.instance.recordError);
+
 }
 
 class MyApp extends StatelessWidget {
@@ -49,12 +66,49 @@ class GogoOnlineInitializer extends StatefulWidget{
 
 class _GogoOnlineInitializerState extends State<GogoOnlineInitializer> {
 
+  Future<void> _initializeFlutterFireFuture;
+
+  Future<void> _testAsyncErrorOnInit() async {
+    Future<void>.delayed(const Duration(seconds: 2), () {
+      final List<int> list = <int>[];
+      print(list[100]);
+    });
+  }
+
+  // Define an async function to initialize FlutterFire
+  Future<void> _initializeFlutterFire() async {
+    // Wait for Firebase to initialize
+
+    if (_kTestingCrashlytics) {
+      // Force enable crashlytics collection enabled if we're testing it.
+      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+    } else {
+      // Else only enable it in non-debug builds.
+      // You could additionally extend this to allow users to opt-in.
+      await FirebaseCrashlytics.instance
+          .setCrashlyticsCollectionEnabled(!kDebugMode);
+    }
+
+    // Pass all uncaught errors to Crashlytics.
+    Function originalOnError = FlutterError.onError;
+    FlutterError.onError = (FlutterErrorDetails errorDetails) async {
+      await FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
+      // Forward to original handler.
+      originalOnError(errorDetails);
+    };
+
+    if (_kShouldTestAsyncErrorOnInit) {
+      await _testAsyncErrorOnInit();
+    }
+  }
+
   @override
   void initState() {
     settingRepo.initSettings();
     userRepo.getCurrentUser();
     settingRepo.getCurrentLocation();
     super.initState();
+    _initializeFlutterFireFuture = _initializeFlutterFire();
   }
 
   @override

@@ -1,5 +1,5 @@
 //import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebaseAuth;
 import 'package:flutter/material.dart';
 import 'package:gogo_online/src/repository/services/db.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
@@ -16,14 +16,14 @@ class UserController extends ControllerMVC {
   GlobalKey<FormState> loginFormKey;
   GlobalKey<ScaffoldState> scaffoldKey;
   //FirebaseMessaging _firebaseMessaging;
-  FirebaseAuth _firebaseAuth ;
+  firebaseAuth.FirebaseAuth _firebaseAuth ;
   OverlayEntry loader;
 
   UserController() {
 
     loginFormKey = new GlobalKey<FormState>();
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
-    _firebaseAuth = FirebaseAuth.instance;
+    _firebaseAuth = firebaseAuth.FirebaseAuth.instance;
    // _firebaseMessaging = FirebaseMessaging();
    /* _firebaseMessaging.getToken().then((String _deviceToken) {
       user.deviceToken = _deviceToken;
@@ -123,9 +123,9 @@ class UserController extends ControllerMVC {
       try {
         final db = DB();
         db.addNewUser(value.user.uid, user.image.thumb, user.name, user.email);
-        UserUpdateInfo info = UserUpdateInfo();
-        info.displayName = user.name;
-        value.user.updateProfile(info);
+
+        value.user.updateDisplayName( user.name);
+
         repository.currentUser.value.firebaseUid = value.user.uid;
         repository.setCurrentUserFireBaseUid(value.user.uid);
       } catch (error) {
