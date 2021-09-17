@@ -49,7 +49,7 @@ class MessagingController extends ControllerMVC{
 
   Future<dynamic> getUserDetailsAndContacts(String currentUserUid) async {
     final userData = await db.getUser(currentUserUid);
-    _userDetails = ChatUser.fromJson(userData.data as Map<String, dynamic>?);
+    _userDetails = ChatUser.fromJson(userData.data as Map<String, dynamic>);
    // _imageUrl = _user.photoUrl;
 
     setUserId(_userDetails.id);

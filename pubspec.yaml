@@ -33,8 +33,8 @@ dependencies:
   google_maps_flutter: ^2.0.8
   #google_map_location_picker:
   mvc_pattern: ^7.1.4
-  firebase_core: "^0.7.0"
-  firebase_crashlytics: ^0.4.0+1
+  firebase_core: "^1.6.0"
+  firebase_crashlytics:
   firebase_auth:
   firebase_storage:
   firebase_analytics:
@@ -51,7 +51,7 @@ dependencies:
   cached_network_image:
   fluttertoast:
   flutter_staggered_grid_view:
-  cloud_firestore: ^0.16.0+1
+  cloud_firestore:
   file_picker:
   video_player:
   intl:
