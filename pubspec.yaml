@@ -39,6 +39,7 @@ dependencies:
   firebase_analytics:
   # firebase_messaging:
   global_configuration:
+  firebase_crashlytics:
   http:
   html:
   flutter_html:
