@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:io';
 
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,7 +28,19 @@ Future<void> main() async {
   print(CustomTrace(StackTrace.current, message: "base_url: ${GlobalConfiguration().getString('base_url')}"));
   print(CustomTrace(StackTrace.current, message: "api_base_url: ${GlobalConfiguration().getString('api_base_url')}"));
   HttpOverrides.global = new MyHttpOverrides();
-  runApp(MyApp());
+
+  // Set `enableInDevMode` to true to see reports while in debug mode
+  // This is only to be used for confirming that reports are being
+  // submitted as expected. It is not intended to be used for everyday
+  // development.
+  Crashlytics.instance.enableInDevMode = true;
+// Pass all uncaught errors to Crashlytics.
+  FlutterError.onError = Crashlytics.instance.recordFlutterError;
+
+  runZonedGuarded((){
+    runApp(MyApp());
+  },  Crashlytics.instance.recordError );
+
 }
 
 class MyApp extends StatelessWidget {
@@ -55,6 +69,7 @@ class _GogoOnlineInitializerState extends State<GogoOnlineInitializer> {
     userRepo.getCurrentUser();
     settingRepo.getCurrentLocation();
     super.initState();
+    //Crashlytics.instance.crash();
   }
 
   @override
