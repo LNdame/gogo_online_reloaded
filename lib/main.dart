@@ -37,10 +37,11 @@ Future<void> main() async {
 // Pass all uncaught errors to Crashlytics.
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
 
-  runZonedGuarded((){
+  runZonedGuarded(() {
     runApp(MyApp());
-  },  Crashlytics.instance.recordError );
-
+  }, (error, stacktrace) {
+    Crashlytics.instance.recordError(error, stacktrace);
+  });
 }
 
 class MyApp extends StatelessWidget {

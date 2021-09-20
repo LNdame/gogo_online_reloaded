@@ -1,10 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:gogo_online/src/helpers/app_constants.dart';
 import 'package:gogo_online/src/models/chat_data.dart';
-import 'package:gogo_online/src/models/chat_user.dart';
 import 'package:gogo_online/src/pages/messaging/messaging_screen.dart';
 import 'package:gogo_online/src/repository/user_repository.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
@@ -13,13 +10,10 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../generated/l10n.dart';
 import '../controllers/healer_controller.dart';
 import '../elements/CircularLoadingWidget.dart';
-import '../elements/GalleryCarouselWidget.dart';
 import '../elements/ProductItemWidget.dart';
-import '../elements/ReviewsListWidget.dart';
 import '../elements/ShoppingCartFloatButtonWidget.dart';
 import '../helpers/helper.dart';
 import '../models/route_argument.dart';
-import '../repository/settings_repository.dart';
 
 class DetailsWidget extends StatefulWidget {
   final RouteArgument routeArgument;
@@ -41,14 +35,13 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
   @override
   void initState() {
     _con.listenForHealer(id: widget.routeArgument.id, currentUserUid: currentUser.value.firebaseUid);
-    _con.listenForGalleries(widget.routeArgument.id);
-    _con.listenForFeaturedProducts(widget.routeArgument.id);
+    //_con.listenForGalleries(widget.routeArgument.id);
+   // _con.listenForFeaturedProducts(widget.routeArgument.id);
     _con.listenForProducts(widget.routeArgument.id);
     _con.listenForHealerReviews(id: widget.routeArgument.id);
   //  _con.listenForChatData(currentUser.value.firebaseUid, _con.healerPeer);
     super.initState();
   }
-
 
   void goToChat(BuildContext context){
 
@@ -260,7 +253,7 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                                 child: Helper.applyHtml(context, _con.healer.language),
                               ),
-                              _con.featuredProducts.isEmpty
+                            /*  _con.featuredProducts.isEmpty
                                   ? SizedBox(height: 0)
                                   : Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -276,7 +269,7 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                                           style: Theme.of(context).textTheme.headline4,
                                         ),
                                       ),
-                                    ),
+                                    ),*/
                               _con.products.isEmpty
                                   ? SizedBox(height: 0)
                                   : ListView.separated(
