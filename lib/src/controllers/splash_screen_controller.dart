@@ -39,14 +39,6 @@ class SplashScreenController extends ControllerMVC {
       print(CustomTrace(StackTrace.current, message: e));
     }
 
-  /*  settingRepo.setting.addListener(() {
-      if (settingRepo.setting.value.appName != null && settingRepo.setting.value.appName != '' && settingRepo.setting.value.mainColor != null) {
-        progress.value["Setting"] = 0;
-        // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-        progress?.notifyListeners();
-      }
-    });*/
-
     Timer(Duration(seconds: 2), () {
         settingRepo.navigatorKey.currentState.pushReplacementNamed('/Onboarding');
     });
