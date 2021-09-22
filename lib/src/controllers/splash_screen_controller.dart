@@ -27,26 +27,28 @@ class SplashScreenController extends ControllerMVC {
     super.initState();
   //  firebaseMessaging.requestNotificationPermissions(const IosNotificationSettings(sound: true, badge: true, alert: true));
     //configureFirebase(firebaseMessaging);
-    userRepo.currentUser.addListener(() {
-      if (userRepo.currentUser.value.auth != null) {
-        progress.value["User"] = 100;
-        // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
-        progress?.notifyListeners();
-      }
-    });
-    settingRepo.setting.addListener(() {
+    try{
+      userRepo.currentUser.addListener(() {
+        if (userRepo.currentUser.value.auth != null) {
+          progress.value["User"] = 100;
+          // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+          progress?.notifyListeners();
+        }
+      });
+    }catch (e){
+      print(CustomTrace(StackTrace.current, message: e));
+    }
+
+  /*  settingRepo.setting.addListener(() {
       if (settingRepo.setting.value.appName != null && settingRepo.setting.value.appName != '' && settingRepo.setting.value.mainColor != null) {
-        progress.value["Setting"] = 100;
+        progress.value["Setting"] = 0;
         // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
         progress?.notifyListeners();
       }
-    });
+    });*/
 
-    Timer(Duration(seconds: 12), () {
-      ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
-        content: Text(S.of(state.context).verify_your_internet_connection),
-      ));
-      settingRepo.navigatorKey.currentState.pushReplacementNamed('/Onboarding');
+    Timer(Duration(seconds: 2), () {
+        settingRepo.navigatorKey.currentState.pushReplacementNamed('/Onboarding');
     });
   }
 

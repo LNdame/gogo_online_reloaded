@@ -51,12 +51,13 @@ android {
 
     defaultConfig {
         applicationId "co.za.inqb8.gogo_online"
-        minSdkVersion 23
+        minSdkVersion 22
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+
     }
 
     signingConfigs {
@@ -71,25 +72,18 @@ android {
         debug {
             minifyEnabled true
             firebaseCrashlytics {
-                // If you don't need crash reporting for your debug build,
-                // you can speed up your build by disabling mapping file uploading.
                 mappingFileUploadEnabled false
             }
         }
 
         release {
+            signingConfig signingConfigs.release
             minifyEnabled true
-            // When minifyEnabled is set to true, Crashlytics automatically
-            // uploads mapping files because the plugin detects that obfuscation
-            // is enabled. mappingFileUploadEnabled defaults to true if
-            // minifyEnabled is true.
             firebaseCrashlytics {
-                // If you don't need crash reporting for your debug build,
-                // you can speed up your build by disabling mapping file uploading.
                 mappingFileUploadEnabled false
             }
+            useProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
         }
     }
 
