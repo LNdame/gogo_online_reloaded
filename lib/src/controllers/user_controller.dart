@@ -15,22 +15,24 @@ class UserController extends ControllerMVC {
   bool loading = false;
   GlobalKey<FormState> loginFormKey;
   GlobalKey<ScaffoldState> scaffoldKey;
+
   //FirebaseMessaging _firebaseMessaging;
-  FirebaseAuth _firebaseAuth ;
+  FirebaseAuth _firebaseAuth;
+
   OverlayEntry loader;
 
   UserController() {
-
     loginFormKey = new GlobalKey<FormState>();
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
     _firebaseAuth = FirebaseAuth.instance;
-   // _firebaseMessaging = FirebaseMessaging();
-   /* _firebaseMessaging.getToken().then((String _deviceToken) {
+    // _firebaseMessaging = FirebaseMessaging();
+    /* _firebaseMessaging.getToken().then((String _deviceToken) {
       user.deviceToken = _deviceToken;
     }).catchError((e) {
       print('Notification not configured');
     });*/
   }
+
 //TODO look at the update if that is not a better way
   void login() async {
     loader = Helper.overlayLoader(state.context);
@@ -40,9 +42,9 @@ class UserController extends ControllerMVC {
       Overlay.of(state.context).insert(loader);
       repository.login(user).then((value) {
         if (value != null && value.apiToken != null) {
-          if(value.role.name =="manager"){
+          if (value.role.name == "manager") {
             Navigator.of(scaffoldKey.currentContext).pushReplacementNamed('/HealerPages', arguments: 2);
-          }else{
+          } else {
             Navigator.of(scaffoldKey.currentContext).pushReplacementNamed('/Pages', arguments: 2);
           }
           firebaseSilentLogin(user.email, user.password);
@@ -119,7 +121,7 @@ class UserController extends ControllerMVC {
   }
 
   void registerOnFirebase(User user, String password) {
-    _firebaseAuth.createUserWithEmailAndPassword(email: user.email, password:password).then((value) {
+    _firebaseAuth.createUserWithEmailAndPassword(email: user.email, password: password).then((value) {
       try {
         final db = DB();
         db.addNewUser(value.user.uid, user.image.thumb, user.name, user.email);
@@ -134,12 +136,10 @@ class UserController extends ControllerMVC {
     });
   }
 
-
-  void firebaseSilentLogin(email, password){
-    _firebaseAuth.signInWithEmailAndPassword(email: email, password: password).then((value){
+  void firebaseSilentLogin(email, password) {
+    _firebaseAuth.signInWithEmailAndPassword(email: email, password: password).then((value) {
       repository.currentUser.value.firebaseUid = value.user.uid;
       repository.setCurrentUserFireBaseUid(value.user.uid);
     });
   }
-
 }

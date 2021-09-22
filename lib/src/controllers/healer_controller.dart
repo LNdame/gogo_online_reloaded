@@ -56,7 +56,7 @@ class HealerController extends ControllerMVC {
       ));
     }, onDone: () {
       if(currentUserUid!=null){
-        listenForChatData(currentUserUid, healerPeer);
+       // listenForChatData(currentUserUid, healerPeer);
       }
       if (message != null) {
         ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(

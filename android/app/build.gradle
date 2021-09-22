@@ -24,14 +24,15 @@ if (flutterVersionName == null) {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.firebase.crashlytics'
 
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'
+
 android {
     compileSdkVersion 30
 
@@ -50,12 +51,13 @@ android {
 
     defaultConfig {
         applicationId "co.za.inqb8.gogo_online"
-        minSdkVersion 23
+        minSdkVersion 22
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+
     }
 
     signingConfigs {
@@ -67,9 +69,21 @@ android {
         }
     }
     buildTypes {
+        debug {
+            minifyEnabled true
+//            firebaseCrashlytics {
+//                mappingFileUploadEnabled false
+//            }
+        }
+
         release {
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            minifyEnabled true
+//            firebaseCrashlytics {
+//                mappingFileUploadEnabled false
+//            }
+            useProguard true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 

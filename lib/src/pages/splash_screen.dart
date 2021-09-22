@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gogo_online/src/helpers/app_constants.dart';
+import 'package:gogo_online/src/helpers/custom_trace.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import '../../generated/l10n.dart';
 import '../repository/user_repository.dart' as userRepo;
-
-
-
 import '../controllers/splash_screen_controller.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -25,7 +23,7 @@ class SplashScreenState extends StateMVC<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    loadData();
+   // loadData();
   }
 
   void loadData() {
@@ -34,17 +32,19 @@ class SplashScreenState extends StateMVC<SplashScreen> {
       _con.progress.value.values.forEach((_progress) {
         progress += _progress;
       });
-      if (progress ==200) {
+      if (progress >= 100) {
         try {
-          if(userRepo.currentUser.value.apiToken == null){
+          if (userRepo.currentUser.value.apiToken == null) {
             Navigator.of(context).pushReplacementNamed('/Onboarding');
-          }else if ( userRepo.currentUser.value.apiToken != null){
-            userRepo.currentUser.value.role.name == AppConstants.ROLE_CLIENT ?
-            Navigator.of(context).pushReplacementNamed('/Pages', arguments: 2): Navigator.of(context).pushNamed('/HealerPages', arguments: 2);
-
+          } else if (userRepo.currentUser.value.apiToken != null) {
+            userRepo.currentUser.value.role.name == AppConstants.ROLE_CLIENT
+                ? Navigator.of(context).pushReplacementNamed('/Pages', arguments: 2)
+                : Navigator.of(context).pushNamed('/HealerPages', arguments: 2);
           }
-
-        } catch (e) {}
+        } catch (e) {
+          print(CustomTrace(StackTrace.current, message: e));
+          Navigator.of(context).pushReplacementNamed('/Onboarding');
+        }
       }
     });
   }
@@ -80,8 +80,6 @@ class SplashScreenState extends StateMVC<SplashScreen> {
     );
   }
 }
-
-
 
 /*Container(
         decoration: BoxDecoration(

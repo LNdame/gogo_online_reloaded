@@ -28,7 +28,6 @@ Future<Setting> initSettings() async {
   Setting _setting;
 
   try {
-
     var themeData = ThemeUtil.themeToMap();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('settings', json.encode(themeData));
@@ -81,12 +80,16 @@ Future<Address> changeCurrentLocation(Address _address) async {
 Future<Address> getCurrentLocation() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   //await prefs.clear();
-  if (prefs.containsKey('delivery_address')) {
-    billingAddress.value = Address.fromJSON(json.decode(prefs.getString('delivery_address')));
-    return billingAddress.value;
-  } else {
-    billingAddress.value = Address.fromJSON({});
-    return Address.fromJSON({});
+  try {
+    if (prefs.containsKey('delivery_address')) {
+      billingAddress.value = Address.fromJSON(json.decode(prefs.getString('delivery_address')));
+      return billingAddress.value;
+    } else {
+      billingAddress.value = Address.fromJSON({});
+      return Address.fromJSON({});
+    }
+  } catch (e) {
+    // Do Nothing
   }
 }
 
@@ -111,7 +114,7 @@ Future<void> setDefaultLanguage(String language) async {
 Future<String> getDefaultLanguage(String defaultLanguage) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   if (prefs.containsKey('language')) {
-    defaultLanguage = await prefs.get('language');
+    defaultLanguage = prefs.get('language');
   }
   return defaultLanguage;
 }
@@ -125,5 +128,5 @@ Future<void> saveMessageId(String messageId) async {
 
 Future<String> getMessageId() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  return await prefs.get('google.message_id');
+  return prefs.get('google.message_id');
 }
