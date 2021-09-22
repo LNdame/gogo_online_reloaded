@@ -23,7 +23,7 @@ class OnBoardingController extends ControllerMVC {
       userRepo.getCurrentUser().then((user) => {
             if (user.auth != null)
               {
-                if (user.firebaseUid.isNotEmpty)
+                if (user.firebaseUid!=null && user.firebaseUid.isNotEmpty)
                   {
                     user.role.name == AppConstants.ROLE_CLIENT
                         ? settingRepo.navigatorKey.currentState.pushReplacementNamed('/Pages', arguments: 2)
@@ -32,6 +32,10 @@ class OnBoardingController extends ControllerMVC {
                   }
               }
           });
+    } on NoSuchMethodError catch(ne){
+      print(CustomTrace(StackTrace.current, message: ne.toString()));
+    } on Exception catch(_){
+      print("error caught");
     } catch (e) {
       print(CustomTrace(StackTrace.current, message: e));
     }

@@ -25,7 +25,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'
+//apply plugin: 'com.google.firebase.crashlytics'
 
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
@@ -71,17 +71,17 @@ android {
     buildTypes {
         debug {
             minifyEnabled true
-            firebaseCrashlytics {
-                mappingFileUploadEnabled false
-            }
+//            firebaseCrashlytics {
+//                mappingFileUploadEnabled false
+//            }
         }
 
         release {
             signingConfig signingConfigs.release
             minifyEnabled true
-            firebaseCrashlytics {
-                mappingFileUploadEnabled false
-            }
+//            firebaseCrashlytics {
+//                mappingFileUploadEnabled false
+//            }
             useProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
