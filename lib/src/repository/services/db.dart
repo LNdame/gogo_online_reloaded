@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gogo_online/src/helpers/app_constants.dart';
+import 'package:gogo_online/src/helpers/custom_trace.dart';
 import 'package:gogo_online/src/models/media_model.dart';
 import 'package:gogo_online/src/models/message.dart';
 
@@ -14,11 +15,40 @@ class DB{
   }
 
   Stream<DocumentSnapshot> getUserContactsStream(String uid) {
-    return _usersCollection.document(uid).snapshots();
+    try{
+      print("obtaining user contact =====");
+      var snapshots =_usersCollection.document(uid).snapshots();
+      print("obtained user contact =====");
+      return snapshots;
+
+    }on NoSuchMethodError catch (ne) {
+      print(CustomTrace(StackTrace.current, message: ne.toString()));
+      return null;
+    } on Exception catch (_) {
+      print("error caught");
+      return null;
+    } catch (e) {
+      print(CustomTrace(StackTrace.current, message: e));
+      return null;
+    }
+
   }
 
   Future<DocumentSnapshot> getUser(String id) {
-    return _usersCollection.document(id).get();
+    try{
+      print("getting user db ******");
+      return _usersCollection.document(id).get();
+    }on NoSuchMethodError catch (ne) {
+      print(CustomTrace(StackTrace.current, message: ne.toString()));
+      return null;
+    } on Exception catch (_) {
+      print("error caught");
+      return null;
+    } catch (e) {
+      print(CustomTrace(StackTrace.current, message: e));
+      return null;
+    }
+
   }
 
   void addNewMessage(String groupId, DateTime timeStamp, dynamic data) {
