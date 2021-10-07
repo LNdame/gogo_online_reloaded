@@ -36,10 +36,12 @@ class _ActiveChatWidgetState extends StateMVC<ActiveChatWidget> {
 
   @override
   void initState() {
-
+    print('active chat initcalled =============');
     super.initState();
     db = DB();
+    print('${currentUser.value.firebaseUid} active chat init database =============');
     _con.getUserDetailsAndContacts(currentUser.value.firebaseUid);
+    print('active chat init _con.getUserDetailsAndContacts =============');
   }
 
   Widget _buildChats(List<ChatData> chats) => BodyList(

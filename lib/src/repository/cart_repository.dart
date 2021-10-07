@@ -66,7 +66,7 @@ Future<Cart> addCart(Cart cart, bool reset) async {
     body: json.encode(cart.toMap()),
   );
   try {
-    decodedJSON = json.decode(response.body)['data'] as Map<String, dynamic>;
+    decodedJSON = json.decode(response.body)['data'] ;
   } on FormatException catch (e) {
     print(e);
   }
