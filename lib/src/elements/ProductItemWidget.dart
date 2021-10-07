@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../helpers/helper.dart';
@@ -21,12 +22,14 @@ class ProductItemWidget extends StatelessWidget {
         Navigator.of(context).pushNamed('/Product', arguments: RouteArgument(id: product.id, heroTag: this.heroTag));
       },
       child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 16),
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor.withOpacity(0.9),
           boxShadow: [
-            BoxShadow(color: Theme.of(context).focusColor.withOpacity(0.1), blurRadius: 5, offset: Offset(0, 2)),
+            BoxShadow(color: Theme.of(context).focusColor.withOpacity(0.1), blurRadius: 5, offset: Offset(0, 2), spreadRadius: 5),
           ],
+          borderRadius: BorderRadius.circular(16)
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,

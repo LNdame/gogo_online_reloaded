@@ -75,6 +75,26 @@ class _ConsultationItemWithDateWidgetState extends State<ConsultationItemWithDat
                                   heroTag: 'mywidget.orders', order: widget.consultation, productOrder: widget.consultation.productConsultations.elementAt(indexProduct));
                             },
                           )),
+                      Padding(padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                        child: TextButton.icon(
+                          onPressed: (){},
+                          style: TextButton.styleFrom(
+                            primary: Theme.of(context).primaryColor,
+                            backgroundColor: Theme.of(context).accentColor,
+                            textStyle: Theme.of(context).textTheme.caption.merge(TextStyle(height: 1,color: Theme.of(context).primaryColor)),
+                            shape: StadiumBorder(),
+                            elevation: 5
+                          ),
+                          icon: Icon(
+                            Icons.chat,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          label: Text("Chat with healer",
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+
+                      ),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                         child: Column(
