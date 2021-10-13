@@ -31,7 +31,7 @@ class _ConsultationsWidgetState extends StateMVC<ConsultationsWidget> {
   @override
   void initState() {
     super.initState();
-    _con.listenForConsultations(message: 'Loaded');
+    _con.listenForConsultations();
   }
 
   @override

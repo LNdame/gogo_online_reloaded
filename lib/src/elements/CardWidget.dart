@@ -87,7 +87,7 @@ class CardWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        healer.name,
+                        healer.name??"",
                         overflow: TextOverflow.fade,
                         softWrap: false,
                         style: Theme.of(context).textTheme.subtitle1,

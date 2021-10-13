@@ -1,3 +1,4 @@
+
 class ValidatorUtil {
   static String phoneValidator(String value) {
     String pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
@@ -24,5 +25,22 @@ class ValidatorUtil {
     else{
       return "$dateItem";
     }
+  }
+
+  static bool isNowPastTheDate(String date, String time){
+    String dateTime= "$date $time:00";
+    try {
+      var parsedDate = DateTime.parse(dateTime);
+      var now = new DateTime.now();
+      return parsedDate.isBefore(now);
+    }on TypeError catch (ce){
+      print("$ce");
+      return false;
+    } catch (e){
+      print("$e");
+      return false;
+    }
+
+
   }
 }
