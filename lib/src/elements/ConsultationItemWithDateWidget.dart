@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gogo_online/generated/l10n.dart';
+import 'package:gogo_online/src/controllers/consultation_item_controller.dart';
 import 'package:gogo_online/src/helpers/app_constants.dart';
 import 'package:gogo_online/src/helpers/helper.dart';
+import 'package:gogo_online/src/models/chat_data.dart';
 import 'package:gogo_online/src/models/consultation.dart';
 import 'package:gogo_online/src/models/route_argument.dart';
+import 'package:gogo_online/src/pages/messaging/messaging_screen.dart';
 import 'package:gogo_online/src/repository/user_repository.dart';
+import 'package:gogo_online/src/utils/ValidatorUtil.dart';
 import 'package:intl/intl.dart';
+import 'package:mvc_pattern/mvc_pattern.dart';
 
 import 'ProductOrderItemWidget.dart';
 
@@ -20,7 +25,42 @@ class ConsultationItemWithDateWidget extends StatefulWidget {
   _ConsultationItemWithDateWidgetState createState() => _ConsultationItemWithDateWidgetState();
 }
 
-class _ConsultationItemWithDateWidgetState extends State<ConsultationItemWithDateWidget> {
+class _ConsultationItemWithDateWidgetState extends StateMVC<ConsultationItemWithDateWidget> {
+  ConsultationItemController _con;
+  bool showChatButton = false;
+  _ConsultationItemWithDateWidgetState(): super(ConsultationItemController()){
+    _con= controller;
+  }
+
+  @override
+  void initState() {
+
+    var id = widget.consultation.productConsultations[0].product.healer.id;
+    _con.listenForHealer(id: id, currentUserUid: currentUser.value.firebaseUid );
+
+    showChatButton = ValidatorUtil.isNowPastTheDate(widget.consultation.consultationDate, widget.consultation.consultationStartTime);
+
+    // TODO: implement initState
+    super.initState();
+  }
+
+
+
+
+  void goToChat(BuildContext context){
+
+    final initData = _con.chatData ??
+        new ChatData(
+            groupId: _con.getGroupId(currentUser.value.firebaseUid),
+            userId: currentUser.value.firebaseUid,
+            peerId: _con.healerPeer.id,
+            peer: _con.healerPeer,
+            messages: []
+        );
+
+    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> MessagingScreenWidget(chatData: initData)));
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).copyWith(dividerColor: Colors.transparent);
@@ -75,9 +115,12 @@ class _ConsultationItemWithDateWidgetState extends State<ConsultationItemWithDat
                                   heroTag: 'mywidget.orders', order: widget.consultation, productOrder: widget.consultation.productConsultations.elementAt(indexProduct));
                             },
                           )),
+                      showChatButton?
                       Padding(padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                         child: TextButton.icon(
-                          onPressed: (){},
+                          onPressed: (){
+                            goToChat(context);
+                          },
                           style: TextButton.styleFrom(
                             primary: Theme.of(context).primaryColor,
                             backgroundColor: Theme.of(context).accentColor,
@@ -93,8 +136,7 @@ class _ConsultationItemWithDateWidgetState extends State<ConsultationItemWithDat
                             textAlign: TextAlign.start,
                           ),
                         ),
-
-                      ),
+                      ):SizedBox(height: 0,),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                         child: Column(
