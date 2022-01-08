@@ -77,6 +77,6 @@ class User {
   }
 
   bool profileCompleted() {
-    return address != null && address != '' && phone != null && phone != '';
+    return  phone != null && phone != '';
   }
 }

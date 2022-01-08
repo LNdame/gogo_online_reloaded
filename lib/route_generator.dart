@@ -4,7 +4,7 @@ import 'package:gogo_online/src/models/cart.dart';
 import 'package:gogo_online/src/pages/consultations.dart';
 import 'package:gogo_online/src/pages/healer/healer_signup.dart';
 import 'package:gogo_online/src/pages/healer/healer_signup_success.dart';
-import 'package:gogo_online/src/pages/payfast_payment.dart';
+import 'package:gogo_online/src/pages/netcash_payment.dart';
 import 'package:gogo_online/src/pages/scheduler.dart';
 import 'src/pages/healer/healer_pages.dart';
 import 'src/pages/onboarding.dart';
@@ -95,8 +95,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => ConsultationSuccessWidget(routeArgument: RouteArgument(param: 'Cash on Delivery')));
       case '/PayOnPickup':
         return MaterialPageRoute(builder: (_) => ConsultationSuccessWidget(routeArgument: RouteArgument(param: 'Pay on Pickup')));
-      case '/PayFast':
-        return MaterialPageRoute(builder: (_) => PayFastPaymentWidget(routeArgument: args as RouteArgument));
+      case '/NetCash':
+        return MaterialPageRoute(builder: (_) => NetCashPaymentWidget(routeArgument: args as RouteArgument));
       case '/PayStack':
         return MaterialPageRoute(builder: (_) => PayStackPaymentWidget(routeArgument: args as RouteArgument));
      /* case '/RazorPay':
