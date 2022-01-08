@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:global_configuration/global_configuration.dart';
-import 'package:gogo_online/src/controllers/payfast_controller.dart';
+import 'package:gogo_online/src/controllers/netcash_controller.dart';
 import 'package:gogo_online/src/models/cart.dart';
 import 'package:gogo_online/src/models/route_argument.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 // ignore: must_be_immutable
-class PayFastPaymentWidget extends StatefulWidget {
+class NetCashPaymentWidget extends StatefulWidget {
   RouteArgument routeArgument;
   final List<Cart> carts ;
   final double total;
-  PayFastPaymentWidget({Key key, this.routeArgument, this.carts, this.total}) : super(key: key);
+  NetCashPaymentWidget({Key key, this.routeArgument, this.carts, this.total}) : super(key: key);
 
   @override
-  _PayFastPaymentWidgetState createState() => _PayFastPaymentWidgetState();
+  _NetCashPaymentWidgetState createState() => _NetCashPaymentWidgetState();
 }
 
-class _PayFastPaymentWidgetState extends StateMVC<PayFastPaymentWidget> {
+class _NetCashPaymentWidgetState extends StateMVC<NetCashPaymentWidget> {
 
-  PayFastController _con;
+  NetCashController _con;
 
 
-  _PayFastPaymentWidgetState() : super(PayFastController()) {
+  _NetCashPaymentWidgetState() : super(NetCashController()) {
     _con = controller;
   }
 
@@ -60,8 +60,11 @@ class _PayFastPaymentWidgetState extends StateMVC<PayFastPaymentWidget> {
                 setState(() {
                   _con.url = url;
                 });
-                if(url ==  "https://gogo.dobo-app.com/payfast/return"){
+                if(url.contains("netcash/accept") ){
                   Navigator.of(context).pushReplacementNamed("/PayOnPickup");
+                }
+                if(url.contains("netcash/cancel") || url.contains("netcash/redirect")){
+                  Navigator.of(context).pushReplacementNamed("/Cart");
                 }
               },
             ),

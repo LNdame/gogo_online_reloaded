@@ -6,14 +6,14 @@ import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../repository/user_repository.dart' as userRepo;
 
-class PayFastController extends ControllerMVC{
+class NetCashController extends ControllerMVC{
   GlobalKey<ScaffoldState> scaffoldKey;
   WebViewController webViewController;
   List<Cart> currentCarts;
   double total;
   String url = "";
 
-  PayFastController(){
+  NetCashController(){
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
   }
 
@@ -24,19 +24,21 @@ class PayFastController extends ControllerMVC{
     super.initState();
   }
 
-
+///netcash?doctor=${getDoctor()}&consultation_date=${getDate()&total=$total&consultation_number=${getTransId()}&email=${getUserEmail()}&cellphone=${getUserCellphone()}
   String getPaymentUrl(){
-   String payUrl = '${GlobalConfiguration().getString('base_url')}payfast?total=$total&doctor=${getDoctor()}&consultation_date=${getDate()}';
+   String payUrl = '${GlobalConfiguration().getString('base_url')}netcash?doctor=${getDoctor()}&consultation_date=${getDate()}&total=$total&consultation_number=${getTransId()}&email=${getUserEmail()}&cellphone=${getUserCellphone()}';
     print(payUrl);
     return payUrl;
   }
 
-  String getDoctor(){
-    return currentCarts[0].product.healer.name;
-  }
+  String getDoctor()=>currentCarts[0].product.healer.name;
 
-  String getDate(){
-    return currentCarts[0].consultationDate;
-  }
+  String getDate()=>currentCarts[0].consultationDate;
+
+  String getUserEmail() =>  userRepo.currentUser.value.email;
+
+  String getUserCellphone()=> userRepo.currentUser.value.phone;
+
+  String getTransId() => currentCarts[0].id.toString();
 
 }

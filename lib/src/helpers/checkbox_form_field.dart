@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CheckboxFormField extends FormField<bool> {
@@ -12,7 +13,7 @@ class CheckboxFormField extends FormField<bool> {
             onSaved: onSaved,
             validator: validator,
             initialValue: initialValue,
-            autovalidate: autovalidate,
+            autovalidateMode: AutovalidateMode.disabled,
             builder: (FormFieldState<bool> state) {
               return CheckboxListTile(
                 dense: state.hasError,
