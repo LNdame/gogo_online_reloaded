@@ -25,18 +25,18 @@ class _OnboardingScreenWidgetState extends State<OnboardingScreenWidget> {
             child: PageView(
               controller: _controller,
               children: [
-                _slideTemplate(
+                _slideTemplateImg(
                     title: S.of(context).welcome_text,
                     subtitle: S.of(context).welcome_subtitle,
-                    lottieAsset: "assets/anims/ehealthuser.json"),
-                _slideTemplate(
+                    asset: "assets/img/w_page_1.jpg"),
+                _slideTemplateImg(
                     title: S.of(context).book_appointment,
                     subtitle: S.of(context).book_appointment_subtitle,
-                    lottieAsset: "assets/anims/calendarappointment.json"),
-                _slideTemplate(
+                    asset: "assets/img/w_page_2.jpg"),
+                _slideTemplateImg(
                   title: S.of(context).chat_with_specialists,
                   subtitle: S.of(context).chat_specialist_subtitle,
-                  lottieAsset: "assets/anims/chat.json",
+                  asset: "assets/img/w_page_3.jpg",
                 ),
               ],
             ),
