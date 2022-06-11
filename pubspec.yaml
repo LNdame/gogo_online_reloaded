@@ -68,7 +68,7 @@ dependencies:
   json_annotation: ^4.0.1
   keyboard_visibility: ^0.5.6
   permission_handler: ^5.1.0+2
-  agora_rtc_engine: ^4.0.1
+ # agora_rtc_engine: ^4.0.1
 
 
 dev_dependencies:

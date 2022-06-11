@@ -1,9 +1,9 @@
-import 'package:agora_rtc_engine/rtc_engine.dart';
+//import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:gogo_online/src/helpers/app_constants.dart';
 import 'package:gogo_online/src/utils/AgoraAppID.dart';
-import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
-import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
+//import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
+//import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 
 
 class CallPage extends StatefulWidget {
@@ -20,15 +20,15 @@ class _CallPageState extends State<CallPage> {
   static final _users = <int>[];
   final _infoStrings = <String>[];
   bool muted = false;
-  RtcEngine _engine;
+  //RtcEngine _engine;
 
   @override
   void dispose() {
     // clear users
     _users.clear();
     // destroy sdk
-    _engine.leaveChannel();
-    _engine.destroy();
+   // _engine.leaveChannel();
+   // _engine.destroy();
     super.dispose();
   }
 
@@ -52,13 +52,13 @@ class _CallPageState extends State<CallPage> {
     await _initAgoraRtcEngine();
     _addAgoraEventHandlers();
     // await _engine.enableWebSdkInteroperability(true);
-    await _engine.joinChannel(null, widget.channelName, null, 0);
+   // await _engine.joinChannel(null, widget.channelName, null, 0);
   }
 
   /// Create agora sdk instance and initialize
   Future<void> _initAgoraRtcEngine() async {
-    _engine = await RtcEngine.create(appID);
-    await _engine.enableVideo();
+   // _engine = await RtcEngine.create(appID);
+  //  await _engine.enableVideo();
   }
 
   void _onCallEnd(BuildContext context) {
@@ -69,16 +69,16 @@ class _CallPageState extends State<CallPage> {
     setState(() {
       muted = !muted;
     });
-    _engine.muteLocalAudioStream(muted);
+   // _engine.muteLocalAudioStream(muted);
   }
 
   void _onSwitchCamera() {
-    _engine.switchCamera();
+    //_engine.switchCamera();
   }
 
   /// Add agora event handlers
   void _addAgoraEventHandlers() {
-    _engine.setEventHandler(RtcEngineEventHandler(
+   /* _engine.setEventHandler(RtcEngineEventHandler(
       error: (code) {
         setState(() {
           final info = 'onError: $code';
@@ -117,7 +117,7 @@ class _CallPageState extends State<CallPage> {
           _infoStrings.add(info);
         });
       },
-    ));
+    ));*/
   }
 
   /// Toolbar layout
@@ -196,8 +196,8 @@ class _CallPageState extends State<CallPage> {
   /// Helper function to get list of native views
   List<Widget> _getRenderViews() {
     final List<StatefulWidget> list = [];
-    list.add(RtcLocalView.SurfaceView());
-    _users.forEach((int uid) => list.add(RtcRemoteView.SurfaceView(uid: uid)));
+   // list.add(RtcLocalView.SurfaceView());
+  //  _users.forEach((int uid) => list.add(RtcRemoteView.SurfaceView(uid: uid)));
     return list;
   }
 
