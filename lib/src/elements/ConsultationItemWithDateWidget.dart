@@ -132,7 +132,9 @@ class _ConsultationItemWithDateWidgetState extends StateMVC<ConsultationItemWith
                             Icons.chat,
                             color: Theme.of(context).primaryColor,
                           ),
-                          label: Text("Chat with healer",
+                          label: Text(currentUser.value.role?.name == AppConstants.ROLE_MANAGER
+                              ? "Chat with client"
+                              : "Chat with healer",
                             textAlign: TextAlign.start,
                           ),
                         ),
