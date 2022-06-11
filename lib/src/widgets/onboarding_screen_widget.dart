@@ -89,8 +89,8 @@ class _OnboardingScreenWidgetState extends State<OnboardingScreenWidget> {
   Widget _slideTemplateImg({String title, String subtitle, String asset}) {
     final Size _size = MediaQuery.of(context).size;
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.0),
-      constraints: BoxConstraints(maxWidth: _size.width * 0.8),
+      padding: EdgeInsets.symmetric(horizontal: 00.0),
+      constraints: BoxConstraints(maxWidth: _size.width ),
 
       child: Column(
         children: [
