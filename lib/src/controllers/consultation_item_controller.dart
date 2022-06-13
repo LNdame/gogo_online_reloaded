@@ -4,6 +4,7 @@ import 'package:gogo_online/src/models/chat_data.dart';
 import 'package:gogo_online/src/models/chat_user.dart';
 import 'package:gogo_online/src/models/healer.dart';
 import 'package:gogo_online/src/models/message.dart';
+import 'package:gogo_online/src/models/user.dart';
 import 'package:gogo_online/src/repository/healer_repository.dart';
 import 'package:gogo_online/src/repository/services/db.dart';
 import 'package:gogo_online/src/repository/settings_repository.dart';
@@ -15,6 +16,8 @@ class ConsultationItemController extends ControllerMVC{
   ChatUser healerPeer;
   ChatData chatData;
   DB db;
+  ChatUser clientPeer;
+  User clientUser;
 
   ConsultationItemController() {
    /* registerFormKey = new  GlobalKey<FormState>();
@@ -47,6 +50,19 @@ class ConsultationItemController extends ControllerMVC{
     });
   }
 
+//Id here should be PatientID //
+  void listenForPatient({User clUser, String message ,String currentUserUid}) async {
+    setState(() {
+      clientUser = clUser;
+      clientPeer = setupClientAsPeerUser(clUser);
+    });
+    if(currentUserUid!=null){
+      listenForChatData(currentUserUid, clientPeer);
+    }
+  }
+
+
+
 
   ChatUser setupHealerAsPeerUser(Healer healer) {
     return new ChatUser(
@@ -56,6 +72,16 @@ class ConsultationItemController extends ControllerMVC{
         imageUrl: healer.image.thumb,
         about: healer.description,
         role: AppConstants.ROLE_MANAGER);
+  }
+
+  ChatUser setupClientAsPeerUser(User client) {
+    return new ChatUser(
+        id: client.firebaseUid,
+        username: client.name,
+        email: "",
+        imageUrl: client.image.thumb,
+        about: "",
+        role: AppConstants.ROLE_CLIENT);
   }
 
   void listenForChatData(String currentUserUid, ChatUser peer) async{

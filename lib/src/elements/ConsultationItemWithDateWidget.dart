@@ -36,7 +36,11 @@ class _ConsultationItemWithDateWidgetState extends StateMVC<ConsultationItemWith
   void initState() {
 
     var id = widget.consultation.productConsultations[0].product.healer.id;
+
     _con.listenForHealer(id: id, currentUserUid: currentUser.value.firebaseUid );
+    if (currentUser.value.role.name ==AppConstants.ROLE_MANAGER){
+      _con.listenForPatient(clUser: widget.consultation.user, currentUserUid: currentUser.value.firebaseUid );
+    }
 
     showChatButton = ValidatorUtil.isNowPastTheDate(widget.consultation.consultationDate, widget.consultation.consultationStartTime);
 

@@ -25,6 +25,7 @@ class User {
       id = jsonMap['id'].toString();
       name = jsonMap['name'] != null ? jsonMap['name'] : '';
       email = jsonMap['email'] != null ? jsonMap['email'] : '';
+      firebaseUid = jsonMap['firebase_uid'] != null ? jsonMap['firebase_uid'] : '';
       apiToken = jsonMap['api_token'];
       deviceToken = jsonMap['device_token'];
       try {
@@ -55,6 +56,7 @@ class User {
     var map = new Map<String, dynamic>();
     map["id"] = id;
     map["email"] = email;
+    map["firebase_uid"] = firebaseUid;
     map["name"] = name;
     map["password"] = password;
     map["api_token"] = apiToken;
