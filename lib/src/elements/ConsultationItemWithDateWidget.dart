@@ -37,22 +37,21 @@ class _ConsultationItemWithDateWidgetState extends StateMVC<ConsultationItemWith
 
     var id = widget.consultation.productConsultations[0].product.healer.id;
 
-    _con.listenForHealer(id: id, currentUserUid: currentUser.value.firebaseUid );
     if (currentUser.value.role.name ==AppConstants.ROLE_MANAGER){
       _con.listenForPatient(clUser: widget.consultation.user, currentUserUid: currentUser.value.firebaseUid );
+    }else{
+      _con.listenForHealer(id: id, currentUserUid: currentUser.value.firebaseUid );
     }
 
     showChatButton = ValidatorUtil.isNowPastTheDate(widget.consultation.consultationDate, widget.consultation.consultationStartTime);
-
-    // TODO: implement initState
+    
     super.initState();
   }
 
 
 
 
-  void goToChat(BuildContext context){
-
+  void goToChatClient(BuildContext context){
     final initData = _con.chatData ??
         new ChatData(
             groupId: _con.getGroupId(currentUser.value.firebaseUid),
@@ -61,7 +60,18 @@ class _ConsultationItemWithDateWidgetState extends StateMVC<ConsultationItemWith
             peer: _con.healerPeer,
             messages: []
         );
+    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> MessagingScreenWidget(chatData: initData)));
+  }
 
+  void goToChatHealer(BuildContext context){
+    final initData = _con.chatData ??
+        new ChatData(
+            groupId: _con.getGroupId(currentUser.value.firebaseUid),
+            userId: currentUser.value.firebaseUid,
+            peerId: _con.clientPeer.id,
+            peer: _con.clientPeer,
+            messages: []
+        );
     Navigator.of(context).push(MaterialPageRoute(builder: (context)=> MessagingScreenWidget(chatData: initData)));
   }
 
@@ -120,29 +130,40 @@ class _ConsultationItemWithDateWidgetState extends StateMVC<ConsultationItemWith
                             },
                           )),
                       showChatButton?
-                      Padding(padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                        child: TextButton.icon(
-                          onPressed: (){
-                            goToChat(context);
-                          },
-                          style: TextButton.styleFrom(
-                            primary: Theme.of(context).primaryColor,
-                            backgroundColor: Theme.of(context).accentColor,
-                            textStyle: Theme.of(context).textTheme.caption.merge(TextStyle(height: 1,color: Theme.of(context).primaryColor)),
-                            shape: StadiumBorder(),
-                            elevation: 5
-                          ),
-                          icon: Icon(
-                            Icons.chat,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          label: Text(currentUser.value.role?.name == AppConstants.ROLE_MANAGER
-                              ? "Chat with client"
-                              : "Chat with healer",
-                            textAlign: TextAlign.start,
-                          ),
-                        ),
-                      ):SizedBox(height: 0,),
+                      Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                              child: TextButton.icon(
+                                onPressed: () {
+                                  if (currentUser.value.role.name == AppConstants.ROLE_MANAGER) {
+                                    goToChatHealer(context);
+                                  } else {
+                                    goToChatClient(context);
+                                  }
+                                },
+                                style: TextButton.styleFrom(
+                                    primary: Theme.of(context).primaryColor,
+                                    backgroundColor: Theme.of(context).accentColor,
+                                    textStyle: Theme.of(context)
+                                        .textTheme
+                                        .caption
+                                        .merge(TextStyle(height: 1, color: Theme.of(context).primaryColor)),
+                                    shape: StadiumBorder(),
+                                    elevation: 5),
+                                icon: Icon(
+                                  Icons.chat,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                label: Text(
+                                  currentUser.value.role?.name == AppConstants.ROLE_MANAGER
+                                      ? "Chat with client"
+                                      : "Chat with healer",
+                                  textAlign: TextAlign.start,
+                                ),
+                              ),
+                            )
+                          : SizedBox(
+                              height: 0,
+                            ),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                         child: Column(

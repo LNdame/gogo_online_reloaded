@@ -46,13 +46,13 @@ class MessagingController extends ControllerMVC {
   }
 
   Future<dynamic> getUserDetailsAndContacts(String currentUserUid) async {
+    setUserId(currentUserUid);
     try {
       print("starting obt user  details and contact =====");
       final userData = await db.getUser(currentUserUid);
       print("${userData.data}");
       _userDetails = ChatUser.fromJson(userData.data);
       // _imageUrl = _user.photoUrl;
-      setUserId(_userDetails.id);
 
       if (userData.data != null) {
         userData.data['contacts'].forEach((elem) {

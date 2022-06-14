@@ -25,7 +25,6 @@ class ConsultationItemController extends ControllerMVC{
     db = DB();
   }
 
-
   void listenForHealer({String id, String message ,String currentUserUid}) async {
     final Stream<Healer> stream = await getHealer(id, billingAddress.value);
     stream.listen((Healer _healer) {
@@ -35,17 +34,13 @@ class ConsultationItemController extends ControllerMVC{
       } );
     }, onError: (a) {
       print(a);
-    /*  ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
-        content: Text(S.of(state.context).verify_your_internet_connection),
-      ));*/
+
     }, onDone: () {
       if(currentUserUid!=null){
          listenForChatData(currentUserUid, healerPeer);
       }
       if (message != null) {
-        /*ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
-          content: Text(message),
-        ));*/
+
       }
     });
   }
@@ -57,12 +52,9 @@ class ConsultationItemController extends ControllerMVC{
       clientPeer = setupClientAsPeerUser(clUser);
     });
     if(currentUserUid!=null){
-      listenForChatData(currentUserUid, clientPeer);
+      listenForChatDataForHealer(currentUserUid, clientPeer);
     }
   }
-
-
-
 
   ChatUser setupHealerAsPeerUser(Healer healer) {
     return new ChatUser(
@@ -91,6 +83,20 @@ class ConsultationItemController extends ControllerMVC{
     }, onError: (e){}, onDone: (){});
   }
 
+  void listenForChatDataForHealer(String currentUserUid, ChatUser peer) async{
+    final Stream<ChatData> stream = await getChatDataForHealer(currentUserUid , peer);
+    stream.listen((ChatData _data) {
+      setState(() => chatData = _data);
+    }, onError: (e){}, onDone: (){});
+  }
+
+  Future<void> retrieveChatData(String currentUserUid, ChatUser peer) async{
+    final Stream<ChatData> stream = await getChatData(currentUserUid , peer);
+    stream.listen((ChatData _data) {
+      setState(() => chatData = _data);
+    }, onError: (e){}, onDone: (){});
+  }
+
   String getGroupId(String uid) {
     String groupId;
     if (uid.hashCode <= healer.firebaseId.hashCode)
@@ -101,10 +107,18 @@ class ConsultationItemController extends ControllerMVC{
     return groupId;
   }
 
+  String getGroupIdForHealer(String uid) {
+    String groupId;
+    if (uid.hashCode <= clientUser.firebaseUid.hashCode)
+      groupId = '$uid-${clientUser.firebaseUid}';
+    else
+      groupId = '${clientUser.firebaseUid}-$uid';
+
+    return groupId;
+  }
+
   Future<Stream<ChatData>> getChatData(String currentUserUid, ChatUser peer) async {
     String groupId = getGroupId(currentUserUid);
-    // final peer = await db.getUser(healer.firebaseId);
-    //final User person = User.fromJson(peer.data);
     final messagesData = await db.getChatItemData(groupId);
 
     int unreadCount = 0;
@@ -119,7 +133,6 @@ class ConsultationItemController extends ControllerMVC{
     if (messagesData.documents.isNotEmpty)
       lastDoc = messagesData.documents[messagesData.documents.length - 1];
 
-
     ChatData chatData = ChatData(
       userId: currentUserUid,
       peerId: healer.firebaseId,
@@ -132,5 +145,31 @@ class ConsultationItemController extends ControllerMVC{
     return new Stream.value(chatData);
   }
 
+  Future<Stream<ChatData>> getChatDataForHealer(String currentUserUid, ChatUser peer) async {
+    String groupId = getGroupIdForHealer(currentUserUid);
+    final messagesData = await db.getChatItemData(groupId);
 
+    int unreadCount = 0;
+    List<Message> messages = [];
+    for (int i = 0; i < messagesData.documents.length; i++) {
+      var tmp = Message.fromMap(Map<String, dynamic>.from(messagesData.documents[i].data));
+      messages.add(tmp);
+      if(tmp.fromId == clientUser.firebaseUid && !tmp.isSeen) unreadCount++;
+    }
+
+    var lastDoc;
+    if (messagesData.documents.isNotEmpty)
+      lastDoc = messagesData.documents[messagesData.documents.length - 1];
+
+    ChatData chatData = ChatData(
+      userId: currentUserUid,
+      peerId: clientUser.firebaseUid,
+      groupId: groupId,
+      peer: peer,
+      messages: messages,
+      lastDoc: lastDoc,
+      unreadCount: unreadCount,
+    );
+    return new Stream.value(chatData);
+  }
 }

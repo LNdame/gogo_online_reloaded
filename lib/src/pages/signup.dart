@@ -164,7 +164,8 @@ class _SignUpWidgetState extends StateMVC<SignUpWidget> {
                           ),
                           color: Theme.of(context).accentColor,
                           onPressed: () {
-                            _con.register();
+                          //  _con.register();
+                            _con.registerFirebaseFirst();
                           },
                         ),
                         SizedBox(height: 25),

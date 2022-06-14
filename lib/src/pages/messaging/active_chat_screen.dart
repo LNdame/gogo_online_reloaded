@@ -40,6 +40,7 @@ class _ActiveChatWidgetState extends StateMVC<ActiveChatWidget> {
     super.initState();
     db = DB();
     print('${currentUser.value.firebaseUid} active chat init database =============');
+    _con.setUserId(currentUser.value.firebaseUid);
     _con.getUserDetailsAndContacts(currentUser.value.firebaseUid);
     print('active chat init _con.getUserDetailsAndContacts =============');
   }
