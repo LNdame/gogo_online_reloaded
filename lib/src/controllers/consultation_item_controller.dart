@@ -4,6 +4,7 @@ import 'package:gogo_online/src/models/chat_data.dart';
 import 'package:gogo_online/src/models/chat_user.dart';
 import 'package:gogo_online/src/models/healer.dart';
 import 'package:gogo_online/src/models/message.dart';
+import 'package:gogo_online/src/models/user.dart';
 import 'package:gogo_online/src/repository/healer_repository.dart';
 import 'package:gogo_online/src/repository/services/db.dart';
 import 'package:gogo_online/src/repository/settings_repository.dart';
@@ -15,13 +16,14 @@ class ConsultationItemController extends ControllerMVC{
   ChatUser healerPeer;
   ChatData chatData;
   DB db;
+  ChatUser clientPeer;
+  User clientUser;
 
   ConsultationItemController() {
    /* registerFormKey = new  GlobalKey<FormState>();
     this.scaffoldKey = new GlobalKey<ScaffoldState>();*/
     db = DB();
   }
-
 
   void listenForHealer({String id, String message ,String currentUserUid}) async {
     final Stream<Healer> stream = await getHealer(id, billingAddress.value);
@@ -32,21 +34,27 @@ class ConsultationItemController extends ControllerMVC{
       } );
     }, onError: (a) {
       print(a);
-    /*  ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
-        content: Text(S.of(state.context).verify_your_internet_connection),
-      ));*/
+
     }, onDone: () {
       if(currentUserUid!=null){
          listenForChatData(currentUserUid, healerPeer);
       }
       if (message != null) {
-        /*ScaffoldMessenger.of(scaffoldKey?.currentContext).showSnackBar(SnackBar(
-          content: Text(message),
-        ));*/
+
       }
     });
   }
 
+//Id here should be PatientID //
+  void listenForPatient({User clUser, String message ,String currentUserUid}) async {
+    setState(() {
+      clientUser = clUser;
+      clientPeer = setupClientAsPeerUser(clUser);
+    });
+    if(currentUserUid!=null){
+      listenForChatDataForHealer(currentUserUid, clientPeer);
+    }
+  }
 
   ChatUser setupHealerAsPeerUser(Healer healer) {
     return new ChatUser(
@@ -58,7 +66,31 @@ class ConsultationItemController extends ControllerMVC{
         role: AppConstants.ROLE_MANAGER);
   }
 
+  ChatUser setupClientAsPeerUser(User client) {
+    return new ChatUser(
+        id: client.firebaseUid,
+        username: client.name,
+        email: "",
+        imageUrl: client.image.thumb,
+        about: "",
+        role: AppConstants.ROLE_CLIENT);
+  }
+
   void listenForChatData(String currentUserUid, ChatUser peer) async{
+    final Stream<ChatData> stream = await getChatData(currentUserUid , peer);
+    stream.listen((ChatData _data) {
+      setState(() => chatData = _data);
+    }, onError: (e){}, onDone: (){});
+  }
+
+  void listenForChatDataForHealer(String currentUserUid, ChatUser peer) async{
+    final Stream<ChatData> stream = await getChatDataForHealer(currentUserUid , peer);
+    stream.listen((ChatData _data) {
+      setState(() => chatData = _data);
+    }, onError: (e){}, onDone: (){});
+  }
+
+  Future<void> retrieveChatData(String currentUserUid, ChatUser peer) async{
     final Stream<ChatData> stream = await getChatData(currentUserUid , peer);
     stream.listen((ChatData _data) {
       setState(() => chatData = _data);
@@ -75,10 +107,18 @@ class ConsultationItemController extends ControllerMVC{
     return groupId;
   }
 
+  String getGroupIdForHealer(String uid) {
+    String groupId;
+    if (uid.hashCode <= clientUser.firebaseUid.hashCode)
+      groupId = '$uid-${clientUser.firebaseUid}';
+    else
+      groupId = '${clientUser.firebaseUid}-$uid';
+
+    return groupId;
+  }
+
   Future<Stream<ChatData>> getChatData(String currentUserUid, ChatUser peer) async {
     String groupId = getGroupId(currentUserUid);
-    // final peer = await db.getUser(healer.firebaseId);
-    //final User person = User.fromJson(peer.data);
     final messagesData = await db.getChatItemData(groupId);
 
     int unreadCount = 0;
@@ -93,7 +133,6 @@ class ConsultationItemController extends ControllerMVC{
     if (messagesData.documents.isNotEmpty)
       lastDoc = messagesData.documents[messagesData.documents.length - 1];
 
-
     ChatData chatData = ChatData(
       userId: currentUserUid,
       peerId: healer.firebaseId,
@@ -106,5 +145,31 @@ class ConsultationItemController extends ControllerMVC{
     return new Stream.value(chatData);
   }
 
+  Future<Stream<ChatData>> getChatDataForHealer(String currentUserUid, ChatUser peer) async {
+    String groupId = getGroupIdForHealer(currentUserUid);
+    final messagesData = await db.getChatItemData(groupId);
 
+    int unreadCount = 0;
+    List<Message> messages = [];
+    for (int i = 0; i < messagesData.documents.length; i++) {
+      var tmp = Message.fromMap(Map<String, dynamic>.from(messagesData.documents[i].data));
+      messages.add(tmp);
+      if(tmp.fromId == clientUser.firebaseUid && !tmp.isSeen) unreadCount++;
+    }
+
+    var lastDoc;
+    if (messagesData.documents.isNotEmpty)
+      lastDoc = messagesData.documents[messagesData.documents.length - 1];
+
+    ChatData chatData = ChatData(
+      userId: currentUserUid,
+      peerId: clientUser.firebaseUid,
+      groupId: groupId,
+      peer: peer,
+      messages: messages,
+      lastDoc: lastDoc,
+      unreadCount: unreadCount,
+    );
+    return new Stream.value(chatData);
+  }
 }

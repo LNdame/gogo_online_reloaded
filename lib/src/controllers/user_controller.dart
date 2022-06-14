@@ -90,6 +90,37 @@ class UserController extends ControllerMVC {
     }
   }
 
+  void registerFirebaseFirst() async {
+    loader = Helper.overlayLoader(state.context);
+    FocusScope.of(state.context).unfocus();
+    if (loginFormKey.currentState.validate()) {
+      loginFormKey.currentState.save();
+      Overlay.of(state.context).insert(loader);
+      await registerFirstOnFirebase(user, user.password).then((authResult) {
+        user.firebaseUid = authResult.user.uid;
+        repository.register(user).then((value) {
+          if (value != null && value.apiToken != null) {
+            try {
+              final db = DB();
+              db.addNewUser(authResult.user.uid, value.image.thumb, user.name, user.email);
+              UserUpdateInfo info = UserUpdateInfo();
+              info.displayName = user.name;
+              authResult.user.updateProfile(info);
+              repository.currentUser.value.firebaseUid = authResult.user.uid;
+              repository.setCurrentUserFireBaseUid(authResult.user.uid);
+
+            } catch (error) {
+              print(error);
+            }
+          }
+        }).whenComplete(() {
+          Helper.hideLoader(loader);
+          Navigator.of(scaffoldKey.currentContext).pushReplacementNamed('/Pages', arguments: 2);
+        } );
+      });
+    }
+  }
+
   void resetPassword() {
     loader = Helper.overlayLoader(state.context);
     FocusScope.of(state.context).unfocus();
@@ -134,6 +165,10 @@ class UserController extends ControllerMVC {
         print(error);
       }
     });
+  }
+
+  Future<AuthResult> registerFirstOnFirebase(User user, String password){
+    return _firebaseAuth.createUserWithEmailAndPassword(email: user.email, password: password);
   }
 
   void firebaseSilentLogin(email, password) {
